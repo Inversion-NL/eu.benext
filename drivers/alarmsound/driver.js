@@ -56,6 +56,7 @@ module.exports = new ZwaveDriver( path.basename(__dirname), {
 });
 
 module.exports.init = function( devices_data, callback ) {
+	Homey.log('');
 	Homey.log("init method", devices_data);
 	devices_data.forEach(initDevice);
 
@@ -65,6 +66,7 @@ module.exports.init = function( devices_data, callback ) {
 
 // the `added` method is called is when pairing is done and a device has been added
 module.exports.added = function( device_data, callback ) {
+	Homey.log('');
 	Homey.log("added method", device_data);
     initDevice( device_data );
     callback( null, true );
@@ -72,6 +74,7 @@ module.exports.added = function( device_data, callback ) {
 
 // the `delete` method is called when a device has been deleted by a user
 module.exports.deleted = function( device_data, callback ) {
+	Homey.log('');
 	Homey.log("deleted method", device_data);
     delete devices[ device_data.id ];
     callback( null, true );
@@ -79,8 +82,10 @@ module.exports.deleted = function( device_data, callback ) {
 
 // a helper method to add a device to the devices list
 function initDevice( device_data ) {
+	Homey.log('');
 	Homey.log('initDevice');
 	Homey.log('device_data', device_data);
+	//devices.push[device_data];
 }
 
 // a helper method to get a device from the devices list by it's device_data object
@@ -93,11 +98,32 @@ function getDeviceByData( device_data ) {
     }
 }
 
-Homey.manager('flow').on('action.alarmsound_enable-sound', function( callback, args ){
-	Homey.log('on flow action.alarmsound_enable-sound');
+Homey.manager('flow').on('action.sound_alarm', function( callback, args ){
+	Homey.log('');
+	Homey.log('on flow action.action.sound_alarm');
 	Homey.log('args', args);
 
-	//var device = getDeviceByData( args.device );
+	Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, function (err, data) {
+		Homey.log('');
+		Homey.log('Homey.manager(drivers).getDriver(alarmsound).capabilities.onoff.set');
+		Homey.log('err', err);
+		Homey.log('data', data);
+	});
+
+	callback( null, true ); // we've fired successfully
+});
+
+Homey.manager('flow').on('action.silence_alarm', function( callback, args ){
+	Homey.log('');
+	Homey.log('on flow action.action.silence_alarm');
+	Homey.log('args', args);
+
+	Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device_data, function (err, data) {
+		Homey.log('');
+		Homey.log('Homey.manager(drivers).getDriver(benext_alarmsound).capabilities.onoff.unset');
+		Homey.log('err', err);
+		Homey.log('data', data);
+	});
 
 	callback( null, true ); // we've fired successfully
 });
