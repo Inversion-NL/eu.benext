@@ -9,7 +9,7 @@
 	    "en": "BeNext devices for Homey",
 		"nl": "BeNext apparaten voor Homey"
     },
-    "category": [ "appliances", "security" ],
+    "category": [ "security" ],
     "images": {
 	    "large": "/assets/images/large.png",
 	    "small": "/assets/images/small.png"
