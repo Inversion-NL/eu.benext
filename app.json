@@ -3,7 +3,7 @@
     "name": {
         "en": "BeNext"
     },
-    "version": "0.1.0",
+    "version": "0.2.0",
     "compatibility": ">=0.9.0",
     "description": {
 	    "en": "BeNext devices for Homey",
