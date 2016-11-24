@@ -119,7 +119,226 @@
 					}
 				}
 			]
-		}
+		},
+		{
+		    "id": "p1-dongle",
+		    "name": {
+			    "en": "BeNext P1 Dongle",
+				"nl": "BeNext P1 Dongle"
+		    },
+		    "zwave": {
+        	"manufacturerId": 138,
+         	 "productTypeId": 47,
+          		"productId": 256,
+			    "learnmode": {
+				    "image": "/drivers/p1-dongle/assets/wakeup.svg",
+				    "instruction": {
+                        "en": "Press and hold the button on your BeNext P1 Dongle for three seconds",
+						"nl": "Druk en hou de knop op de BeNext P1 Dongle vast voor drie seconden"
+				    }
+				},
+			    "associationGroups": [ 1 ]
+		    },
+		    "class": "sensor",
+		    "capabilities": [ 
+		    	"measure_power",
+        		"meter_power.normal",
+				"meter_power.low",
+        		"meter_gas"
+        	],
+			"capabilitiesOptions": {
+				"meter_power.normal": {
+					"title":{
+						"en":"Power Meter Normal",
+						"nl":"Stroommeter normaal"
+					}
+				},
+				"meter_power.low": {
+					"title":{
+						"en":"Power Meter low",
+						"nl":"Stroommeter laag"
+					}
+				}
+			},
+		    "images": {
+			    "large": "/drivers/psm02/assets/images/large.jpg",
+			    "small": "/drivers/psm02/assets/images/small.jpg"
+		    },
+		    "settings": [ {
+					"id": "HW_pullup",
+					"type": "number",
+					"label": {
+						"en": "HW pullup",
+						"nl": "HW pullup"
+					},
+					"hint": {
+						"en": "It is possible to provide a pullup to your smart meter.\nRange: 0 - 1",
+						"nl": "Het is mogelijk om een pullup aan te bieden aan uw slimme meter.\nBereik: 0 - 1"
+					},
+					"attr": {
+						"min": 0,
+						"max": 1
+					},
+					"value": 0
+					},
+					{
+					"id": "baud_rate",
+					"type": "dropdown",
+					"label": {
+						"en": "Default Baud rate",
+						"nl": "Standaard Baud rate"
+					},
+					"hint": {
+						"en": "Kamstrup and Iskra = BAUD rate 9600   Kaifa, Landis, Gyr = BAUD rate 115200",
+						"nl": "Kamstrup en Iskra = BAUD rate 9600   Kaifa, Landis, Gyr = BAUD rate 115200"
+					},
+					"value": "1152",
+					"values": [
+						{
+							"id": "1152",
+							"label": {
+								"en": "115200 (DSMR 4.0)"
+							}
+						},
+						{
+							"id": "96",
+							"label": {
+								"en": "9600 (DMSR 2.2)"							}
+						}
+					]
+					},
+					{
+					"id": "channel_1_unasked_Report_use_w",
+					"type": "number",
+					"label": {
+						"en": "Channel 1 unasked Meter Report consumed W.",
+						"nl": "Channel 1 ongevraagd Meter Report verbruikt W."
+					},
+					"hint": {
+						"en": "The conditions to be automatically reported current consumption.\nChannel 1 = normal electricity rate",
+						"nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
+					},
+					"value": 100
+					},
+					{
+					"id": "channel_1_unasked_Report_use_kwh",
+					"type": "number",
+					"label": {
+						"en": "Channel 1 unasked Meter Report consumed kWh.",
+						"nl": "Channel 1 ongevraagd Meter Report verbruikt kWh."
+					},
+					"hint": {
+						"en": "The condition that total consumption is automatically reported.\nChannel 1 = normal electricity rate",
+						"nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
+					},
+					"value": 100
+					},
+					{
+					"id": "channel_1_unasked_Report_returned_w",
+					"type": "number",
+					"label": {
+						"en": "Channel 1 unasked Meter Report returned W.",
+						"nl": "Channel 1 ongevraagd Meter Report teruggeleverd W."
+					},
+					"hint": {
+						"en": "The conditions which currently returned reported automatically.\nChannel 1 = normal electricity rate",
+						"nl": "De voorwaarden dat huidig teruggeleverd automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
+					},
+					"value": 100
+					},
+					{
+					"id": "channel_1_unasked_Report_returned_kwh",
+					"type": "number",
+					"label": {
+						"en": "Channel 1 unasked Meter Report returned kWh.",
+						"nl": "Channel 1 ongevraagd Meter Report teruggeleverd kWh."
+					},
+					"hint": {
+						"en": "The conditions totally returned is reported automatically.\nChannel 1 = normal electricity rate",
+						"nl": "De voorwaarden dat totaal teruggeleverd automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
+					},
+					"value": 100
+					},
+					{
+					"id": "channel_2_unasked_Report_use_w",
+					"type": "number",
+					"label": {
+						"en": "Channel 2 unasked Meter Report consumed W.",
+						"nl": "Channel 2 ongevraagd Meter Report verbruikt W."
+					},
+					"hint": {
+						"en": "The conditions to be automatically reported current consumption.\nChannel 2 = low electricity rate",
+						"nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
+					},
+					"value": 100
+					},
+					{
+					"id": "channel_2_unasked_Report_use_kwh",
+					"type": "number",
+					"label": {
+						"en": "Channel 2 unasked Meter Report consumed kWh.",
+						"nl": "Channel 2 ongevraagd Meter Report verbruikt kWh."
+					},
+					"hint": {
+						"en": "The condition that total consumption is automatically reported.\nChannel 2 = low electricity rate",
+						"nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
+					},
+					"value": 100
+					},
+					{
+					"id": "channel_2_unasked_Report_returned_w",
+					"type": "number",
+					"label": {
+						"en": "Channel 2 unasked Meter Report returned W.",
+						"nl": "Channel 2 ongevraagd Meter Report teruggeleverd W."
+					},
+					"hint": {
+						"en": "The conditions which currently returned reported automatically.\nChannel 2 = low electricity rate",
+						"nl": "De voorwaarden dat huidig teruggeleverd automatisch wordt gerapporteerd"
+					},
+					"value": 100
+					},
+					{
+					"id": "channel_2_unasked_Report_returned_kwh",
+					"type": "number",
+					"label": {
+						"en": "Channel 2 unasked Meter Report returned kWh",
+						"nl": "Channel 2 ongevraagd Meter Report teruggeleverd kWh"
+					},
+					"hint": {
+						"en": "The conditions totally returned is reported automatically.\nChannel 2 = low electricity rate",
+						"nl": "De voorwaarden dat totaal teruggeleverd automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
+					},
+					"value": 100
+					},
+					{
+					"id": "channel_3_unasked_Report_use_w",
+					"type": "number",
+					"label": {
+						"en": "Channel 3 unasked Meter Report consumed W.",
+						"nl": "Channel 3 ongevraagd Meter Report verbruikt W."
+					},
+					"hint": {
+						"en": "The conditions to be automatically reported current consumption.\nChannel 3 = Gas",
+						"nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 3 = Gas"
+					},
+					"value": 100
+					},
+					{
+					"id": "channel_3_unasked_Report_use_kwh",
+					"type": "number",
+					"label": {
+						"en": "Channel 3 unasked Meter Report consumed kWh.",
+						"nl": "Channel 3 ongevraagd Meter Report verbruikt kWh."
+					},
+					"hint": {
+						"en": "The condition that total consumption is automatically reported.\nChannel 3 = Gas",
+						"nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 3 = Gas"
+					},
+					"value": 100
+				}
+            		]
+	    }
     ],
 	"flow" : {
 		"actions": [
