@@ -161,8 +161,8 @@
 				}
 			},
 		    "images": {
-			    "large": "/drivers/psm02/assets/images/large.jpg",
-			    "small": "/drivers/psm02/assets/images/small.jpg"
+			    "large": "/drivers/p1-dongle/assets/images/large.jpg",
+			    "small": "/drivers/p1-dongle/assets/images/small.jpg"
 		    },
 		    "settings": [ {
 					"id": "HW_pullup",
