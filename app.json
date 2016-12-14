@@ -338,6 +338,35 @@
 					"value": 100
 				}
             		]
+	    },
+		{
+		    "id": "tagreader500",
+		    "name": {
+			    "en": "Tag Reader 500",
+				"nl": "Tag Reader 500"
+		    },
+		    "zwave": {
+				"manufacturerId": 138,
+				"productTypeId": 7,
+				"productId": 512,
+				"learnmode": {
+					"image": "/drivers/tagreader500/assets/TODO!.svg",
+					"instruction": {
+						"en": "Press and hold the enter button for two seconds (indication LED blinks shortly) and release to start the add/remove routine.",
+						"nl": "Druk en houdt de enter knop (op de Tag Reader 500) ingedrukt voor twee seconden (LED indicatie knippert kort) om de toevoegen/verwijder modus te starten."
+					}
+				},
+				"associationGroups": [ 1 ]
+		    },
+		    "class": "other",
+		    "capabilities": [
+				"measure_battery"
+        	],
+		    "images": {
+			    "large": "/drivers/tagreader500/assets/images/large.jpg",
+			    "small": "/drivers/tagreader500/assets/images/small.jpg"
+		    },
+		    "settings": []
 	    }
     ],
 	"flow" : {
