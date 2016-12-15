@@ -1,404 +1,528 @@
 {
-    "id": "eu.benext",
-    "name": {
-        "en": "BeNext"
-    },
-    "version": "0.2.0",
-    "compatibility": ">=0.9.0",
-    "description": {
-	    "en": "BeNext devices for Homey",
+	"id": "eu.benext",
+	"name": {
+		"en": "BeNext"
+	},
+	"version": "0.2.0",
+	"compatibility": ">=0.9.0",
+	"description": {
+		"en": "BeNext devices for Homey",
 		"nl": "BeNext apparaten voor Homey"
-    },
-    "category": [ "security" ],
-    "images": {
-	    "large": "/assets/images/large.png",
-	    "small": "/assets/images/small.png"
-    },
-    "author": {
-        "name": "Robin van Kekem",
-        "email": "nl.inversion@gmail.com"
-    },
-    "drivers": [
-	    {
-		    "id": "alarmsound",
-		    "name": {
-			    "en": "Alarm Sound",
-				"nl": "Alarm Sound"
-		    },
-		    "zwave": {
-			    "manufacturerId": 138,
-			    "productTypeId": 5,
-			    "productId": 257,
-			    "learnmode": {
-				    "image": "/drivers/alarmsound/assets/learnmode.svg",
-				    "instruction": {
-					    "en": "Press and hold the button until the red licht starts blinking, and then release",
-					    "nl": "Houd de knop ingedrukt tot het rode lichtje begint te knipperen en laat dan los"
-				    }
-				  },
-			    "associationGroups": [ 1, 2 ]
-		    },
-		    "class": "other",
-		    "capabilities": [ "onoff" ],
-		    "images": {
-			    "large": "/drivers/alarmsound/assets/images/large.png",
-			    "small": "/drivers/alarmsound/assets/images/small.png"
-		    },
-			"settings": [
-				{
-					"id": "destination_routine_enabled",
-					"type": "dropdown",
-					"label": {
-						"en": "Destination routine enabled"
-					},
-					"value": "255",
-					"hint": {
-						"en": "Enables an internal routine that periodically checks the Z-Wave device in association group 2 by sending a test message. If transmission fails, the AlarmSound will notify the user with a sound. (See also configuration param 3, 4 and 9)."
-					},
-					"values": [
-						{
-							"id": "0",
-							"label": {
-								"en": "routine is disabled"
-							}
-						},
-						{
-							"id": "255",
-							"label": {
-								"en": "routine is enabled"
-							}
-						}
-					]
-				},
-				
-				{
-					"id": "sound_light_mode_index",
-					"type": "number",
-					"label": {
-						"en": "Select index sound/light mode"
-					},
-					"value": 1,
-					"attr": {
-						"min": 0,
-						"max": 6
-					},
-					"hint": {
-						"en": "The index of the sound mode when a switch binary/basic set frame is received."
-					}
-				},
-				
-				{
-					"id": "power_offline_sound_light_mode",
-					"type": "number",
-					"label": {
-						"en": "Power offline sound/light mode"
-					},
-					"value": 1,
-					"attr": {
-						"min": 0,
-						"max": 6
-					},
-					"hint": {
-						"en": "The index of the sound mode the AlarmSound will start when it is unplugged. Use number zero (0) to disable, 1-6 to select sound/light mode number."
-					}
-				},
-				
-				{
-					"id": "destination_route_failed_sound_light_mode",
-					"type": "number",
-					"label": {
-						"en": "Error (Destination Routine Failed) sound/light mode"
-					},
-					"value": 1,
-					"attr": {
-						"min": 0,
-						"max": 6
-					},
-					"hint": {
-						"en": "The index of the sound mode the AlarmSound will play when it is unable to reach the device in association group 2. Use number zero (0) to disable, 1-6 to select sound/light mode number."
-					}
-				}
-			]
+	},
+	"category": ["security"],
+	"images": {
+		"large": "/assets/images/large.png",
+		"small": "/assets/images/small.png"
+	},
+	"author": {
+		"name": "Robin van Kekem",
+		"email": "nl.inversion@gmail.com"
+	},
+	"drivers": [{
+		"id": "alarmsound",
+		"name": {
+			"en": "Alarm Sound",
+			"nl": "Alarm Sound"
 		},
-		{
-		    "id": "p1-dongle",
-		    "name": {
-			    "en": "BeNext P1 Dongle",
-				"nl": "BeNext P1 Dongle"
-		    },
-		    "zwave": {
-        	"manufacturerId": 138,
-         	 "productTypeId": 47,
-          		"productId": 256,
-			    "learnmode": {
-				    "image": "/drivers/p1-dongle/assets/wakeup.svg",
-				    "instruction": {
-                        "en": "Press and hold the button on your BeNext P1 Dongle for three seconds",
-						"nl": "Druk en hou de knop op de BeNext P1 Dongle vast voor drie seconden"
-				    }
-				},
-			    "associationGroups": [ 1 ]
-		    },
-		    "class": "sensor",
-		    "capabilities": [ 
-		    	"measure_power",
-        		"meter_power.normal",
-				"meter_power.low",
-        		"meter_gas"
-        	],
-			"capabilitiesOptions": {
-				"meter_power.normal": {
-					"title":{
-						"en":"Power Meter Normal",
-						"nl":"Stroommeter normaal"
-					}
-				},
-				"meter_power.low": {
-					"title":{
-						"en":"Power Meter low",
-						"nl":"Stroommeter laag"
-					}
+		"zwave": {
+			"manufacturerId": 138,
+			"productTypeId": 5,
+			"productId": 257,
+			"learnmode": {
+				"image": "/drivers/alarmsound/assets/learnmode.svg",
+				"instruction": {
+					"en": "Press and hold the button until the red licht starts blinking, and then release",
+					"nl": "Houd de knop ingedrukt tot het rode lichtje begint te knipperen en laat dan los"
 				}
 			},
-		    "images": {
-			    "large": "/drivers/p1-dongle/assets/images/large.jpg",
-			    "small": "/drivers/p1-dongle/assets/images/small.jpg"
-		    },
-		    "settings": [ {
-					"id": "HW_pullup",
-					"type": "number",
-					"label": {
-						"en": "HW pullup",
-						"nl": "HW pullup"
-					},
-					"hint": {
-						"en": "It is possible to provide a pullup to your smart meter.\nRange: 0 - 1",
-						"nl": "Het is mogelijk om een pullup aan te bieden aan uw slimme meter.\nBereik: 0 - 1"
-					},
-					"attr": {
-						"min": 0,
-						"max": 1
-					},
-					"value": 0
-					},
-					{
-					"id": "baud_rate",
-					"type": "dropdown",
-					"label": {
-						"en": "Default Baud rate",
-						"nl": "Standaard Baud rate"
-					},
-					"hint": {
-						"en": "Kamstrup and Iskra = BAUD rate 9600   Kaifa, Landis, Gyr = BAUD rate 115200",
-						"nl": "Kamstrup en Iskra = BAUD rate 9600   Kaifa, Landis, Gyr = BAUD rate 115200"
-					},
-					"value": "1152",
-					"values": [
-						{
-							"id": "1152",
-							"label": {
-								"en": "115200 (DSMR 4.0)"
-							}
-						},
-						{
-							"id": "96",
-							"label": {
-								"en": "9600 (DMSR 2.2)"							}
-						}
-					]
-					},
-					{
-					"id": "channel_1_unasked_Report_use_w",
-					"type": "number",
-					"label": {
-						"en": "Channel 1 unasked Meter Report consumed W.",
-						"nl": "Channel 1 ongevraagd Meter Report verbruikt W."
-					},
-					"hint": {
-						"en": "The conditions to be automatically reported current consumption.\nChannel 1 = normal electricity rate",
-						"nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
-					},
-					"value": 100
-					},
-					{
-					"id": "channel_1_unasked_Report_use_kwh",
-					"type": "number",
-					"label": {
-						"en": "Channel 1 unasked Meter Report consumed kWh.",
-						"nl": "Channel 1 ongevraagd Meter Report verbruikt kWh."
-					},
-					"hint": {
-						"en": "The condition that total consumption is automatically reported.\nChannel 1 = normal electricity rate",
-						"nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
-					},
-					"value": 100
-					},
-					{
-					"id": "channel_1_unasked_Report_returned_w",
-					"type": "number",
-					"label": {
-						"en": "Channel 1 unasked Meter Report returned W.",
-						"nl": "Channel 1 ongevraagd Meter Report teruggeleverd W."
-					},
-					"hint": {
-						"en": "The conditions which currently returned reported automatically.\nChannel 1 = normal electricity rate",
-						"nl": "De voorwaarden dat huidig teruggeleverd automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
-					},
-					"value": 100
-					},
-					{
-					"id": "channel_1_unasked_Report_returned_kwh",
-					"type": "number",
-					"label": {
-						"en": "Channel 1 unasked Meter Report returned kWh.",
-						"nl": "Channel 1 ongevraagd Meter Report teruggeleverd kWh."
-					},
-					"hint": {
-						"en": "The conditions totally returned is reported automatically.\nChannel 1 = normal electricity rate",
-						"nl": "De voorwaarden dat totaal teruggeleverd automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
-					},
-					"value": 100
-					},
-					{
-					"id": "channel_2_unasked_Report_use_w",
-					"type": "number",
-					"label": {
-						"en": "Channel 2 unasked Meter Report consumed W.",
-						"nl": "Channel 2 ongevraagd Meter Report verbruikt W."
-					},
-					"hint": {
-						"en": "The conditions to be automatically reported current consumption.\nChannel 2 = low electricity rate",
-						"nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
-					},
-					"value": 100
-					},
-					{
-					"id": "channel_2_unasked_Report_use_kwh",
-					"type": "number",
-					"label": {
-						"en": "Channel 2 unasked Meter Report consumed kWh.",
-						"nl": "Channel 2 ongevraagd Meter Report verbruikt kWh."
-					},
-					"hint": {
-						"en": "The condition that total consumption is automatically reported.\nChannel 2 = low electricity rate",
-						"nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
-					},
-					"value": 100
-					},
-					{
-					"id": "channel_2_unasked_Report_returned_w",
-					"type": "number",
-					"label": {
-						"en": "Channel 2 unasked Meter Report returned W.",
-						"nl": "Channel 2 ongevraagd Meter Report teruggeleverd W."
-					},
-					"hint": {
-						"en": "The conditions which currently returned reported automatically.\nChannel 2 = low electricity rate",
-						"nl": "De voorwaarden dat huidig teruggeleverd automatisch wordt gerapporteerd"
-					},
-					"value": 100
-					},
-					{
-					"id": "channel_2_unasked_Report_returned_kwh",
-					"type": "number",
-					"label": {
-						"en": "Channel 2 unasked Meter Report returned kWh",
-						"nl": "Channel 2 ongevraagd Meter Report teruggeleverd kWh"
-					},
-					"hint": {
-						"en": "The conditions totally returned is reported automatically.\nChannel 2 = low electricity rate",
-						"nl": "De voorwaarden dat totaal teruggeleverd automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
-					},
-					"value": 100
-					},
-					{
-					"id": "channel_3_unasked_Report_use_w",
-					"type": "number",
-					"label": {
-						"en": "Channel 3 unasked Meter Report consumed W.",
-						"nl": "Channel 3 ongevraagd Meter Report verbruikt W."
-					},
-					"hint": {
-						"en": "The conditions to be automatically reported current consumption.\nChannel 3 = Gas",
-						"nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 3 = Gas"
-					},
-					"value": 100
-					},
-					{
-					"id": "channel_3_unasked_Report_use_kwh",
-					"type": "number",
-					"label": {
-						"en": "Channel 3 unasked Meter Report consumed kWh.",
-						"nl": "Channel 3 ongevraagd Meter Report verbruikt kWh."
-					},
-					"hint": {
-						"en": "The condition that total consumption is automatically reported.\nChannel 3 = Gas",
-						"nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 3 = Gas"
-					},
-					"value": 100
-				}
-            		]
-	    },
-		{
-		    "id": "tagreader500",
-		    "name": {
-			    "en": "Tag Reader 500",
-				"nl": "Tag Reader 500"
-		    },
-		    "zwave": {
-				"manufacturerId": 138,
-				"productTypeId": 7,
-				"productId": 512,
-				"learnmode": {
-					"image": "/drivers/tagreader500/assets/TODO!.svg",
-					"instruction": {
-						"en": "Press and hold the enter button for two seconds (indication LED blinks shortly) and release to start the add/remove routine.",
-						"nl": "Druk en houdt de enter knop (op de Tag Reader 500) ingedrukt voor twee seconden (LED indicatie knippert kort) om de toevoegen/verwijder modus te starten."
-					}
+			"associationGroups": [1, 2]
+		},
+		"class": "other",
+		"capabilities": ["onoff"],
+		"images": {
+			"large": "/drivers/alarmsound/assets/images/large.png",
+			"small": "/drivers/alarmsound/assets/images/small.png"
+		},
+		"settings": [{
+				"id": "destination_routine_enabled",
+				"type": "dropdown",
+				"label": {
+					"en": "Destination routine enabled"
 				},
-				"associationGroups": [ 1 ]
-		    },
-		    "class": "other",
-		    "capabilities": [
-				"measure_battery"
-        	],
-		    "images": {
-			    "large": "/drivers/tagreader500/assets/images/large.jpg",
-			    "small": "/drivers/tagreader500/assets/images/small.jpg"
-		    },
-		    "settings": []
-	    }
-    ],
-	"flow" : {
-		"actions": [
-        	{
-				"id": "sound_alarm",
-				"title": {
-					"en": "Sound alarm",
-					"nl": "Alarm luiden"
+				"value": "255",
+				"hint": {
+					"en": "Enables an internal routine that periodically checks the Z-Wave device in association group 2 by sending a test message. If transmission fails, the AlarmSound will notify the user with a sound. (See also configuration param 3, 4 and 9)."
 				},
-				"args": [
-					{
-						"name": "device",
-						"type": "device",
-						"filter": "driver_id=alarmsound"
+				"values": [{
+					"id": "0",
+					"label": {
+						"en": "routine is disabled"
 					}
-				]
+				}, {
+					"id": "255",
+					"label": {
+						"en": "routine is enabled"
+					}
+				}]
 			},
-        	{
-				"id": "silence_alarm",
-				"title": {
-					"en": "Silence alarm",
-					"nl": "Alarm stil"
+
+			{
+				"id": "sound_light_mode_index",
+				"type": "number",
+				"label": {
+					"en": "Select index sound/light mode"
 				},
-				"args": [
-					{
-						"name": "device",
-						"type": "device",
-						"filter": "driver_id=alarmsound"
-					}
-				]
+				"value": 1,
+				"attr": {
+					"min": 0,
+					"max": 6
+				},
+				"hint": {
+					"en": "The index of the sound mode when a switch binary/basic set frame is received."
+				}
+			},
+
+			{
+				"id": "power_offline_sound_light_mode",
+				"type": "number",
+				"label": {
+					"en": "Power offline sound/light mode"
+				},
+				"value": 1,
+				"attr": {
+					"min": 0,
+					"max": 6
+				},
+				"hint": {
+					"en": "The index of the sound mode the AlarmSound will start when it is unplugged. Use number zero (0) to disable, 1-6 to select sound/light mode number."
+				}
+			},
+
+			{
+				"id": "destination_route_failed_sound_light_mode",
+				"type": "number",
+				"label": {
+					"en": "Error (Destination Routine Failed) sound/light mode"
+				},
+				"value": 1,
+				"attr": {
+					"min": 0,
+					"max": 6
+				},
+				"hint": {
+					"en": "The index of the sound mode the AlarmSound will play when it is unable to reach the device in association group 2. Use number zero (0) to disable, 1-6 to select sound/light mode number."
+				}
 			}
 		]
+	}, {
+		"id": "p1-dongle",
+		"name": {
+			"en": "BeNext P1 Dongle",
+			"nl": "BeNext P1 Dongle"
+		},
+		"zwave": {
+			"manufacturerId": 138,
+			"productTypeId": 47,
+			"productId": 256,
+			"learnmode": {
+				"image": "/drivers/p1-dongle/assets/wakeup.svg",
+				"instruction": {
+					"en": "Press and hold the button on your BeNext P1 Dongle for three seconds",
+					"nl": "Druk en hou de knop op de BeNext P1 Dongle vast voor drie seconden"
+				}
+			},
+			"associationGroups": [1]
+		},
+		"class": "sensor",
+		"capabilities": [
+			"measure_power",
+			"meter_power.normal",
+			"meter_power.low",
+			"meter_gas"
+		],
+		"capabilitiesOptions": {
+			"meter_power.normal": {
+				"title": {
+					"en": "Power Meter Normal",
+					"nl": "Stroommeter normaal"
+				}
+			},
+			"meter_power.low": {
+				"title": {
+					"en": "Power Meter low",
+					"nl": "Stroommeter laag"
+				}
+			}
+		},
+		"images": {
+			"large": "/drivers/p1-dongle/assets/images/large.jpg",
+			"small": "/drivers/p1-dongle/assets/images/small.jpg"
+		},
+		"settings": [{
+			"id": "HW_pullup",
+			"type": "number",
+			"label": {
+				"en": "HW pullup",
+				"nl": "HW pullup"
+			},
+			"hint": {
+				"en": "It is possible to provide a pullup to your smart meter.\nRange: 0 - 1",
+				"nl": "Het is mogelijk om een pullup aan te bieden aan uw slimme meter.\nBereik: 0 - 1"
+			},
+			"attr": {
+				"min": 0,
+				"max": 1
+			},
+			"value": 0
+		}, {
+			"id": "baud_rate",
+			"type": "dropdown",
+			"label": {
+				"en": "Default Baud rate",
+				"nl": "Standaard Baud rate"
+			},
+			"hint": {
+				"en": "Kamstrup and Iskra = BAUD rate 9600   Kaifa, Landis, Gyr = BAUD rate 115200",
+				"nl": "Kamstrup en Iskra = BAUD rate 9600   Kaifa, Landis, Gyr = BAUD rate 115200"
+			},
+			"value": "1152",
+			"values": [{
+				"id": "1152",
+				"label": {
+					"en": "115200 (DSMR 4.0)"
+				}
+			}, {
+				"id": "96",
+				"label": {
+					"en": "9600 (DMSR 2.2)"
+				}
+			}]
+		}, {
+			"id": "channel_1_unasked_Report_use_w",
+			"type": "number",
+			"label": {
+				"en": "Channel 1 unasked Meter Report consumed W.",
+				"nl": "Channel 1 ongevraagd Meter Report verbruikt W."
+			},
+			"hint": {
+				"en": "The conditions to be automatically reported current consumption.\nChannel 1 = normal electricity rate",
+				"nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
+			},
+			"value": 100
+		}, {
+			"id": "channel_1_unasked_Report_use_kwh",
+			"type": "number",
+			"label": {
+				"en": "Channel 1 unasked Meter Report consumed kWh.",
+				"nl": "Channel 1 ongevraagd Meter Report verbruikt kWh."
+			},
+			"hint": {
+				"en": "The condition that total consumption is automatically reported.\nChannel 1 = normal electricity rate",
+				"nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
+			},
+			"value": 100
+		}, {
+			"id": "channel_1_unasked_Report_returned_w",
+			"type": "number",
+			"label": {
+				"en": "Channel 1 unasked Meter Report returned W.",
+				"nl": "Channel 1 ongevraagd Meter Report teruggeleverd W."
+			},
+			"hint": {
+				"en": "The conditions which currently returned reported automatically.\nChannel 1 = normal electricity rate",
+				"nl": "De voorwaarden dat huidig teruggeleverd automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
+			},
+			"value": 100
+		}, {
+			"id": "channel_1_unasked_Report_returned_kwh",
+			"type": "number",
+			"label": {
+				"en": "Channel 1 unasked Meter Report returned kWh.",
+				"nl": "Channel 1 ongevraagd Meter Report teruggeleverd kWh."
+			},
+			"hint": {
+				"en": "The conditions totally returned is reported automatically.\nChannel 1 = normal electricity rate",
+				"nl": "De voorwaarden dat totaal teruggeleverd automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
+			},
+			"value": 100
+		}, {
+			"id": "channel_2_unasked_Report_use_w",
+			"type": "number",
+			"label": {
+				"en": "Channel 2 unasked Meter Report consumed W.",
+				"nl": "Channel 2 ongevraagd Meter Report verbruikt W."
+			},
+			"hint": {
+				"en": "The conditions to be automatically reported current consumption.\nChannel 2 = low electricity rate",
+				"nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
+			},
+			"value": 100
+		}, {
+			"id": "channel_2_unasked_Report_use_kwh",
+			"type": "number",
+			"label": {
+				"en": "Channel 2 unasked Meter Report consumed kWh.",
+				"nl": "Channel 2 ongevraagd Meter Report verbruikt kWh."
+			},
+			"hint": {
+				"en": "The condition that total consumption is automatically reported.\nChannel 2 = low electricity rate",
+				"nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
+			},
+			"value": 100
+		}, {
+			"id": "channel_2_unasked_Report_returned_w",
+			"type": "number",
+			"label": {
+				"en": "Channel 2 unasked Meter Report returned W.",
+				"nl": "Channel 2 ongevraagd Meter Report teruggeleverd W."
+			},
+			"hint": {
+				"en": "The conditions which currently returned reported automatically.\nChannel 2 = low electricity rate",
+				"nl": "De voorwaarden dat huidig teruggeleverd automatisch wordt gerapporteerd"
+			},
+			"value": 100
+		}, {
+			"id": "channel_2_unasked_Report_returned_kwh",
+			"type": "number",
+			"label": {
+				"en": "Channel 2 unasked Meter Report returned kWh",
+				"nl": "Channel 2 ongevraagd Meter Report teruggeleverd kWh"
+			},
+			"hint": {
+				"en": "The conditions totally returned is reported automatically.\nChannel 2 = low electricity rate",
+				"nl": "De voorwaarden dat totaal teruggeleverd automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
+			},
+			"value": 100
+		}, {
+			"id": "channel_3_unasked_Report_use_w",
+			"type": "number",
+			"label": {
+				"en": "Channel 3 unasked Meter Report consumed W.",
+				"nl": "Channel 3 ongevraagd Meter Report verbruikt W."
+			},
+			"hint": {
+				"en": "The conditions to be automatically reported current consumption.\nChannel 3 = Gas",
+				"nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 3 = Gas"
+			},
+			"value": 100
+		}, {
+			"id": "channel_3_unasked_Report_use_kwh",
+			"type": "number",
+			"label": {
+				"en": "Channel 3 unasked Meter Report consumed kWh.",
+				"nl": "Channel 3 ongevraagd Meter Report verbruikt kWh."
+			},
+			"hint": {
+				"en": "The condition that total consumption is automatically reported.\nChannel 3 = Gas",
+				"nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 3 = Gas"
+			},
+			"value": 100
+		}]
+	}, {
+		"id": "tagreader500",
+		"name": {
+			"en": "Tag Reader 500",
+			"nl": "Tag Reader 500"
+		},
+		"zwave": {
+			"manufacturerId": 138,
+			"productTypeId": 7,
+			"productId": 512,
+			"learnmode": {
+				"image": "/drivers/tagreader500/assets/TODO!.svg",
+				"instruction": {
+					"en": "Press and hold the enter button for two seconds (indication LED blinks shortly) and release to start the add/remove routine.",
+					"nl": "Druk en houdt de enter knop (op de Tag Reader 500) ingedrukt voor twee seconden (LED indicatie knippert kort) om de toevoegen/verwijder modus te starten."
+				}
+			},
+			"associationGroups": [1]
+		},
+		"class": "other",
+		"capabilities": [
+			"measure_battery"
+		],
+		"images": {
+			"large": "/drivers/tagreader500/assets/images/large.jpg",
+			"small": "/drivers/tagreader500/assets/images/small.jpg"
+		},
+		"settings": []
+	}],
+	"flow": {
+		"triggers": [{
+			"id": "system_home",
+			"title": {
+				"en": "System disarmed",
+				"nl": "Systeem gedeactiveerd"
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=tagreader500"
+			}],
+			"tokens": [{
+				"name": "user_id",
+				"title": {
+					"en": "User ID",
+					"nl": "Gebruikers ID"
+				},
+				"example": {
+					"en": "1",
+					"nl": "1"
+				}
+			}, {
+				"name": "user_name",
+				"title": {
+					"en": "Username",
+					"nl": "Gebruikersnaam"
+				},
+				"example": {
+					"en": "Test",
+					"nl": "Test"
+				}
+			}]
+		}, {
+			"id": "system_away",
+			"title": {
+				"en": "System armed",
+				"nl": "Systeem geactiveerd"
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=tagreader500"
+			}],
+			"tokens": [{
+				"name": "user_id",
+				"title": {
+					"en": "User ID",
+					"nl": "Gebruikers ID"
+				},
+				"example": {
+					"en": "1",
+					"nl": "1"
+				}
+			}, {
+				"name": "user_name",
+				"title": {
+					"en": "Username",
+					"nl": "Gebruikersnaam"
+				},
+				"example": {
+					"en": "Test",
+					"nl": "Test"
+				}
+			}]
+		}, {
+			"id": "system_scene",
+			"title": {
+				"en": "Scene activated",
+				"nl": "Scene geactiveerd"
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=tagreader500"
+			}],
+			"tokens": [{
+				"name": "sceneid",
+				"title": {
+					"en": "Scene ID",
+					"nl": "Scene ID"
+				},
+				"example": {
+					"en": "1",
+					"nl": "1"
+				}
+			}]
+		}],
+		"conditions": [{
+			"id": "is_at_home",
+			"title": {
+				"en": "Is !{{|not}} at home",
+				"nl": "Is !{{|niet}} thuis"
+			},
+			"args": [{
+				"name": "person",
+				"type": "autocomplete",
+				"placeholder": {
+					"en": "Who is !{{|not}} at home?",
+					"nl": "Wie is !{{|niet}} thuis?"
+				}
+			}, {
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=tagreader500"
+			}]
+		}],
+		"actions": [{
+			"id": "sound_alarm",
+			"title": {
+				"en": "Sound alarm",
+				"nl": "Alarm luiden"
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=alarmsound"
+			}]
+		}, {
+			"id": "silence_alarm",
+			"title": {
+				"en": "Silence alarm",
+				"nl": "Alarm stil"
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=alarmsound"
+			}]
+		}, {
+			"id": "silence_alarm",
+			"title": {
+				"en": "Silence alarm",
+				"nl": "Alarm stil"
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=alarmsound"
+			}]
+		}, {
+			"id": "toggle_system_home",
+			"title": {
+				"en": "Mark as home",
+				"nl": "Is thuis"
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=tagreader500"
+			}, {
+				"name": "person",
+				"type": "autocomplete",
+				"placeholder": {
+					"en": "Whoe came home?",
+					"nl": "Wie is er thuis?"
+				}
+			}]
+		}, {
+			"id": "toggle_system_away",
+			"title": {
+				"en": "Mark as away",
+				"nl": "Is afwezig"
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=tagreader500"
+			}, {
+				"name": "person",
+				"type": "autocomplete",
+				"placeholder": {
+					"en": "Who has gone away?",
+					"nl": "Wie is er afwezig?"
+				}
+			}]
+		}]
 	}
 }

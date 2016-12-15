@@ -62,3 +62,130 @@ debug: true,
 	// COMMAND_CLASS_USER_CODE (only used in local mode), we don't want to support this if not nescecarry
 	// 
 });
+
+Homey.manager('flow').on('trigger.system_home', function( callback, args ){
+	Homey.log('');
+	Homey.log('on flow trigger.system_home');
+	Homey.log('args', args);
+
+	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
+	//	if (err) callback (err, false);
+	//});
+
+	callback( null, true ); // we've fired successfully
+});
+
+Homey.manager('flow').on('trigger.system_away', function( callback, args ){
+	Homey.log('');
+	Homey.log('on flow trigger.system_away');
+	Homey.log('args', args);
+
+	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
+	//	if (err) callback (err, false);
+	//});
+
+	callback( null, true ); // we've fired successfully
+});
+
+Homey.manager('flow').on('trigger.system_scene', function( callback, args ){
+	Homey.log('');
+	Homey.log('on flow trigger.system_scene');
+	Homey.log('args', args);
+
+	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
+	//	if (err) callback (err, false);
+	//});
+
+	callback( null, true ); // we've fired successfully
+});
+
+Homey.manager('flow').on('condition.is_at_home', function( callback, args ){
+	Homey.log('');
+	Homey.log('on flow condition.is_at_home');
+	Homey.log('args', args);
+
+	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
+	//	if (err) callback (err, false);
+	//});
+
+	callback( null, true ); // we've fired successfully
+});
+
+Homey.manager('flow').on('action.toggle_system_home', function( callback, args ){
+	Homey.log('');
+	Homey.log('on flow action.toggle_system_home');
+	Homey.log('args', args);
+
+	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
+	//	if (err) callback (err, false);
+	//});
+
+	callback( null, true ); // we've fired successfully
+});
+
+Homey.manager('flow').on('action.toggle_system_away', function( callback, args ){
+	Homey.log('');
+	Homey.log('on flow action.toggle_system_away');
+	Homey.log('args', args);
+
+	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
+	//	if (err) callback (err, false);
+	//});
+
+	callback( null, true ); // we've fired successfully
+});
+
+Homey.manager('flow').on('action.toggle_system_away.person.autocomplete', function( callback, args ) {
+	var myItems = autocomplete(args.query);
+    callback( null, myItems ); // err, results
+});
+
+Homey.manager('flow').on('action.toggle_system_home.person.autocomplete', function( callback, args ) {
+	var myItems = autocomplete(args.query);
+    callback( null, myItems ); // err, results
+});
+
+Homey.manager('flow').on('condition.is_at_home.person.autocomplete', function( callback, args ) {
+	var myItems = autocomplete(args.query);
+    callback( null, myItems ); // err, results
+});
+
+function autocompleteUser(filterValue)
+{
+	var myItems = [ ];
+
+    // filter items to match the search query
+    myItems = myItems.filter(function(item){
+    	return ( item.name.toLowerCase().indexOf( filterValue.toLowerCase() ) > -1 )
+    })
+
+    // args can also contain other arguments, so you can specify your autocomplete results
+
+    /*
+        example `myItems`:
+        [
+            {
+                icon: 'https://path.to/icon.svg', // or use "image: 'https://path.to/icon.png'" for non-svg icons.
+                name: 'Item name',
+                description: 'Optional description',
+                some_value_for_myself: 'that i will recognize when fired, such as an ID'
+            },
+            {
+                ...
+            }
+        ]
+    */
+	
+	return myItems;
+}
+
+
+
+
+
+
+
+
+
+
+
