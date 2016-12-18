@@ -27,8 +27,8 @@ debug: true,
 				return report['Battery Level (Raw)'][0];
 			}
 		},
-		'user_code_report': {
-			'command_class'				: 'COMMAND_CLASS_ALARM_V2',
+		/*'custom.user_code_report': {
+			'command_class'				: 'COMMAND_CLASS_USER_CODE',
 			'command_get'				: function( report )
 			{
 				// Parse UserID, UID Status 0, Tag Code
@@ -37,10 +37,22 @@ debug: true,
 				return;
 			}
 		},
-		'manual_entry':{
+		'custom.arm_disarm': {
+			'command_class'				: 'COMMAND_CLASS_ALARM_V2',
+			'command_get'				: function( report )
+			{
+				// Parse UserID, UID Status 0, Tag Code
+				
+				// Send USER_CODE_SET (UserId, UID Status 1, Tag Code)
+				return;
+			}
+		},*/
+		'custom.gateway_control': {
 			'command_class'				: 'COMMAND_CLASS_ENTRY_CONTROL',
 			'command_get'				: function( report )
 			{
+				console.log(report);
+				
 				/*
 				The supported events are: 
 				- Caching 
@@ -54,13 +66,9 @@ debug: true,
 			}
 		}
     },
-
     settings: {
 		
     }
-	
-	// COMMAND_CLASS_USER_CODE (only used in local mode), we don't want to support this if not nescecarry
-	// 
 });
 
 Homey.manager('flow').on('trigger.system_home', function( callback, args ){
