@@ -335,7 +335,15 @@
 					"nl": "Druk en houdt de enter knop (op de Tag Reader 500) ingedrukt voor twee seconden (LED indicatie knippert kort) om de toevoegen/verwijder modus te starten."
 				}
 			},
-			"associationGroups": [1]
+			"associationGroups": [1],
+			"wakeUpInterval": 900,
+			"defaultConfiguration": [
+				{
+					"id": 5,
+					"size": 1,
+					"value": 0
+				}
+			]
 		},
 		"class": "other",
 		"capabilities": [
@@ -412,7 +420,7 @@
 			"value": 2
 		}, {
 			"id": "always_awake_mode",
-			"type": "checkbox",
+			"type": "dropdown",
 			"label": {
 				"en": "Always awake mode",
 				"nl": "Altijd wakker modus"
