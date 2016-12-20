@@ -348,7 +348,7 @@
 		"class": "other",
 		"capabilities": [
 			"measure_battery",
-			"custom.gateway_control"
+			"my_gateway_control"
 		],
 		"images": {
 			"large": "/drivers/tagreader500/assets/images/large.jpg",

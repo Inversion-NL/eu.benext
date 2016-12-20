@@ -49,8 +49,9 @@ debug: true,
 				return;
 			}
 		},*/
-		'custom.gateway_control': {
+		'my_gateway_control': {
 			'command_class'				: 'COMMAND_CLASS_ENTRY_CONTROL',
+			//'command_class_get'			: 'ENTRY_CONTROL_GET', ??
 			'command_get_parser'		: function( report )
 			{
 				console.log(report);
