@@ -14,11 +14,8 @@ const ZwaveDriver = require('homey-zwavedriver');
 // The same way is for custom codes added by the user
 // On a setting page we can map the ID's we send out here to readable user names and use them in cards.
 
-var tagContainer = [ ]; // contains objects: { "tagId": 0, "tagValue": "" };
-var userContainer = [ ]; // contains objects: { "user": "bla", "tagIds": { 1, 3 } };
-
 module.exports = new ZwaveDriver(path.basename(__dirname), {
-debug: true,
+	debug: true,
     capabilities: {
 		'measure_battery': {
 			'command_class'				: 'COMMAND_CLASS_BATTERY',
@@ -29,29 +26,109 @@ debug: true,
 				return report['Battery Level (Raw)'][0];
 			}
 		},
-		/*'custom.user_code_report': {
+		'user_code_report': {
 			'command_class'				: 'COMMAND_CLASS_USER_CODE',
-			'command_get'				: function( report )
+			'command_report'			: 'USER_CODE_REPORT',
+			'command_report_parser'		: function( report, node )
 			{
-				// Parse UserID, UID Status 0, Tag Code
+				console.log(report);
 				
-				// Send USER_CODE_SET (UserId, UID Status 1, Tag Code)
-				return;
+				var userIdentifier = report["User Identifier (Raw)"];
+				var tagOrUserCode = report["USER_CODE"]; // It's a buffer (hex), and we store the buffer
+				var userIdStatus = report["User ID Status (Raw)"];
+				
+				//console.log(tagOrUserCode);
+				//console.log(userIdStatus);
+				// console.log("UTF-8");
+				// console.log(tagOrUserCode.toString('utf8'));
+				// console.log("HEX");
+				// console.log(tagOrUserCode.toString('hex'));
+				// console.log("ASCII");
+				// console.log(tagOrUserCode.toString('ascii'));
+
+				// When home is not armed, send a "USER_CODE_SET" back with a new/existing ID
+				var tag = retrieveAndSetUserId(tagOrUserCode, node.instance);
+				console.log(tag);
+				if(tag === false)
+				{
+					console.log("Something went wrong! :(");
+					return 0;
+				}
+				
+				return tag.tagId;
 			}
 		},
-		'custom.arm_disarm': {
-			'command_class'				: 'COMMAND_CLASS_ALARM_V2',
-			'command_get'				: function( report )
+		'alarm_report':
+		{
+			'command_class'				: 'COMMAND_CLASS_ALARM',
+			'command_get'				: 'ALARM_GET',
+			'command_get_parser'		: function ( report )
 			{
-				// Parse UserID, UID Status 0, Tag Code
+				//console.log(report);
+				//return 0;
+			},
+			'command_report'			: 'ALARM_REPORT',
+			'command_report_parser'		: function( report, node)
+			{
+				console.log("report event recieved");
+				console.log(report);
+				console.log(node.device_data);
 				
-				// Send USER_CODE_SET (UserId, UID Status 1, Tag Code)
-				return;
+				var eventType = -1;
+				var tagReaderTagId = report["Event Parameter"].toString('hex');
+				var tagReaderTagIdInt = -1;
+				
+				try {
+					tagReaderTagIdInt = parseInt(tagReaderTagId);
+				} catch(e) { console.log("Cannot parse tag reader id to int"); }
+				
+				// Search for user with this tag id
+				var userWithTagId = searchUser(tagReaderTagIdInt);
+				console.log(userWithTagId);
+				
+				var tokens = {
+								userId: userWithTagId !== null ? userWithTagId.id : -1,
+								userName: userWithTagId !== null ? userWithTagId.name : "",
+								tagId: tagReaderTagIdInt,
+								deviceId: node.instance.token
+							};
+				var state = {};
+				
+				switch(report["ZWave Alarm Event"])
+				{
+					case 6: // Home
+						// Toggle event, "User X came home"
+						eventType = 1;
+						
+						Homey.manager('flow').triggerDevice('system_home', tokens, state, node.device_data, function(err, result) {
+							if( err ){ console.log(err); return Homey.error(err); }
+						});
+					break;
+					case 5: // Away
+						eventType = 0;
+						
+						// Toggle event, "User X went away"
+						Homey.manager('flow').triggerDevice('system_away', tokens, state, node.device_data, function(err, result) {
+							if( err ){ console.log(err); return Homey.error(err); }
+						});
+					break;
+				}
+				
+				writeToLogFile(
+					userWithTagId !== null ? userWithTagId.id : null,
+					node.instance.token,
+					tagReaderTagIdInt,
+					eventType,
+					userWithTagId !== null ? userWithTagId.name : null,
+					null
+				);
+				
+				return 0;
 			}
-		},*/
-		'my_gateway_control': {
+		}
+		/*, 'my_gateway_control': {
 			'command_class'				: 'COMMAND_CLASS_ENTRY_CONTROL',
-			//'command_class_get'			: 'ENTRY_CONTROL_GET', ??
+			'command_class_get'			: 'ENTRY_CONTROL_NOTIFICATION',
 			'command_get_parser'		: function( report )
 			{
 				console.log(report);
@@ -84,8 +161,9 @@ debug: true,
 						// event data contains array of numbers (toggle scene)
 					break;
 				}
-			}
-		}
+			},
+			'command_report'			: 'ENTRY_CONTROL_GET'
+		}*/
     },
     settings: {
 		"set_to_default" : {
@@ -119,50 +197,47 @@ debug: true,
     }
 });
 
-Homey.manager('flow').on('trigger.system_home', function( callback, args ){
-	Homey.log('');
-	Homey.log('on flow trigger.system_home');
-	Homey.log('args', args);
+// Don't need those listeners?
+// Homey.manager('flow').on('trigger.system_home', function( callback, args, state ){
+	// Homey.log('');
+	// Homey.log('on flow trigger.system_home');
+	// Homey.log('args', args);
+	
+	// console.log(args);
+	// console.log(state);
 
-	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
-	//	if (err) callback (err, false);
-	//});
+	// callback( null, true ); // we've fired successfully
+// });
 
-	callback( null, true ); // we've fired successfully
-});
+// Homey.manager('flow').on('trigger.system_away', function( callback, args, state ){
+	// Homey.log('');
+	// Homey.log('on flow trigger.system_away');
+	// Homey.log('args', args);
+	
+	// console.log(args);
+	// console.log(state);
 
-Homey.manager('flow').on('trigger.system_away', function( callback, args ){
-	Homey.log('');
-	Homey.log('on flow trigger.system_away');
-	Homey.log('args', args);
+	// callback( null, true ); // we've fired successfully
+// });
 
-	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
-	//	if (err) callback (err, false);
-	//});
-
-	callback( null, true ); // we've fired successfully
-});
-
-Homey.manager('flow').on('trigger.system_scene', function( callback, args ){
-	Homey.log('');
-	Homey.log('on flow trigger.system_scene');
-	Homey.log('args', args);
-
-	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
-	//	if (err) callback (err, false);
-	//});
-
-	callback( null, true ); // we've fired successfully
-});
+// This is only available in Gateway mode and that isn't supported by Homey yet
+// Can be implemented when class COMMAND_CLASS_ENTRY_CONTROL . ENTRY_CONTROL_NOTIFICATION is supported
+// Homey.manager('flow').on('trigger.system_scene', function( callback, args ){
+	// Homey.log('');
+	// Homey.log('on flow trigger.system_scene');
+	// Homey.log('args', args);
+	
+	// callback( null, true ); // we've fired successfully
+// });
 
 Homey.manager('flow').on('condition.is_at_home', function( callback, args ){
 	Homey.log('');
 	Homey.log('on flow condition.is_at_home');
 	Homey.log('args', args);
-
-	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
-	//	if (err) callback (err, false);
-	//});
+	
+	console.log(args);
+	console.log(state);
+	
 
 	callback( null, true ); // we've fired successfully
 });
@@ -170,11 +245,7 @@ Homey.manager('flow').on('condition.is_at_home', function( callback, args ){
 Homey.manager('flow').on('action.toggle_system_home', function( callback, args ){
 	Homey.log('');
 	Homey.log('on flow action.toggle_system_home');
-	Homey.log('args', args);
-
-	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
-	//	if (err) callback (err, false);
-	//});
+	Homey.log('args', args);//});
 
 	callback( null, true ); // we've fired successfully
 });
@@ -184,64 +255,233 @@ Homey.manager('flow').on('action.toggle_system_away', function( callback, args )
 	Homey.log('on flow action.toggle_system_away');
 	Homey.log('args', args);
 
-	//Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, function (err, data) {
-	//	if (err) callback (err, false);
-	//});
-
 	callback( null, true ); // we've fired successfully
 });
 
+// Autocomplete events
 Homey.manager('flow').on('action.toggle_system_away.person.autocomplete', function( callback, args ) {
-	var myItems = autocomplete(args.query);
+	var myItems = autocompleteUser(args.query);
     callback( null, myItems ); // err, results
 });
 
 Homey.manager('flow').on('action.toggle_system_home.person.autocomplete', function( callback, args ) {
-	var myItems = autocomplete(args.query);
+	var myItems = autocompleteUser(args.query);
     callback( null, myItems ); // err, results
 });
 
 Homey.manager('flow').on('condition.is_at_home.person.autocomplete', function( callback, args ) {
-	var myItems = autocomplete(args.query);
+	var myItems = autocompleteUser(args.query);
     callback( null, myItems ); // err, results
 });
 
+//var tagContainer = [ ]; // contains objects: { "tagId": 0, "tagValue": "", "createdOn": "" };
+function getTagContainer()
+{
+	return Homey.manager('settings').get('tagContainer');
+}
+
+function setTagContainer(value)
+{
+	Homey.manager('settings').set('tagContainer', value);
+}
+
+//var userContainer = [ ]; // contains objects: { "name": "bla", "id": -1, "status": 0 (0 = away, 1 = home), tagIds": { 1, 3 } };
+function getUserContainer()
+{
+	return Homey.manager('settings').get('userContainer');
+}
+
+function setUserContainer(value)
+{
+	Homey.manager('settings').set('userContainer', value);
+}
+
+function getSystemArmed()
+{
+	return Homey.manager('settings').get('systemArmed') === true;
+}
+
+function setSystemArmed(value)
+{
+	if(value === false || value === 0) {
+		value = false;
+	} else {
+		value = true;
+	}
+	
+	Homey.manager('settings').set('systemArmed', value);
+}
+
+function writeToLogFile(userId, deviceId, tagId, statusCode, userName, deviceName)
+{
+	var logEntry =
+	{
+		"time": new Date(),
+		"userId": userId,
+		"tagId": tagId,
+		"statusCode": statusCode, // 1 === home, 0 === away
+		"userName": userName,
+		"deviceName": deviceName
+	};
+	
+	var log = Homey.manager('settings').get('systemEventLog');
+	if(typeof log === 'undefined' || log === null)
+	{
+		log = [];
+	}
+	
+	log.push(logEntry);
+	console.log("Just logged entry:");
+	console.log(logEntry);
+	Homey.manager('settings').set('systemEventLog', log);
+}
+
 function autocompleteUser(filterValue)
 {
-	var myItems = [ ];
-
+	var myItems = getUserContainer();
+	
+	if(typeof myItems === 'undefined' || myItems === null)
+	{
+		myItems = [{ "name": "Robert", "id": -1, "tagIds": [1, 2, 3] }];
+	}
+	
     // filter items to match the search query
-    myItems = myItems.filter(function(item){
+    myItems = myItems.filter(function(item) {
     	return ( item.name.toLowerCase().indexOf( filterValue.toLowerCase() ) > -1 )
-    })
-
-    // args can also contain other arguments, so you can specify your autocomplete results
-
-    /*
-        example `myItems`:
-        [
-            {
-                icon: 'https://path.to/icon.svg', // or use "image: 'https://path.to/icon.png'" for non-svg icons.
-                name: 'Item name',
-                description: 'Optional description',
-                some_value_for_myself: 'that i will recognize when fired, such as an ID'
-            },
-            {
-                ...
-            }
-        ]
-    */
+    });
 	
 	return myItems;
 }
 
+/**
+* Retrieves user ID from the homey settings.
+* Sends ID confirmation if tagcode couldn't be found in the homey settings.
+*/
+function retrieveAndSetUserId(tagCode, node)
+{
+	// Check if tagCode already exists
+	var matchedTag = searchTag(getTagContainer(), tagCode);
+	
+	// Create new unique tag ID if tag doesn't exist
+	if(matchedTag === null)
+	{
+		matchedTag = addTag(tagCode);
+	}
+	
+	// Matched tag still null?
+	if(matchedTag === null)
+	{
+		console.log("Tag couldn't be added.");
+		return false;
+	}
+	
+	console.log(matchedTag);
+	
+	// Send USER_CODE_SET to device with the new/existing unique tag ID
+	sendUserIdSetConfirmation(matchedTag, node);
+	
+	return matchedTag;
+}
 
+/**
+* Sends the tag ID to the device
+*/
+function sendUserIdSetConfirmation(tag,  node)
+{
+	node.CommandClass.COMMAND_CLASS_USER_CODE.USER_CODE_SET({
+			"User Identifier": tag.tagId,
+			"User ID Status": Buffer.from('01', 'hex'),
+			"USER_CODE": tag.tagValue
+		},
+		function( err, result )
+		{
+			if( err ) { return console.error( err ); }
+		}
+	);
+}
 
+/**
+* Returns the tag for the value searched.
+*/
+function searchTag(tags, matchValue)
+{
+	var match = null;
+	if(typeof tags === 'undefined' || tags === null)
+	{
+		return null;
+	}
+	
+	for(var i = 0; i < tags.length; i++) {
+		if(tags[i].tagValue === matchValue)
+		{
+			console.log("match found");
+			console.log(tags[i]);
+			match = tags[i];
+			i = 100;
+		}
+	}
+	
+	return match;
+}
 
+/**
+* Finds the user belonging to the tagId.
+*/
+function searchUser(tagId)
+{
+	var users = getUserContainer();
+	if(typeof users === 'undefined' || users === null || typeof users !== 'object')
+	{
+		return null;
+	}
+	
+	for(var i = 0; i < users.length; i++) {
+		if(users[i].tagIds.find(tagId))
+		{
+			console.log("match found id");
+			console.log(users[i]);
+			return users[i];
+		}
+	}
+	
+	return null;
+}
 
-
-
-
-
-
-
+/**
+* Adds a tag to the tag ID and returns the tag value.
+*/
+function addTag(tagCode)
+{
+	var tags = getTagContainer();
+	
+	if(typeof tags === 'undefined' || tags == null)
+	{
+		console.log("Tags not set, new tag list initiated.");
+		tags = new Array();
+	}
+	
+	if(typeof tags !== "object")
+	{
+		tags = new Array();
+	}
+	
+	// Fallback to search for tags if someone is to stupid to not search for the tag himself
+	var existingTag = searchTag(tags, tagCode);
+	if(existingTag !== null)
+	{
+		return existingTag;
+	}
+	
+	var highestId = 0;
+	for(var i = 0; i < tags.length; i++) {
+		if(tags[i].tagId > highestId)
+		{
+			highestId = tags[i].tagId;
+		}
+	}
+	
+	var tag = { "tagId": (highestId+1), "tagValue": tagCode, "createdOn": new Date() };
+	tags.push(tag);
+	setTagContainer(tags);
+	return tag;
+}

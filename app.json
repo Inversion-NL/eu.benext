@@ -348,7 +348,8 @@
 		"class": "other",
 		"capabilities": [
 			"measure_battery",
-			"my_gateway_control"
+			"user_code_report",
+			"alarm_report"
 		],
 		"images": {
 			"large": "/drivers/tagreader500/assets/images/large.jpg",
@@ -495,6 +496,40 @@
 			}]
 		}]
 	}],
+	"capabilities": {
+        "user_code_report": {
+            "type": "number",
+            "title": {
+                "en": "User Code Report",
+				"nl": "Gebruikerscode Rapport"
+            },
+            "getable": true,
+            "setable": false,
+            "units": {
+                "en": "status",
+				"nl": "status"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 1
+        },
+		"alarm_report": {
+            "type": "number",
+            "title": {
+                "en": "Alarm Report User ID",
+				"nl": "Alarm Rapport Gebruiker ID"
+            },
+            "getable": true,
+            "setable": false,
+            "units": {
+                "en": "status",
+				"nl": "status"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 1
+        }
+    },
 	"flow": {
 		"triggers": [{
 			"id": "system_home",
@@ -508,7 +543,7 @@
 				"filter": "driver_id=tagreader500"
 			}],
 			"tokens": [{
-				"name": "user_id",
+				"name": "userId",
 				"title": {
 					"en": "User ID",
 					"nl": "Gebruikers ID"
@@ -518,7 +553,7 @@
 					"nl": "1"
 				}
 			}, {
-				"name": "user_name",
+				"name": "userName",
 				"title": {
 					"en": "Username",
 					"nl": "Gebruikersnaam"
@@ -526,6 +561,26 @@
 				"example": {
 					"en": "Test",
 					"nl": "Test"
+				}
+			}, {
+				"name": "tagId",
+				"title": {
+					"en": "Tag ID",
+					"nl": "Tag ID"
+				},
+				"example": {
+					"en": "Test",
+					"nl": "Test"
+				}
+			}, {
+				"name": "deviceId",
+				"title": {
+					"en": "Tagreader ID",
+					"nl": "Tagreader ID"
+				},
+				"example": {
+					"en": "123x",
+					"nl": "123x"
 				}
 			}]
 		}, {
@@ -540,7 +595,7 @@
 				"filter": "driver_id=tagreader500"
 			}],
 			"tokens": [{
-				"name": "user_id",
+				"name": "userId",
 				"title": {
 					"en": "User ID",
 					"nl": "Gebruikers ID"
@@ -550,7 +605,7 @@
 					"nl": "1"
 				}
 			}, {
-				"name": "user_name",
+				"name": "userName",
 				"title": {
 					"en": "Username",
 					"nl": "Gebruikersnaam"
@@ -559,27 +614,25 @@
 					"en": "Test",
 					"nl": "Test"
 				}
-			}]
-		}, {
-			"id": "system_scene",
-			"title": {
-				"en": "Scene activated",
-				"nl": "Scene geactiveerd"
-			},
-			"args": [{
-				"name": "device",
-				"type": "device",
-				"filter": "driver_id=tagreader500"
-			}],
-			"tokens": [{
-				"name": "sceneid",
+			}, {
+				"name": "tagId",
 				"title": {
-					"en": "Scene ID",
-					"nl": "Scene ID"
+					"en": "Tag ID",
+					"nl": "Tag ID"
 				},
 				"example": {
-					"en": "1",
-					"nl": "1"
+					"en": "Test",
+					"nl": "Test"
+				}
+			}, {
+				"name": "deviceId",
+				"title": {
+					"en": "Tagreader ID",
+					"nl": "Tagreader ID"
+				},
+				"example": {
+					"en": "123x",
+					"nl": "123x"
 				}
 			}]
 		}],
@@ -593,8 +646,8 @@
 				"name": "person",
 				"type": "autocomplete",
 				"placeholder": {
-					"en": "Who is !{{|not}} at home?",
-					"nl": "Wie is !{{|niet}} thuis?"
+					"en": "Who?",
+					"nl": "Wie?"
 				}
 			}]
 		}],
