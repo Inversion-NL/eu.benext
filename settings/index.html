@@ -2,15 +2,39 @@
 <head>
 
 <style>
-
+	table#systemEventLog th, table#systemEventLog td { font-size: 14px; text-align: left; padding-right: 10px; }
+	table#systemEventLog tr { font-size: 14px; }
+	button.benext { margin-right: 10px; }
 </style>
 </head>
 <body>
 	<h2 data-i18n="settings.title"></h2>
     <p style="display:block" data-i18n="settings.description"></p>
-	<br /><br />	
+	
 	<fieldset>
-		<legend data-i18n="settings.systemEventLog.Title"></legend>
+		<legend data-i18n="settings.users.title"></legend>
+        <table id="systemUserLog">
+			<thead>
+				<tr>
+					<th data-i18n="settings.users.table.userId"></th>
+					<th data-i18n="settings.users.table.userName"></th>
+					<th data-i18n="settings.users.table.tags"></th>
+					<th data-i18n="settings.users.table.status"></th>
+				</tr>
+			</thead>
+			<tbody id="systemUserLogBody">
+			</tbody>
+		</table>
+    </fieldset>
+	
+	<button class="left benext" style="display:block" onclick="addUser()" data-i18n="settings.buttons.addUser"></button>
+	<button class="left benext" style="display:block" onclick="removeUser()" data-i18n="settings.buttons.removeUser"></button>
+	<button class="left benext" style="display:block" onclick="save()" data-i18n="settings.buttons.saveSettings" ></button>
+	
+	<br /><br />
+	
+	<fieldset>
+		<legend data-i18n="settings.systemEventLog.title"></legend>
         <table id="systemEventLog">
 			<thead>
 				<tr>
@@ -25,7 +49,6 @@
 			</tbody>
 		</table>
     </fieldset>
-	
 	<br /><br />
 
 	<script type="text/javascript">
@@ -52,17 +75,24 @@
 				{
 					var logEntry = eventLog[i];
 					var tableRow = document.createElement("tr");
+					
+					console.log(logEntry);
+					
+					// Parse data in nice format
+					var date = new Date(logEntry.time);
+					var device = logEntry.deviceName === null ? (logEntry.deviceId !== null ? logEntry.deviceId : __('settings.systemEventLog.messages.deviceUnknown')) : logEntry.deviceName;
+					var user = logEntry.userName === null ? __('settings.systemEventLog.messages.userNameUnknown') : logEntry.userName + '(' + logEntry.userId + ')';
 										
-					tableRow.innerHTML += '<td>' + logEntry.time + '</td>';
-					tableRow.innerHTML += '<td>' + logEntry.statusCode + '</td>';
-					tableRow.innerHTML += '<td>' + logEntry.deviceName + '</td>';
+					tableRow.innerHTML += '<td>' + date.toString() + '</td>';
+					tableRow.innerHTML += '<td>' + __('settings.systemEventLog.eventTypes.s' + logEntry.statusCode) + '</td>';
+					tableRow.innerHTML += '<td>' + device + '</td>';
 					tableRow.innerHTML += '<td>' + logEntry.tagId + '</td>';
-					tableRow.innerHTML += '<td>' + logEntry.userName + '(' + logEntry.userId + ')</td>';
+					tableRow.innerHTML += '<td>' + user + '</td>';
 					
 					var tableBody = document.getElementById('systemEventLogBody');
 					if(previousChild === null)
 					{
-						tableBody.innerHTML = tableRow;
+						tableBody.appendChild(tableRow);
 						previousChild = tableBody.getElementsByTagName("tr")[0];
 					}
 					else
@@ -71,7 +101,41 @@
 					}
 				}
         	});
+			
+			Homey.get('userContainer', function (err, users)
+			{
+				if(err)
+        		{
+        			console.log("Can't retrieve event log.");
+        			return console.error(err);
+        		}
+        		
+				if(typeof users === 'undefined' || users === null || users.length <= 0)
+				{
+					//document.getElementById('systemEventLogBody').innerHTML = '<tr><td colspan="5">' + __('settings.systemEventLog.messages.noUsersFound') + '</td></tr>';
+					return;
+				}
+				
+				for (var i = 0; i < users.length; i++)
+				{
+					var userEntry = users[i];
+					var tableRow = document.createElement("tr");
+					
+					console.log(userEntry);
+															
+					tableRow.innerHTML += '<td>' + userEntry.id + '</td>';
+					tableRow.innerHTML += '<td>' + userEntry.name + '</td>';
+					tableRow.innerHTML += '<td>Not supported yet</td>';
+					tableRow.innerHTML += '<td>' + __('settings.systemEventLog.eventTypes.s' + userEntry.statusCode) + '</td>';
+					
+					var tableBody = document.getElementById('systemUserLogBody');
+					tableBody.appendChild(tableRow);
+				}
+			});
+						
+			Homey.ready();
 		}
+		
 	</script>
-<body>
+	<body>
 </html>

@@ -13,10 +13,36 @@
 				"person": "User",
 				"tagOrCode": "Tag/Code ID"
 			},
+			"eventTypes":
+			{
+				"s0": "Away",
+				"s1": "Home",
+				"s2": "Tag Paired",
+				"s3": "Scene Started"
+			},
 			"messages":
 			{
-				"noEventsYet": "No events yet available, add a Tag Reader to your Homey to start collecting events."
+				"noEventsYet": "No events yet available, add a Tag Reader to your Homey to start collecting events.",
+				"userNameUnknown": "Unknown",
+				"deviceUnknown": "Unknown"
 			}
+		},
+		"users":
+		{
+			"title": "Manage users",
+			"table":
+			{
+				"userId": "#",
+				"userName": "Naam",
+				"tags": "Tags belonging to user",
+				"status": "Current status"
+			}
+		},
+		"buttons":
+		{
+			"addUser": "Add user",
+			"removeUser": "Remove user",
+			"saveSettings": "Save user settings"
 		}
 	}
 }

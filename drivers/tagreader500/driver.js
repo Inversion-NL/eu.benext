@@ -262,7 +262,7 @@ function setTagContainer(value)
 	Homey.manager('settings').set('tagContainer', value);
 }
 
-//var userContainer = [ ]; // contains objects: { "name": "bla", "id": -1, "status": 0 (0 = away, 1 = home), tagIds": { 1, 3 } };
+//var userContainer = [ ]; // contains objects: { "name": "bla", "id": -1, "statusCode": 0 (0 = away, 1 = home), tagIds": { 1, 3 } };
 function getUserContainer()
 {
 	return Homey.manager('settings').get('userContainer');
@@ -291,6 +291,7 @@ function setSystemArmed(value)
 
 /**
 * Writes entry to log file for EU Benext
+* statusCodes: 0 = away, 1 = home, 2 = tag added, 3 = Scene Started
 */
 function writeToLogFile(userId, deviceId, tagId, statusCode, userName, deviceName)
 {
@@ -301,7 +302,8 @@ function writeToLogFile(userId, deviceId, tagId, statusCode, userName, deviceNam
 		"tagId": tagId,
 		"statusCode": statusCode, // 1 === home, 0 === away
 		"userName": userName,
-		"deviceName": deviceName
+		"deviceName": deviceName,
+		"deviceId": deviceId
 	};
 	
 	var log = Homey.manager('settings').get('systemEventLog');
@@ -322,7 +324,7 @@ function autocompleteUser(filterValue)
 	
 	if(typeof myItems === 'undefined' || myItems === null)
 	{
-		myItems = [{ "name": "Robert", "id": -1, "tagIds": [1, 2, 3] }];
+		myItems = [];
 	}
 	
     // filter items to match the search query
