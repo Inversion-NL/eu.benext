@@ -1,0 +1,77 @@
+<html>
+<head>
+
+<style>
+
+</style>
+</head>
+<body>
+	<h2 data-i18n="settings.title"></h2>
+    <p style="display:block" data-i18n="settings.description"></p>
+	<br /><br />	
+	<fieldset>
+		<legend data-i18n="settings.systemEventLog.Title"></legend>
+        <table id="systemEventLog">
+			<thead>
+				<tr>
+					<th data-i18n="settings.systemEventLog.table.datetime"></th>
+					<th data-i18n="settings.systemEventLog.table.event"></th>
+					<th data-i18n="settings.systemEventLog.table.device"></th>
+					<th data-i18n="settings.systemEventLog.table.tagOrCode"></th>
+					<th data-i18n="settings.systemEventLog.table.person"></th>
+				</tr>
+			</thead>
+			<tbody id="systemEventLogBody">
+			</tbody>
+		</table>
+    </fieldset>
+	
+	<br /><br />
+
+	<script type="text/javascript">
+
+        function onHomeyReady()
+		{
+			// Retrieve log file			
+        	Homey.get('systemEventLog', function(err, eventLog){
+        		if(err)
+        		{
+        			console.log("Can't retrieve event log.");
+        			return console.error(err);
+        		}
+        		
+				if(typeof eventLog === 'undefined' || eventLog === null || eventLog.length <= 0)
+				{
+					document.getElementById('systemEventLogBody').innerHTML = '<tr><td colspan="5">' + __('settings.systemEventLog.messages.noEventsYet') + '</td></tr>';
+					return;
+				}
+				
+				// Parse array into log table
+				var previousChild = null;
+				for (var i = 0; i < eventLog.length; i++)
+				{
+					var logEntry = eventLog[i];
+					var tableRow = document.createElement("tr");
+										
+					tableRow.innerHTML += '<td>' + logEntry.time + '</td>';
+					tableRow.innerHTML += '<td>' + logEntry.statusCode + '</td>';
+					tableRow.innerHTML += '<td>' + logEntry.deviceName + '</td>';
+					tableRow.innerHTML += '<td>' + logEntry.tagId + '</td>';
+					tableRow.innerHTML += '<td>' + logEntry.userName + '(' + logEntry.userId + ')</td>';
+					
+					var tableBody = document.getElementById('systemEventLogBody');
+					if(previousChild === null)
+					{
+						tableBody.innerHTML = tableRow;
+						previousChild = tableBody.getElementsByTagName("tr")[0];
+					}
+					else
+					{
+						previousChild = tableBody.insertBefore(tableRow, previousChild);
+					}
+				}
+        	});
+		}
+	</script>
+<body>
+</html>

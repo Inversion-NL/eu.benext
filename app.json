@@ -685,7 +685,7 @@
 				"filter": "driver_id=alarmsound"
 			}]
 		}, {
-			"id": "toggle_system_home",
+			"id": "toggle_person_home",
 			"title": {
 				"en": "Mark as home",
 				"nl": "Is thuis"
@@ -699,7 +699,7 @@
 				}
 			}]
 		}, {
-			"id": "toggle_system_away",
+			"id": "toggle_person_away",
 			"title": {
 				"en": "Mark as away",
 				"nl": "Is afwezig"

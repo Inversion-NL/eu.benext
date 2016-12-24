@@ -197,29 +197,6 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
     }
 });
 
-// Don't need those listeners?
-// Homey.manager('flow').on('trigger.system_home', function( callback, args, state ){
-	// Homey.log('');
-	// Homey.log('on flow trigger.system_home');
-	// Homey.log('args', args);
-	
-	// console.log(args);
-	// console.log(state);
-
-	// callback( null, true ); // we've fired successfully
-// });
-
-// Homey.manager('flow').on('trigger.system_away', function( callback, args, state ){
-	// Homey.log('');
-	// Homey.log('on flow trigger.system_away');
-	// Homey.log('args', args);
-	
-	// console.log(args);
-	// console.log(state);
-
-	// callback( null, true ); // we've fired successfully
-// });
-
 // This is only available in Gateway mode and that isn't supported by Homey yet
 // Can be implemented when class COMMAND_CLASS_ENTRY_CONTROL . ENTRY_CONTROL_NOTIFICATION is supported
 // Homey.manager('flow').on('trigger.system_scene', function( callback, args ){
@@ -230,7 +207,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 	// callback( null, true ); // we've fired successfully
 // });
 
-Homey.manager('flow').on('condition.is_at_home', function( callback, args ){
+Homey.manager('flow').on('condition.is_at_home', function( callback, args ) {
 	Homey.log('');
 	Homey.log('on flow condition.is_at_home');
 	Homey.log('args', args);
@@ -242,7 +219,7 @@ Homey.manager('flow').on('condition.is_at_home', function( callback, args ){
 	callback( null, true ); // we've fired successfully
 });
 
-Homey.manager('flow').on('action.toggle_system_home', function( callback, args ){
+Homey.manager('flow').on('action.toggle_system_home', function( callback, args ) {
 	Homey.log('');
 	Homey.log('on flow action.toggle_system_home');
 	Homey.log('args', args);//});
@@ -250,7 +227,7 @@ Homey.manager('flow').on('action.toggle_system_home', function( callback, args )
 	callback( null, true ); // we've fired successfully
 });
 
-Homey.manager('flow').on('action.toggle_system_away', function( callback, args ){
+Homey.manager('flow').on('action.toggle_system_away', function( callback, args ) {
 	Homey.log('');
 	Homey.log('on flow action.toggle_system_away');
 	Homey.log('args', args);
@@ -312,6 +289,9 @@ function setSystemArmed(value)
 	Homey.manager('settings').set('systemArmed', value);
 }
 
+/**
+* Writes entry to log file for EU Benext
+*/
 function writeToLogFile(userId, deviceId, tagId, statusCode, userName, deviceName)
 {
 	var logEntry =
