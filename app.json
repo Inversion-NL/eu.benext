@@ -532,7 +532,7 @@
     },
 	"flow": {
 		"triggers": [{
-			"id": "system_home",
+			"id": "user_home",
 			"title": {
 				"en": "System disarmed",
 				"nl": "Systeem gedeactiveerd"
@@ -542,6 +542,85 @@
 				"type": "device",
 				"filter": "driver_id=tagreader500"
 			}],
+			"tokens": [{
+				"name": "userId",
+				"title": {
+					"en": "User ID",
+					"nl": "Gebruikers ID"
+				},
+				"example": {
+					"en": "1",
+					"nl": "1"
+				}
+			}, {
+				"name": "userName",
+				"title": {
+					"en": "Username",
+					"nl": "Gebruikersnaam"
+				},
+				"example": {
+					"en": "Test",
+					"nl": "Test"
+				}
+			}, {
+				"name": "tagId",
+				"title": {
+					"en": "Tag ID",
+					"nl": "Tag ID"
+				},
+				"example": {
+					"en": "Test",
+					"nl": "Test"
+				}
+			}]
+		}, {
+			"id": "user_away",
+			"title": {
+				"en": "System armed",
+				"nl": "Systeem geactiveerd"
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=tagreader500"
+			}],
+			"tokens": [{
+				"name": "userId",
+				"title": {
+					"en": "User ID",
+					"nl": "Gebruikers ID"
+				},
+				"example": {
+					"en": "1",
+					"nl": "1"
+				}
+			}, {
+				"name": "userName",
+				"title": {
+					"en": "Username",
+					"nl": "Gebruikersnaam"
+				},
+				"example": {
+					"en": "Test",
+					"nl": "Test"
+				}
+			}, {
+				"name": "tagId",
+				"title": {
+					"en": "Tag ID",
+					"nl": "Tag ID"
+				},
+				"example": {
+					"en": "Test",
+					"nl": "Test"
+				}
+			}]
+		}, {
+			"id": "user_system_home",
+			"title": {
+				"en": "System disarmed",
+				"nl": "Systeem gedeactiveerd"
+			},
 			"tokens": [{
 				"name": "userId",
 				"title": {
@@ -584,16 +663,11 @@
 				}
 			}]
 		}, {
-			"id": "system_away",
+			"id": "user_system_away",
 			"title": {
 				"en": "System armed",
 				"nl": "Systeem geactiveerd"
 			},
-			"args": [{
-				"name": "device",
-				"type": "device",
-				"filter": "driver_id=tagreader500"
-			}],
 			"tokens": [{
 				"name": "userId",
 				"title": {

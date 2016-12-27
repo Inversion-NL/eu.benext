@@ -15,6 +15,7 @@
 			},
 			"eventTypes":
 			{
+				"s-1": "Unknown",
 				"s0": "Away",
 				"s1": "Home",
 				"s2": "Tag Paired",
@@ -35,7 +36,41 @@
 				"userId": "#",
 				"userName": "Naam",
 				"tags": "Tags belonging to user",
-				"status": "Current status"
+				"status": "Current status",
+				"edit": "Remove"
+			},
+			"messages":
+			{
+				"noUsersYet": "No users known in Homey yet, add a user via the add button.",
+				"confirmDeteleUser": "Are you sure you want to remove this user?"
+			}
+		},
+		"advanced":
+		{
+			"title": "Advanced settings",
+			"description": "Please use the below settings only when you are really sure you want to reset the settings of Homey (and therefore in most cases need to rebuild your flows and reset your Tag Readers as well).",
+			"table":
+			{
+				"eventLog": "Event Log",
+				"tags": "Tags",
+				"tagApproval": "Tag Approval",
+				"tagApprovalStatus": "Current status: Unknown"
+			},
+			"messages":
+			{
+				"confirmClearEventLog": "Are you sure you want to clear the entire event log?",
+				"eventLogClearedConfirmation": "The event log is cleared.",
+				"confirmClearTags": "Clear all tags from the Homey cache. Please note that you should reset all your devices to factory settings and start adding the tags and codes again. Are you sure?",
+				"tagsClearedConfirmation": "The tags are all removed from Homey. Please reset your Tag Readers manually.",
+				"allowTags": "Registration of new tags is allowed",
+				"denyTags": "Registration of new tags is not allowed",
+				"toggleTagStatusConfirmedTitle": "Tag registration status switched: "
+			},
+			"buttons":
+			{
+				"clearEventLog": "Clear event log",
+				"clearTags": "Clear tags",
+				"toggleTag": "Toggle tag registration on/off"
 			}
 		},
 		"buttons":
@@ -43,6 +78,14 @@
 			"addUser": "Add user",
 			"removeUser": "Remove user",
 			"saveSettings": "Save user settings"
+		}
+	},
+	"flow":
+	{
+		"condition":
+		{
+			"userNotFound": "Can't find user with given ID.",
+			"unknownUserStatus": "The status of the user is unknown. Please toggle the user status first before using this condition card."
 		}
 	}
 }

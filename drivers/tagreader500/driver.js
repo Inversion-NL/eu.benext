@@ -33,18 +33,17 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			{
 				console.log(report);
 				
-				var userIdentifier = report["User Identifier (Raw)"];
+				//var userIdentifier = report["User Identifier (Raw)"];
 				var tagOrUserCode = report["USER_CODE"]; // It's a buffer (hex), and we store the buffer
-				var userIdStatus = report["User ID Status (Raw)"];
+				//var userIdStatus = report["User ID Status (Raw)"];
 				
-				//console.log(tagOrUserCode);
-				//console.log(userIdStatus);
-				// console.log("UTF-8");
-				// console.log(tagOrUserCode.toString('utf8'));
-				// console.log("HEX");
-				// console.log(tagOrUserCode.toString('hex'));
-				// console.log("ASCII");
-				// console.log(tagOrUserCode.toString('ascii'));
+				// Tags are only allowed when the manual toggle is set to true and the system is not armed.
+				var tagAllowed = getTagStatus() && !getSystemArmed();
+				if(!tagAllowed)
+				{
+					console.log("You are not allowed to add tags. Either the manual toggle is set to off or your system is in armed status");
+					return;
+				}
 
 				// When home is not armed, send a "USER_CODE_SET" back with a new/existing ID
 				var tag = retrieveAndSetUserId(tagOrUserCode, node.instance);
@@ -54,6 +53,15 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 					console.log("Something went wrong! :(");
 					return 0;
 				}
+				
+				writeToLogFile(
+					null,
+					node.instance.token,
+					tag.tagId,
+					2, // tag added
+					null,
+					null
+				);
 				
 				return tag.tagId;
 			}
@@ -97,21 +105,36 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				switch(report["ZWave Alarm Event"])
 				{
 					case 6: // Home
-						// Toggle event, "User X came home"
 						eventType = 1;
 						
-						Homey.manager('flow').triggerDevice('system_home', tokens, state, node.device_data, function(err, result) {
+						// Toggle event, "User X came home"
+						Homey.manager('flow').triggerDevice('user_home', tokens, state, node.device_data, function(err, result) {
 							if( err ){ console.log(err); return Homey.error(err); }
 						});
+						
+						Homey.manager('flow').trigger('user_system_home', tokens, state, function(err, result) {
+							if( err ){ console.log(err); return Homey.error(err); }
+						});
+						
 					break;
 					case 5: // Away
 						eventType = 0;
 						
 						// Toggle event, "User X went away"
-						Homey.manager('flow').triggerDevice('system_away', tokens, state, node.device_data, function(err, result) {
+						Homey.manager('flow').triggerDevice('user_away', tokens, state, node.device_data, function(err, result) {
 							if( err ){ console.log(err); return Homey.error(err); }
 						});
+						
+						Homey.manager('flow').trigger('user_system_away', tokens, state, function(err, result) {
+							if( err ){ console.log(err); return Homey.error(err); }
+						});
+						
 					break;
+				}
+				
+				if(userWithTagId !== null)
+				{
+					setStatusOfUser(userWithTagId, eventType);
 				}
 				
 				writeToLogFile(
@@ -213,35 +236,53 @@ Homey.manager('flow').on('condition.is_at_home', function( callback, args ) {
 	Homey.log('args', args);
 	
 	console.log(args);
-	console.log(state);
+		
+	// Get the status of the requested user
+	var user = searchUserByUserId(args.person.id);
+	if(user !== null && typeof user.statusCode !== 'undefined')
+	{
+		if(user.statusCode === 1 || user.statusCode === 0)
+		{
+			return callback( null, user.statusCode === 1 ); // we've fired successfully
+		}
+		
+		var message = __('flow.condition.unknownUserStatus');
+		return callback( new Error( message )); // user not found.
+	}
 	
+	var message = __('flow.condition.userNotFound');
+	return callback( new Error( message )); // user not found.
+});
+
+Homey.manager('flow').on('action.toggle_person_home', function( callback, args ) {
+	Homey.log('');
+	Homey.log('on flow action.toggle_person_home');
+	Homey.log('args', args);
+	
+	// Set status of user to home
+	setStatusOfUser(args.person, 1);
 
 	callback( null, true ); // we've fired successfully
 });
 
-Homey.manager('flow').on('action.toggle_system_home', function( callback, args ) {
+Homey.manager('flow').on('action.toggle_person_away', function( callback, args ) {
 	Homey.log('');
-	Homey.log('on flow action.toggle_system_home');
-	Homey.log('args', args);//});
-
-	callback( null, true ); // we've fired successfully
-});
-
-Homey.manager('flow').on('action.toggle_system_away', function( callback, args ) {
-	Homey.log('');
-	Homey.log('on flow action.toggle_system_away');
+	Homey.log('on flow action.toggle_person_away');
 	Homey.log('args', args);
 
+	// Set status of user to away
+	setStatusOfUser(args.person, 0);
+	
 	callback( null, true ); // we've fired successfully
 });
 
 // Autocomplete events
-Homey.manager('flow').on('action.toggle_system_away.person.autocomplete', function( callback, args ) {
+Homey.manager('flow').on('action.toggle_person_home.person.autocomplete', function( callback, args ) {
 	var myItems = autocompleteUser(args.query);
     callback( null, myItems ); // err, results
 });
 
-Homey.manager('flow').on('action.toggle_system_home.person.autocomplete', function( callback, args ) {
+Homey.manager('flow').on('action.toggle_person_away.person.autocomplete', function( callback, args ) {
 	var myItems = autocompleteUser(args.query);
     callback( null, myItems ); // err, results
 });
@@ -251,7 +292,8 @@ Homey.manager('flow').on('condition.is_at_home.person.autocomplete', function( c
     callback( null, myItems ); // err, results
 });
 
-//var tagContainer = [ ]; // contains objects: { "tagId": 0, "tagValue": "", "createdOn": "" };
+// var tagContainer = [ ]; // contains objects: { "tagId": 0, "tagValue": "", "createdOn": "", "tagType": null };
+// tagType can be null (unknown, when not in gateway mode), 0 == RFID, or 1 == Code
 function getTagContainer()
 {
 	return Homey.manager('settings').get('tagContainer');
@@ -262,7 +304,7 @@ function setTagContainer(value)
 	Homey.manager('settings').set('tagContainer', value);
 }
 
-//var userContainer = [ ]; // contains objects: { "name": "bla", "id": -1, "statusCode": 0 (0 = away, 1 = home), tagIds": { 1, 3 } };
+//var userContainer = [ ]; // contains objects: { "name": "bla", "id": -1, "statusCode": 0 (0 = away, 1 = home), "tagIds": { 1, 3 } };
 function getUserContainer()
 {
 	return Homey.manager('settings').get('userContainer');
@@ -289,6 +331,22 @@ function setSystemArmed(value)
 	Homey.manager('settings').set('systemArmed', value);
 }
 
+function getTagStatus()
+{
+	return Homey.manager('settings').get('tagStatus') === true;
+}
+
+function setTagStatus(value) // value needs to be true or false
+{
+	if(value === false || value === 0) {
+		value = false;
+	} else {
+		value = true;
+	}
+	
+	Homey.manager('settings').set('tagStatus', value);
+}
+
 /**
 * Writes entry to log file for EU Benext
 * statusCodes: 0 = away, 1 = home, 2 = tag added, 3 = Scene Started
@@ -300,7 +358,7 @@ function writeToLogFile(userId, deviceId, tagId, statusCode, userName, deviceNam
 		"time": new Date(),
 		"userId": userId,
 		"tagId": tagId,
-		"statusCode": statusCode, // 1 === home, 0 === away
+		"statusCode": statusCode, // 0 = away, 1 = home, 2 = tag added, 3 = Scene Started, -1 = unknown
 		"userName": userName,
 		"deviceName": deviceName,
 		"deviceId": deviceId
@@ -309,6 +367,10 @@ function writeToLogFile(userId, deviceId, tagId, statusCode, userName, deviceNam
 	var log = Homey.manager('settings').get('systemEventLog');
 	if(typeof log === 'undefined' || log === null)
 	{
+		log = [];
+	}
+	
+	if (typeof log.push === "undefined") { 
 		log = [];
 	}
 	
@@ -418,7 +480,8 @@ function searchUser(tagId)
 	}
 	
 	for(var i = 0; i < users.length; i++) {
-		if(users[i].tagIds.find(tagId))
+		var match = users[i].tagIds.indexOf(tagId);
+		if(match > -1)
 		{
 			console.log("match found id");
 			console.log(users[i]);
@@ -427,6 +490,47 @@ function searchUser(tagId)
 	}
 	
 	return null;
+}
+
+/**
+* Finds the user based on user id.
+*/
+function searchUserByUserId(userId)
+{
+	var users = getUserContainer();
+	if(typeof users === 'undefined' || users === null || typeof users !== 'object')
+	{
+		return null;
+	}
+	
+	for(var i = 0; i < users.length; i++) {
+		if(users[i].id === userId)
+		{
+			console.log("match found id");
+			console.log(users[i]);
+			return users[i];
+		}
+	}
+	
+	return null;
+}
+
+function setStatusOfUser(user, statusCode)
+{
+	var users = getUserContainer();
+	if(typeof users === 'undefined' || users === null || typeof users !== 'object')
+	{
+		return null;
+	}
+	
+	for(var i = 0; i < users.length; i++) {
+		if(users[i].id === user.id)
+		{
+			users[i].statusCode = (statusCode === 0 ? 0 : 1);
+		}
+	}
+	
+	setUserContainer(users);
 }
 
 /**
@@ -462,7 +566,7 @@ function addTag(tagCode)
 		}
 	}
 	
-	var tag = { "tagId": (highestId+1), "tagValue": tagCode, "createdOn": new Date() };
+	var tag = { "tagId": (highestId+1), "tagValue": tagCode, "createdOn": new Date(), "tagType": null };
 	tags.push(tag);
 	setTagContainer(tags);
 	return tag;
