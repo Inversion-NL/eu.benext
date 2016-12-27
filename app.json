@@ -368,7 +368,7 @@
 			},
 			"attr": {
 				"min": 0,
-				"max": 1
+				"max": 255
 			},
 			"value": 170
 		}, {
@@ -452,8 +452,8 @@
 				"nl": "Operatie modus"
 			},
 			"hint": {
-				"en": "The mode that the Tag Reader 500 communicates with the associated gateway (needs to be in Gateway mode for Homey to work).",
-				"nl": "De modus waarin de Tagreader 500 communiceert met de gateway. Voor Homey oet deze altijd in gateway modus staan."
+				"en": "The mode that the Tag Reader 500 communicates with the associated gateway.",
+				"nl": "De modus waarin de Tagreader 500 communiceert met de gateway."
 			},
 			"value": "0",
 			"values": [{
