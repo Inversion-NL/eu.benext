@@ -30,11 +30,11 @@
 		},
 		"users":
 		{
-			"title": "Manage users",
+			"title": "Manage Users",
 			"table":
 			{
 				"userId": "#",
-				"userName": "Naam",
+				"userName": "Name",
 				"tags": "Tags belonging to user",
 				"status": "Current status",
 				"edit": "Remove"
@@ -47,7 +47,7 @@
 		},
 		"advanced":
 		{
-			"title": "Advanced settings",
+			"title": "Advanced Settings",
 			"description": "Please use the below settings only when you are really sure you want to reset the settings of Homey (and therefore in most cases need to rebuild your flows and reset your Tag Readers as well).",
 			"table":
 			{

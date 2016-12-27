@@ -199,7 +199,7 @@
 					var tag = tags[i];
 					var optionValue = document.createElement("option");
 					optionValue.setAttribute('value', tag.tagId);
-					optionValue.innerHTML = tag.tagValue + ' (' + tag.tagId + ')';
+					optionValue.innerHTML = tag.tagId + ' (ID)'; //tag.tagValue + ' (' + tag.tagId + ')';
 					tagSelect.appendChild(optionValue);
 				}
 				
@@ -497,7 +497,7 @@
 					// Parse data in nice format
 					var date = new Date(logEntry.time);
 					var device = logEntry.deviceName === null ? (logEntry.deviceId !== null ? logEntry.deviceId : __('settings.systemEventLog.messages.deviceUnknown')) : logEntry.deviceName;
-					var user = logEntry.userName === null ? __('settings.systemEventLog.messages.userNameUnknown') : logEntry.userName + '(' + logEntry.userId + ')';
+					var user = logEntry.userName === null ? __('settings.systemEventLog.messages.userNameUnknown') : logEntry.userName + ' (' + logEntry.userId + ')';
 										
 					tableRow.innerHTML += '<td>' + date.toString() + '</td>';
 					tableRow.innerHTML += '<td>' + __('settings.systemEventLog.eventTypes.s' + logEntry.statusCode) + '</td>';
@@ -586,6 +586,7 @@
 		
 			document.getElementById('messageId').innerHTML = message;
 			document.getElementById('messageId').setAttribute('class', 'alert alert-' + style);
+			document.getElementById('messageId').style = 'display: block;';
 		}
 	</script>
 	<body>
