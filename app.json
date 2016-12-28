@@ -339,7 +339,7 @@
 			"wakeUpInterval": 900,
 			"defaultConfiguration": [
 				{
-					"id": 5,
+					"id": 6,
 					"size": 1,
 					"value": 0
 				}
@@ -349,7 +349,8 @@
 		"capabilities": [
 			"measure_battery",
 			"user_code_report",
-			"alarm_report"
+			"alarm_report",
+			"my_gateway_control"
 		],
 		"images": {
 			"large": "/drivers/tagreader500/assets/images/large.jpg",
@@ -528,6 +529,22 @@
             "min": 0,
             "max": 100,
             "step": 1
+        },
+		"my_gateway_control": {
+            "type": "number",
+            "title": {
+                "en": "Gateway Events",
+				"nl": "Gateway Events"
+            },
+            "getable": true,
+            "setable": false,
+            "units": {
+                "en": "event",
+				"nl": "event"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 1
         }
     },
 	"flow": {
@@ -536,6 +553,10 @@
 			"title": {
 				"en": "System disarmed",
 				"nl": "Systeem gedeactiveerd"
+			},
+			"hint": { 
+				"en": "Triggered when a user presses the home button of this tag reader.", 
+				"nl": "Wordt uitgevoerd wanneer iemand op de thuis knop van deze tag reader drukt." 
 			},
 			"args": [{
 				"name": "device",
@@ -579,6 +600,10 @@
 				"en": "System armed",
 				"nl": "Systeem geactiveerd"
 			},
+			"hint": { 
+				"en": "Triggered when a user presses the away button of this tag reader.", 
+				"nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop van deze tag reader drukt." 
+			},
 			"args": [{
 				"name": "device",
 				"type": "device",
@@ -620,6 +645,10 @@
 			"title": {
 				"en": "System disarmed",
 				"nl": "Systeem gedeactiveerd"
+			},
+			"hint": { 
+				"en": "Triggered when a user presses the home button on a tag reader.", 
+				"nl": "Wordt uitgevoerd wanneer iemand op de thuis knop op de tag reader drukt." 
 			},
 			"tokens": [{
 				"name": "userId",
@@ -667,6 +696,10 @@
 			"title": {
 				"en": "System armed",
 				"nl": "Systeem geactiveerd"
+			},
+			"hint": { 
+				"en": "Triggered when a user presses the away button on a tag reader.", 
+				"nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop op de tag reader drukt." 
 			},
 			"tokens": [{
 				"name": "userId",
@@ -716,6 +749,10 @@
 				"en": "Is !{{|not}} at home",
 				"nl": "Is !{{|niet}} thuis"
 			},
+			"hint": { 
+				"en": "Select a person to check if this person is home or away. This card doesn't work well if the person checked is the one that just came home/went away.", 
+				"nl": "Selecteer een persoon om te controleren of deze persoon thuis of afwezig is. Deze kaart werkt niet goed samen als de persoon die hier gecontroleerd wordt net thuis komt/weg gaat." 
+			},
 			"args": [{
 				"name": "person",
 				"type": "autocomplete",
@@ -764,6 +801,10 @@
 				"en": "Mark as home",
 				"nl": "Is thuis"
 			},
+			"hint": { 
+				"en": "Select a person to set the status of the person to home.", 
+				"nl": "Selecteer een persoon om de status van deze persoon op thuis te zetten." 
+			},
 			"args": [{
 				"name": "person",
 				"type": "autocomplete",
@@ -777,6 +818,10 @@
 			"title": {
 				"en": "Mark as away",
 				"nl": "Is afwezig"
+			},
+			"hint": { 
+				"en": "Select a person to set the status of the person to away.", 
+				"nl": "Selecteer een persoon om de status van deze persoon op afwezig te zetten." 
 			},
 			"args": [{
 				"name": "person",

@@ -148,11 +148,10 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				
 				return 0;
 			}
-		}
-		/*, 'my_gateway_control': {
+		}, 'my_gateway_control': {
 			'command_class'				: 'COMMAND_CLASS_ENTRY_CONTROL',
-			'command_class_get'			: 'ENTRY_CONTROL_NOTIFICATION',
-			'command_get_parser'		: function( report )
+			'command_report'			: 'ENTRY_CONTROL_NOTIFICATION',
+			'command_report_parser'		: function( report, node )
 			{
 				console.log(report);
 				
@@ -184,9 +183,8 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 						// event data contains array of numbers (toggle scene)
 					break;
 				}
-			},
-			'command_report'			: 'ENTRY_CONTROL_GET'
-		}*/
+			}
+		}
     },
     settings: {
 		"set_to_default" : {
