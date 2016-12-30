@@ -14,6 +14,9 @@ const ZwaveDriver = require('homey-zwavedriver');
 // The same way is for custom codes added by the user
 // On a setting page we can map the ID's we send out here to readable user names and use them in cards.
 
+var eventsRecieved = new Array();
+var eventIdsRecieved = new Array();
+
 module.exports = new ZwaveDriver(path.basename(__dirname), {
 	debug: true,
     capabilities: {
@@ -34,7 +37,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				console.log(report);
 				
 				//var userIdentifier = report["User Identifier (Raw)"];
-				var tagOrUserCode = report["USER_CODE"]; // It's a buffer (hex), and we store the buffer
+				var tagOrUserCode = report["USER_CODE"].toString('hex'); // It's a buffer (hex), and we store the translated value
 				//var userIdStatus = report["User ID Status (Raw)"];
 				
 				// Tags are only allowed when the manual toggle is set to true and the system is not armed.
@@ -46,7 +49,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				}
 
 				// When home is not armed, send a "USER_CODE_SET" back with a new/existing ID
-				var tag = retrieveAndSetUserId(tagOrUserCode, node.instance);
+				var tag = retrieveAndSetUserId(tagOrUserCode, node.instance, -1); // -1 because we don't know if it is a tag or not.
 				console.log(tag);
 				if(tag === false)
 				{
@@ -83,23 +86,8 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				console.log(node.device_data);
 				
 				var eventType = -1;
-				var tagReaderTagId = report["Event Parameter"].toString('hex');
-				var tagReaderTagIdInt = -1;
-				
-				try {
-					tagReaderTagIdInt = parseInt(tagReaderTagId);
-				} catch(e) { console.log("Cannot parse tag reader id to int"); }
-				
-				// Search for user with this tag id
-				var userWithTagId = searchUser(tagReaderTagIdInt);
-				console.log(userWithTagId);
-				
-				var tokens = {
-								userId: userWithTagId !== null ? userWithTagId.id : -1,
-								userName: userWithTagId !== null ? userWithTagId.name : "",
-								tagId: tagReaderTagIdInt,
-								deviceId: node.instance.token
-							};
+				var tagReaderTagId = report["Event Parameter"].toString('hex'); // Tag reader sends us a tag ID we provided it earlier.
+				var tokens = searchUserBelongingToTagId(tagReaderTagId, node);
 				var state = {};
 				
 				switch(report["ZWave Alarm Event"])
@@ -132,17 +120,17 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 					break;
 				}
 				
-				if(userWithTagId !== null)
+				if(tokens !== null)
 				{
-					setStatusOfUser(userWithTagId, eventType);
+					setStatusOfUser(tokens, eventType);
 				}
 				
 				writeToLogFile(
-					userWithTagId !== null ? userWithTagId.id : null,
+					tokens !== null ? tokens.userId : null,
 					node.instance.token,
-					tagReaderTagIdInt,
+					tokens !== null ? tokens.tagId : tagReaderTagId,
 					eventType,
-					userWithTagId !== null ? userWithTagId.name : null,
+					tokens !== null ? tokens.userName : null,
 					null
 				);
 				
@@ -153,9 +141,12 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			'command_report'			: 'ENTRY_CONTROL_NOTIFICATION',
 			'command_report_parser'		: function( report, node )
 			{
-				console.log(report);
+				eventsRecieved.push(report);
+				eventIdsRecieved.push(report["Sequence Number"]);
+				//console.log(node.device_data);
+				//console.log(report);
 				
-				var eventName = "none";
+				var eventName = report["Event Type"];
 				switch(eventName)
 				{
 					case "ARM_HOME": // (0x06)
@@ -163,24 +154,142 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 						// As gateway we can allow or deny this request.
 							// Via a response: INDICATOR_SET ; ID: (0x06), value: (0x06) : allow
 							// or via: INDICATOR_SET; ID: (0x04), value: 8 : deny
+						return sendGatewayApprovalDisaproval(node.instance, 1, false, false);
 					break;
 					case "ARM_AWAY": // (0x05)
 						// Announces away rfid/enter coming.
 						// As gateway we can allow or deny this request.
 							// Via a response: INDICATOR_SET ; ID: (0x06), value: (0x06) : allow
 							// or via: INDICATOR_SET; ID: (0x04), value: 8 : deny
+						return sendGatewayApprovalDisaproval(node.instance, 0, false, false);
 					break;
-					case "RFID": // (0x0D)
+					case "ARM_6": // (0x0D)
+					case "ENTER":
 						// Contains a RFID tag in event data.
-					break;
-					case "ENTER":  // (0x0D)
 						// Contains array of numbers in event data.
+						
+						// Check previous event to see if we have to arm home or away
+						var indexPreviousEvent = eventIdsRecieved.indexOf(report["Sequence Number"]-1);
+						var previousEvent = eventsRecieved[indexPreviousEvent];
+						if(typeof previousEvent !== 'undefined' && typeof previousEvent["Event Type"] !== undefined)
+						{
+							var eventType = previousEvent["Event Type"] === "ARM_HOME" ? 1 : 0; // 1 = home, 0 = away
+							var tagType = eventName === "ARM_6" ? 0 : 1; // 0 = tag, 1 = user code
+							var tagData = tagType === 1 ? report["Event Data"].toString('ascii') : report["Event Data"].toString('hex');
+							
+							// Now we have to find the tag in our list and user belonging to this tag.
+							var identifiedTag = searchTag(getTagContainer(), tagData);
+							
+							// We didn't find a tag, are we allowed to add this tag to the system?
+							// Please note that this can also happen when an unknown user is trying to get access to the home!
+							if(identifiedTag === null)
+							{
+								var tagAllowed = getTagStatus() && !getSystemArmed();
+								if(!tagAllowed)
+								{
+									console.log("You are not allowed to add tags. Either the manual toggle is set to off or your system is in armed status.");
+									console.log("Possibly an unauthorized person is trying to get access to your system.");
+									
+									// Send error beeps?? Throw event??
+									// TODO: Send red light and error bleep to device (thrice == tag adding / recognition failed)
+									
+									return;
+								}
+								
+								// Well, we are allowed to add a tag, so let's add the tag!
+								var tag = addTag(tagData, tagType); // -1 because we don't know if it is a tag or not.
+								console.log(tag);
+								if(tag === false)
+								{
+									console.log("Something went wrong! :(");
+									return 0;
+								}
+								
+								writeToLogFile(
+									null,
+									node.instance.token,
+									tag.tagId,
+									2, // tag added
+									null,
+									null
+								);
+								
+								// TODO: Send green light and bleep to device (thrice == tag added)
+								
+								return;
+							}
+							
+							// Now we have to set the tokens to toggle the events
+							var tokens = searchUserBelongingToTagId(identifiedTag.tagId, node);
+							var state = {};
+							
+							// All went well, tag is identified and we possibly even found a matching user. Let's trigger the right triggers!
+							switch(eventType)
+							{
+								case 1: // Home
+									// Toggle event, "User X came home"
+									Homey.manager('flow').triggerDevice('user_home', tokens, state, node.device_data, function(err, result) {
+										if( err ){ console.log(err); return Homey.error(err); }
+									});
+									
+									Homey.manager('flow').trigger('user_system_home', tokens, state, function(err, result) {
+										if( err ){ console.log(err); return Homey.error(err); }
+									});
+									
+								break;
+								case 0: // Away								
+									// Toggle event, "User X went away"
+									Homey.manager('flow').triggerDevice('user_away', tokens, state, node.device_data, function(err, result) {
+										if( err ){ console.log(err); return Homey.error(err); }
+									});
+									
+									Homey.manager('flow').trigger('user_system_away', tokens, state, function(err, result) {
+										if( err ){ console.log(err); return Homey.error(err); }
+									});
+									
+								break;
+							}
+							
+							// Set status of user to home/away.
+							if(tokens !== null)
+							{
+								setStatusOfUser(tokens, eventType);
+							}
+							
+							// Write incoming event to log file.
+							writeToLogFile(
+								tokens !== null ? tokens.userId : null,
+								node.instance.token,
+								identifiedTag.tagId,
+								eventType,
+								tokens !== null ? tokens.userName : null,
+								null
+							);
+							
+							// TODO: Send green light and bleep to device (twice == armed, once == disarmed)
+						}
+						else
+						{
+							// TODO: Send red light and bleep error to device.
+						}
 					break;
 					case "CACHING":  // (0x00)
 						// Announces a manual code is coming our way.
+						// Cool, do nothing yet
 					break;
 					case "CACHED_KEYS": // (0x01)
 						// event data contains array of numbers (toggle scene)
+						var sceneId = report["Event Data"].toString('ascii');
+						console.log("Scene triggered");
+						console.log(sceneId);
+						
+						// Now we have to set the tokens to toggle the events
+						var tokens = { "sceneId": sceneId };
+						var state = {};
+						
+						Homey.manager('flow').triggerDevice('user_away', tokens, state, node.device_data, function(err, result) {
+							if( err ){ console.log(err); return Homey.error(err); }
+						});
 					break;
 				}
 			}
@@ -188,45 +297,35 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
     },
     settings: {
 		"set_to_default" : {
-			"index": 0,
-			"size": 1
-		},
-		"feedback_time" : {
 			"index": 1,
 			"size": 1
 		},
-		"feedback_timeout" : {
+		"feedback_time" : {
 			"index": 2,
 			"size": 1
 		},
-		"feedback_beeps_per_second" : {
+		"feedback_timeout" : {
 			"index": 3,
 			"size": 1
 		},
-		"always_awake_mode" : {
+		"feedback_beeps_per_second" : {
 			"index": 4,
 			"size": 1
 		},
+		"always_awake_mode" : {
+			"index": 5,
+			"size": 1
+		},
 		"operation_mode" : {
-			"index": 6,
+			"index": 7,
 			"size": 1
 		},
 		"gateway_confirmation" : {
-			"index": 7,
+			"index": 8,
 			"size": 1
 		}
     }
 });
-
-// This is only available in Gateway mode and that isn't supported by Homey yet
-// Can be implemented when class COMMAND_CLASS_ENTRY_CONTROL . ENTRY_CONTROL_NOTIFICATION is supported
-// Homey.manager('flow').on('trigger.system_scene', function( callback, args ){
-	// Homey.log('');
-	// Homey.log('on flow trigger.system_scene');
-	// Homey.log('args', args);
-	
-	// callback( null, true ); // we've fired successfully
-// });
 
 Homey.manager('flow').on('condition.is_at_home', function( callback, args ) {
 	Homey.log('');
@@ -378,6 +477,11 @@ function writeToLogFile(userId, deviceId, tagId, statusCode, userName, deviceNam
 	Homey.manager('settings').set('systemEventLog', log);
 }
 
+/**
+* Function for autocompletion results in flow cards
+* @param filterValue ; value to search for
+* @returns array with user objects.
+*/
 function autocompleteUser(filterValue)
 {
 	var myItems = getUserContainer();
@@ -399,7 +503,7 @@ function autocompleteUser(filterValue)
 * Retrieves user ID from the homey settings.
 * Sends ID confirmation if tagcode couldn't be found in the homey settings.
 */
-function retrieveAndSetUserId(tagCode, node)
+function retrieveAndSetUserId(tagCode, node, tagType)
 {
 	// Check if tagCode already exists
 	var matchedTag = searchTag(getTagContainer(), tagCode);
@@ -407,7 +511,7 @@ function retrieveAndSetUserId(tagCode, node)
 	// Create new unique tag ID if tag doesn't exist
 	if(matchedTag === null)
 	{
-		matchedTag = addTag(tagCode);
+		matchedTag = addTag(tagCode, tagType);
 	}
 	
 	// Matched tag still null?
@@ -430,13 +534,98 @@ function retrieveAndSetUserId(tagCode, node)
 */
 function sendUserIdSetConfirmation(tag,  node)
 {
+	console.log("Sending information");
 	node.CommandClass.COMMAND_CLASS_USER_CODE.USER_CODE_SET({
 			"User Identifier": tag.tagId,
 			"User ID Status": Buffer.from('01', 'hex'),
-			"USER_CODE": tag.tagValue
+			"USER_CODE": Buffer.from(tag.tagValue, 'hex')
 		},
 		function( err, result )
 		{
+			console.log("Done sending information");
+			console.log(err);
+			console.log(result);
+			
+			if( err ) { return console.error( err ); }
+		}
+	);
+}
+
+/**
+* Checks if user is allowed to arm/disarm the home.
+* @param type: 1 == home (disarm), 0 == away (arm)
+* @param override: true if value must be overriden
+* @param overrideValue: the value to override it with (true/false)
+*/
+function sendGatewayApprovalDisaproval(node, type, override, overrideValue)
+{
+	var allow = getTagStatus();
+	if(override === true)
+	{
+		// always allowed
+	}
+	else
+	{
+		// check if system is armed
+	}
+	
+	// Via a response: INDICATOR_SET ; ID: (0x06), value: (0x06) : allow
+	// or via: INDICATOR_SET; ID: (0x04), value: 8 : deny
+	var indicatorId = 0x04;
+	var indicatorValue = 8;
+	if(allow)
+	{
+		indicatorId = 0x06;
+		indicatorValue = 0x06;
+	}
+	
+	console.log("Sending information");
+	node.CommandClass.COMMAND_CLASS_INDICATOR.INDICATOR_SET({
+			"Indicator 0 Value": 0,
+			"Indicator ID 1": indicatorId,
+			"Property ID 1": indicatorId,
+			"Value 1": indicatorValue,
+			"Properties1": { "Indicator Object Count": 1 }
+		},
+		function( err, result )
+		{
+			console.log("Done sending information");
+			console.log(err);
+			console.log(result);
+			
+			if( err ) { return console.error( err ); }
+		}
+	);
+}
+
+/**
+* Sends feedback to the device via indicator.
+* @param node: the node that is sending the request
+* @param eventType: 1 = Disarm, 0 = Arm, 2 = New Tag, 3 = Intruder Tag
+* @param success: if the LED has to be green or red (true = green, false = red)
+*/
+function sendLedFeedback(node, eventType, success)
+{
+	/**
+	Variable indicators (using the indicator command class)
+	1. System walkin/out (armed)  red blink 2x every second (indicator: ARMED)
+	2. RF message send failed  red blink 8x (indicator: FAULT)
+	3. Ready for arm/disarm (enter rfid/pin) red on for 5 seconds (indicator: ENTER_ID)
+	4. Valid rfid/pin received  green on for 1 second (indicator: READY) Note: above values are default values
+	*/
+	node.CommandClass.COMMAND_CLASS_INDICATOR.INDICATOR_SET({
+			"Indicator 0 Value": 0,
+			"Indicator ID 1": indicatorId,
+			"Property ID 1": indicatorId,
+			"Value 1": indicatorValue,
+			"Properties1": { "Indicator Object Count": 1 }
+		},
+		function( err, result )
+		{
+			console.log("Done sending information");
+			console.log(err);
+			console.log(result);
+			
 			if( err ) { return console.error( err ); }
 		}
 	);
@@ -444,6 +633,9 @@ function sendUserIdSetConfirmation(tag,  node)
 
 /**
 * Returns the tag for the value searched.
+* @param tags ; All the tags you want to look in
+* @param matchValue ; The value you are looking for
+* @returns null if no match found, otherwise the matched tag object.
 */
 function searchTag(tags, matchValue)
 {
@@ -454,6 +646,11 @@ function searchTag(tags, matchValue)
 	}
 	
 	for(var i = 0; i < tags.length; i++) {
+		if(typeof tags[i].tagValue === 'undefined' || tags[i].tagValue === null)
+		{
+			continue;
+		}
+		
 		if(tags[i].tagValue === matchValue)
 		{
 			console.log("match found");
@@ -467,7 +664,57 @@ function searchTag(tags, matchValue)
 }
 
 /**
+* Adds a tag to the tags container and returns the tag value (and id, as tag object). Searches first if the tag doesn't exist yet.
+* @param tagCode ; the tag code value
+* @param tagType ; the type of tag (0 = tag, 1 = user code, -1 = unknown)
+* @returns the newly added / or the found existing tag.
+* Please note that this function reads all tags from the tag container and overwrites all tags after adding the new tag.
+*/
+function addTag(tagCode, tagType)
+{
+	var tags = getTagContainer();
+	
+	if(tagType !== 0 || tagType !== 1) // 0 = tag, 1 = user code, -1 = unknown
+	{
+		tagType = -1;
+	}
+	
+	if(typeof tags === 'undefined' || tags == null)
+	{
+		console.log("Tags not set, new tag list initiated.");
+		tags = new Array();
+	}
+	
+	if(typeof tags !== "object")
+	{
+		tags = new Array();
+	}
+	
+	// Search for tag, in case we do not need to send the report back, we will still find a matching tag (or create a new one)
+	var existingTag = searchTag(tags, tagCode);
+	if(existingTag !== null)
+	{
+		return existingTag;
+	}
+	
+	var highestId = 0;
+	for(var i = 0; i < tags.length; i++) {
+		if(tags[i].tagId > highestId)
+		{
+			highestId = tags[i].tagId;
+		}
+	}
+	
+	var tag = { "tagId": (highestId+1), "tagValue": tagCode, "createdOn": new Date(), "tagType": tagType };
+	tags.push(tag);
+	setTagContainer(tags);
+	return tag;
+}
+
+/**
 * Finds the user belonging to the tagId.
+* @param tagId; The tag ID you want to find a user match for
+* @returns null if no user with that Tag ID assigned found, otherwise returns the user object.
 */
 function searchUser(tagId)
 {
@@ -492,6 +739,8 @@ function searchUser(tagId)
 
 /**
 * Finds the user based on user id.
+* @param userId ; The ID of the user you are looking for
+* @returns null if no match found, otherwise returns the user object.
 */
 function searchUserByUserId(userId)
 {
@@ -513,6 +762,12 @@ function searchUserByUserId(userId)
 	return null;
 }
 
+/**
+* Sets the status of the user given in the user parameter
+* @param user ; An user object with user.id or user.userId
+* @param statusCode ; The statuscode this user should get (home = 1 or away = 0)
+* Please note: this function loads the user container and writes all objects back to it.
+*/
 function setStatusOfUser(user, statusCode)
 {
 	var users = getUserContainer();
@@ -522,7 +777,8 @@ function setStatusOfUser(user, statusCode)
 	}
 	
 	for(var i = 0; i < users.length; i++) {
-		if(users[i].id === user.id)
+		var userId = (typeof user.id !== 'undefined') ? user.id : user.userId;
+		if(users[i].id === userId)
 		{
 			users[i].statusCode = (statusCode === 0 ? 0 : 1);
 		}
@@ -532,40 +788,26 @@ function setStatusOfUser(user, statusCode)
 }
 
 /**
-* Adds a tag to the tag ID and returns the tag value.
+* Lookups the user based on a tag ID
+* @param tagReaderTagId; the tag ID
+* @param node; the node that triggered this event
+* @return an object with userId, userName, tagId, and deviceId
 */
-function addTag(tagCode)
+function searchUserBelongingToTagId(tagReaderTagId, node)
 {
-	var tags = getTagContainer();
-	
-	if(typeof tags === 'undefined' || tags == null)
-	{
-		console.log("Tags not set, new tag list initiated.");
-		tags = new Array();
-	}
-	
-	if(typeof tags !== "object")
-	{
-		tags = new Array();
-	}
-	
-	// Fallback to search for tags if someone is to stupid to not search for the tag himself
-	var existingTag = searchTag(tags, tagCode);
-	if(existingTag !== null)
-	{
-		return existingTag;
-	}
-	
-	var highestId = 0;
-	for(var i = 0; i < tags.length; i++) {
-		if(tags[i].tagId > highestId)
-		{
-			highestId = tags[i].tagId;
-		}
-	}
-	
-	var tag = { "tagId": (highestId+1), "tagValue": tagCode, "createdOn": new Date(), "tagType": null };
-	tags.push(tag);
-	setTagContainer(tags);
-	return tag;
+	var tagReaderTagIdInt = -1;
+	try {
+		tagReaderTagIdInt = parseInt(tagReaderTagId);
+	} catch(e) { console.log("Cannot parse tag reader id to int"); }
+
+	// Search for user with this tag id
+	var userWithTagId = searchUser(tagReaderTagIdInt);
+	console.log(userWithTagId);
+
+	return {
+		userId: userWithTagId !== null ? userWithTagId.id : -1,
+		userName: userWithTagId !== null ? userWithTagId.name : "",
+		tagId: tagReaderTagIdInt,
+		deviceId: node.instance.token
+	};
 }

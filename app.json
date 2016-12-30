@@ -3,8 +3,8 @@
 	"name": {
 		"en": "BeNext"
 	},
-	"version": "0.2.0",
-	"compatibility": ">=0.9.0",
+	"version": "0.2.1",
+	"compatibility": ">=1.1.0",
 	"description": {
 		"en": "BeNext devices for Homey",
 		"nl": "BeNext apparaten voor Homey"
@@ -44,76 +44,69 @@
 			"small": "/drivers/alarmsound/assets/images/small.png"
 		},
 		"settings": [{
-				"id": "destination_routine_enabled",
-				"type": "dropdown",
-				"label": {
-					"en": "Destination routine enabled"
-				},
-				"value": "255",
-				"hint": {
-					"en": "Enables an internal routine that periodically checks the Z-Wave device in association group 2 by sending a test message. If transmission fails, the AlarmSound will notify the user with a sound. (See also configuration param 3, 4 and 9)."
-				},
-				"values": [{
-					"id": "0",
-					"label": {
-						"en": "routine is disabled"
-					}
-				}, {
-					"id": "255",
-					"label": {
-						"en": "routine is enabled"
-					}
-				}]
+			"id": "destination_routine_enabled",
+			"type": "dropdown",
+			"label": {
+				"en": "Destination routine enabled"
 			},
-
-			{
-				"id": "sound_light_mode_index",
-				"type": "number",
-				"label": {
-					"en": "Select index sound/light mode"
-				},
-				"value": 1,
-				"attr": {
-					"min": 0,
-					"max": 6
-				},
-				"hint": {
-					"en": "The index of the sound mode when a switch binary/basic set frame is received."
-				}
+			"value": "255",
+			"hint": {
+				"en": "Enables an internal routine that periodically checks the Z-Wave device in association group 2 by sending a test message. If transmission fails, the AlarmSound will notify the user with a sound. (See also configuration param 3, 4 and 9)."
 			},
-
-			{
-				"id": "power_offline_sound_light_mode",
-				"type": "number",
+			"values": [{
+				"id": "0",
 				"label": {
-					"en": "Power offline sound/light mode"
-				},
-				"value": 1,
-				"attr": {
-					"min": 0,
-					"max": 6
-				},
-				"hint": {
-					"en": "The index of the sound mode the AlarmSound will start when it is unplugged. Use number zero (0) to disable, 1-6 to select sound/light mode number."
+					"en": "routine is disabled"
 				}
+			}, {
+				"id": "255",
+				"label": {
+					"en": "routine is enabled"
+				}
+			}]
+		}, {
+			"id": "sound_light_mode_index",
+			"type": "number",
+			"label": {
+				"en": "Select index sound/light mode"
 			},
-
-			{
-				"id": "destination_route_failed_sound_light_mode",
-				"type": "number",
-				"label": {
-					"en": "Error (Destination Routine Failed) sound/light mode"
-				},
-				"value": 1,
-				"attr": {
-					"min": 0,
-					"max": 6
-				},
-				"hint": {
-					"en": "The index of the sound mode the AlarmSound will play when it is unable to reach the device in association group 2. Use number zero (0) to disable, 1-6 to select sound/light mode number."
-				}
+			"value": 1,
+			"attr": {
+				"min": 0,
+				"max": 6
+			},
+			"hint": {
+				"en": "The index of the sound mode when a switch binary/basic set frame is received."
 			}
-		]
+		}, {
+			"id": "power_offline_sound_light_mode",
+			"type": "number",
+			"label": {
+				"en": "Power offline sound/light mode"
+			},
+			"value": 1,
+			"attr": {
+				"min": 0,
+				"max": 6
+			},
+			"hint": {
+				"en": "The index of the sound mode the AlarmSound will start when it is unplugged. Use number zero (0) to disable, 1-6 to select sound/light mode number."
+			}
+		}, {
+			"id": "destination_route_failed_sound_light_mode",
+			"type": "number",
+			"label": {
+				"en": "Error (Destination Routine Failed) sound/light mode"
+			},
+			"value": 1,
+			"attr": {
+				"min": 0,
+				"max": 6
+			},
+			"hint": {
+				"en": "The index of the sound mode the AlarmSound will play when it is unable to reach the device in association group 2. Use number zero (0) to disable, 1-6 to select sound/light mode number."
+			}
+		}]
 	}, {
 		"id": "p1-dongle",
 		"name": {
@@ -337,13 +330,11 @@
 			},
 			"associationGroups": [1],
 			"wakeUpInterval": 900,
-			"defaultConfiguration": [
-				{
-					"id": 6,
-					"size": 1,
-					"value": 0
-				}
-			]
+			"defaultConfiguration": [{
+				"id": 7,
+				"size": 1,
+				"value": 0
+			}]
 		},
 		"class": "other",
 		"capabilities": [
@@ -358,20 +349,29 @@
 		},
 		"settings": [{
 			"id": "set_to_default",
-			"type": "number",
+			"type": "dropdown",
 			"label": {
-				"en": "Set to default",
-				"nl": "Standaard instellingen herstellen"
+				"en": "Reset to factory settings",
+				"nl": "Fabrieksinstellingen terugzetten"
 			},
 			"hint": {
 				"en": "Set all configuration values to default values (factory settings). Read more in chapter Configuration Reset. (Any value other than 85, 170 set all parameters to default).",
 				"nl": "Zet alle configuratie waarden terug naar de standaard instellingen. Elke waarde anders dan 85 of 170 zal dit bewerkstelligen."
 			},
-			"attr": {
-				"min": 0,
-				"max": 255
-			},
-			"value": 170
+			"value": "170",
+			"values": [{
+				"id": "170",
+				"label": {
+					"en": "Don't reset settings",
+					"nl": "Wis gegevens niet"
+				}
+			}, {
+				"id": "3",
+				"label": {
+					"en": "Reset to factory settings",
+					"nl": "Fabrieksinstellingen terugzetten"
+				}
+			}]
 		}, {
 			"id": "feedback_time",
 			"type": "number",
@@ -498,55 +498,55 @@
 		}]
 	}],
 	"capabilities": {
-        "user_code_report": {
-            "type": "number",
-            "title": {
-                "en": "User Code Report",
+		"user_code_report": {
+			"type": "number",
+			"title": {
+				"en": "User Code Report",
 				"nl": "Gebruikerscode Rapport"
-            },
-            "getable": true,
-            "setable": false,
-            "units": {
-                "en": "status",
+			},
+			"getable": true,
+			"setable": false,
+			"units": {
+				"en": "status",
 				"nl": "status"
-            },
-            "min": 0,
-            "max": 100,
-            "step": 1
-        },
+			},
+			"min": 0,
+			"max": 100,
+			"step": 1
+		},
 		"alarm_report": {
-            "type": "number",
-            "title": {
-                "en": "Alarm Report User ID",
+			"type": "number",
+			"title": {
+				"en": "Alarm Report User ID",
 				"nl": "Alarm Rapport Gebruiker ID"
-            },
-            "getable": true,
-            "setable": false,
-            "units": {
-                "en": "status",
+			},
+			"getable": true,
+			"setable": false,
+			"units": {
+				"en": "status",
 				"nl": "status"
-            },
-            "min": 0,
-            "max": 100,
-            "step": 1
-        },
+			},
+			"min": 0,
+			"max": 100,
+			"step": 1
+		},
 		"my_gateway_control": {
-            "type": "number",
-            "title": {
-                "en": "Gateway Events",
+			"type": "number",
+			"title": {
+				"en": "Gateway Events",
 				"nl": "Gateway Events"
-            },
-            "getable": true,
-            "setable": false,
-            "units": {
-                "en": "event",
+			},
+			"getable": true,
+			"setable": false,
+			"units": {
+				"en": "event",
 				"nl": "event"
-            },
-            "min": 0,
-            "max": 100,
-            "step": 1
-        }
-    },
+			},
+			"min": 0,
+			"max": 100,
+			"step": 1
+		}
+	},
 	"flow": {
 		"triggers": [{
 			"id": "user_home",
@@ -554,9 +554,9 @@
 				"en": "System disarmed",
 				"nl": "Systeem gedeactiveerd"
 			},
-			"hint": { 
-				"en": "Triggered when a user presses the home button of this tag reader.", 
-				"nl": "Wordt uitgevoerd wanneer iemand op de thuis knop van deze tag reader drukt." 
+			"hint": {
+				"en": "Triggered when a user presses the home button of this tag reader.",
+				"nl": "Wordt uitgevoerd wanneer iemand op de thuis knop van deze tag reader drukt."
 			},
 			"args": [{
 				"name": "device",
@@ -600,9 +600,9 @@
 				"en": "System armed",
 				"nl": "Systeem geactiveerd"
 			},
-			"hint": { 
-				"en": "Triggered when a user presses the away button of this tag reader.", 
-				"nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop van deze tag reader drukt." 
+			"hint": {
+				"en": "Triggered when a user presses the away button of this tag reader.",
+				"nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop van deze tag reader drukt."
 			},
 			"args": [{
 				"name": "device",
@@ -646,9 +646,9 @@
 				"en": "System disarmed",
 				"nl": "Systeem gedeactiveerd"
 			},
-			"hint": { 
-				"en": "Triggered when a user presses the home button on a tag reader.", 
-				"nl": "Wordt uitgevoerd wanneer iemand op de thuis knop op de tag reader drukt." 
+			"hint": {
+				"en": "Triggered when a user presses the home button on a tag reader.",
+				"nl": "Wordt uitgevoerd wanneer iemand op de thuis knop op de tag reader drukt."
 			},
 			"tokens": [{
 				"name": "userId",
@@ -697,9 +697,9 @@
 				"en": "System armed",
 				"nl": "Systeem geactiveerd"
 			},
-			"hint": { 
-				"en": "Triggered when a user presses the away button on a tag reader.", 
-				"nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop op de tag reader drukt." 
+			"hint": {
+				"en": "Triggered when a user presses the away button on a tag reader.",
+				"nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop op de tag reader drukt."
 			},
 			"tokens": [{
 				"name": "userId",
@@ -742,6 +742,32 @@
 					"nl": "123x"
 				}
 			}]
+		}, {
+			"id": "start_scene",
+			"title": {
+				"en": "Scene activated",
+				"nl": "Scene geactiveerd"
+			},
+			"hint": {
+				"en": "Triggered when a user presses numbers without pressing home/away first. Please note that trying to trigger multiple scenes after each other without an home/away event screws up the tag reader in sending some random scene numbers somehow.",
+				"nl": "Wordt uitgevoerd wanneer iemand een nummber indrukt zonder home/away te gebruiken. Houdt er rekening mee dat als je meerdere scenes achter alkaar wilt uitvoeren zonder dat er een home/away event tussen zit dat de tag reader dan random scene nummers verstuurd naar Homey en er geen touw meer aan vast te knopen is."
+			},
+			"args": [{
+				"name": "device",
+				"type": "device",
+				"filter": "driver_id=tagreader500"
+			}],
+			"tokens": [{
+				"name": "sceneId",
+				"title": {
+					"en": "Scene ID",
+					"nl": "Scene Nr"
+				},
+				"example": {
+					"en": "1",
+					"nl": "1"
+				}
+			}]
 		}],
 		"conditions": [{
 			"id": "is_at_home",
@@ -749,9 +775,9 @@
 				"en": "Is !{{|not}} at home",
 				"nl": "Is !{{|niet}} thuis"
 			},
-			"hint": { 
-				"en": "Select a person to check if this person is home or away. This card doesn't work well if the person checked is the one that just came home/went away.", 
-				"nl": "Selecteer een persoon om te controleren of deze persoon thuis of afwezig is. Deze kaart werkt niet goed samen als de persoon die hier gecontroleerd wordt net thuis komt/weg gaat." 
+			"hint": {
+				"en": "Select a person to check if this person is home or away. This card doesn't work well if the person checked is the one that just came home/went away.",
+				"nl": "Selecteer een persoon om te controleren of deze persoon thuis of afwezig is. Deze kaart werkt niet goed samen als de persoon die hier gecontroleerd wordt net thuis komt/weg gaat."
 			},
 			"args": [{
 				"name": "person",
@@ -801,9 +827,9 @@
 				"en": "Mark as home",
 				"nl": "Is thuis"
 			},
-			"hint": { 
-				"en": "Select a person to set the status of the person to home.", 
-				"nl": "Selecteer een persoon om de status van deze persoon op thuis te zetten." 
+			"hint": {
+				"en": "Select a person to set the status of the person to home.",
+				"nl": "Selecteer een persoon om de status van deze persoon op thuis te zetten."
 			},
 			"args": [{
 				"name": "person",
@@ -819,9 +845,9 @@
 				"en": "Mark as away",
 				"nl": "Is afwezig"
 			},
-			"hint": { 
-				"en": "Select a person to set the status of the person to away.", 
-				"nl": "Selecteer een persoon om de status van deze persoon op afwezig te zetten." 
+			"hint": {
+				"en": "Select a person to set the status of the person to away.",
+				"nl": "Selecteer een persoon om de status van deze persoon op afwezig te zetten."
 			},
 			"args": [{
 				"name": "person",

@@ -525,7 +525,7 @@
 		{
 			if(confirm(__('settings.advanced.messages.confirmClearEventLog')))
 			{
-				Homey.set('systemEventLog', {});
+				Homey.set('systemEventLog', new Array());
 				showMessage('', __('settings.advanced.messages.eventLogClearedConfirmation'), 'success');
 			}
 			
@@ -537,7 +537,7 @@
 		{
 			if(confirm(__('settings.advanced.messages.confirmClearTags')))
 			{
-				Homey.set('tagContainer', {});
+				Homey.set('tagContainer', new Array());
 				showMessage('', __('settings.advanced.messages.tagsClearedConfirmation'), 'success');	 
 			}
 			
