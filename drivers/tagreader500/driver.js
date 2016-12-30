@@ -287,7 +287,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 						var tokens = { "sceneId": sceneId };
 						var state = {};
 						
-						Homey.manager('flow').triggerDevice('user_away', tokens, state, node.device_data, function(err, result) {
+						Homey.manager('flow').triggerDevice('start_scene', tokens, state, node.device_data, function(err, result) {
 							if( err ){ console.log(err); return Homey.error(err); }
 						});
 					break;

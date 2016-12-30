@@ -565,14 +565,12 @@
 			}],
 			"tokens": [{
 				"name": "userId",
+				"type": "number",
 				"title": {
 					"en": "User ID",
 					"nl": "Gebruikers ID"
 				},
-				"example": {
-					"en": "1",
-					"nl": "1"
-				}
+				"example": 2
 			}, {
 				"name": "userName",
 				"title": {
@@ -585,14 +583,12 @@
 				}
 			}, {
 				"name": "tagId",
+				"type": "number",
 				"title": {
 					"en": "Tag ID",
 					"nl": "Tag ID"
 				},
-				"example": {
-					"en": "Test",
-					"nl": "Test"
-				}
+				"example": 1
 			}]
 		}, {
 			"id": "user_away",
@@ -611,14 +607,12 @@
 			}],
 			"tokens": [{
 				"name": "userId",
+				"type": "number",
 				"title": {
 					"en": "User ID",
 					"nl": "Gebruikers ID"
 				},
-				"example": {
-					"en": "1",
-					"nl": "1"
-				}
+				"example": 2
 			}, {
 				"name": "userName",
 				"title": {
@@ -631,14 +625,12 @@
 				}
 			}, {
 				"name": "tagId",
+				"type": "number",
 				"title": {
 					"en": "Tag ID",
 					"nl": "Tag ID"
 				},
-				"example": {
-					"en": "Test",
-					"nl": "Test"
-				}
+				"example": 1
 			}]
 		}, {
 			"id": "user_system_home",
@@ -652,14 +644,12 @@
 			},
 			"tokens": [{
 				"name": "userId",
+				"type": "number",
 				"title": {
 					"en": "User ID",
 					"nl": "Gebruikers ID"
 				},
-				"example": {
-					"en": "1",
-					"nl": "1"
-				}
+				"example": 2
 			}, {
 				"name": "userName",
 				"title": {
@@ -672,16 +662,15 @@
 				}
 			}, {
 				"name": "tagId",
+				"type": "number",
 				"title": {
 					"en": "Tag ID",
 					"nl": "Tag ID"
 				},
-				"example": {
-					"en": "Test",
-					"nl": "Test"
-				}
+				"example": 1
 			}, {
 				"name": "deviceId",
+				"type": "number",
 				"title": {
 					"en": "Tagreader ID",
 					"nl": "Tagreader ID"
@@ -703,14 +692,12 @@
 			},
 			"tokens": [{
 				"name": "userId",
+				"type": "number",
 				"title": {
 					"en": "User ID",
 					"nl": "Gebruikers ID"
 				},
-				"example": {
-					"en": "1",
-					"nl": "1"
-				}
+				"example": 2
 			}, {
 				"name": "userName",
 				"title": {
@@ -723,14 +710,12 @@
 				}
 			}, {
 				"name": "tagId",
+				"type": "number",
 				"title": {
 					"en": "Tag ID",
 					"nl": "Tag ID"
 				},
-				"example": {
-					"en": "Test",
-					"nl": "Test"
-				}
+				"example": 1
 			}, {
 				"name": "deviceId",
 				"title": {
@@ -759,14 +744,12 @@
 			}],
 			"tokens": [{
 				"name": "sceneId",
+				"type": "number",
 				"title": {
 					"en": "Scene ID",
 					"nl": "Scene Nr"
 				},
-				"example": {
-					"en": "1",
-					"nl": "1"
-				}
+				"example": 1
 			}]
 		}],
 		"conditions": [{
