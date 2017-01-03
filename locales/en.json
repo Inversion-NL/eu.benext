@@ -45,6 +45,21 @@
 				"confirmDeteleUser": "Are you sure you want to remove this user?"
 			}
 		},
+		"devices":
+		{
+			"title": "Devices",
+			"description": "",
+			"table":
+			{
+				"deviceId": "#",
+				"status": "Current Reporting Status",
+				"lastUpdated": "Last Updated"
+			},
+			"messages":
+			{
+				"noDevicesYet": "No reports reported to Homey yet, couldn't determine devices and their reporting status."
+			}
+		},
 		"advanced":
 		{
 			"title": "Advanced Settings",

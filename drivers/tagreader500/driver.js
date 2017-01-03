@@ -35,6 +35,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			'command_report_parser'		: function( report, node )
 			{
 				console.log(report);
+				setDeviceReport(node.instance.token, "BASIC");
 				
 				//var userIdentifier = report["User Identifier (Raw)"];
 				var tagOrUserCode = report["USER_CODE"].toString('hex'); // It's a buffer (hex), and we store the translated value
@@ -84,6 +85,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				console.log("report event recieved");
 				console.log(report);
 				console.log(node.device_data);
+				setDeviceReport(node.instance.token, "BASIC");
 				
 				var eventType = -1;
 				var tagReaderTagId = report["Event Parameter"].toString('hex'); // Tag reader sends us a tag ID we provided it earlier.
@@ -145,7 +147,9 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				eventIdsRecieved.push(report["Sequence Number"]);
 				//console.log(node.device_data);
 				//console.log(report);
-				
+			
+				setDeviceReport(node.instance.token, "GATEWAY");
+			
 				var eventName = report["Event Type"];
 				switch(eventName)
 				{
@@ -442,6 +446,16 @@ function setTagStatus(value) // value needs to be true or false
 	}
 	
 	Homey.manager('settings').set('tagStatus', value);
+}
+
+function getTagReaders()
+{
+	return Homey.manager('settings').get('tagReaders');
+}
+
+function setTagReaders()
+{
+	Homey.manager('settings').set('tagReaders', value);
 }
 
 /**
@@ -791,7 +805,7 @@ function setStatusOfUser(user, statusCode)
 * Lookups the user based on a tag ID
 * @param tagReaderTagId; the tag ID
 * @param node; the node that triggered this event
-* @return an object with userId, userName, tagId, and deviceId
+* @returns an object with userId, userName, tagId, and deviceId
 */
 function searchUserBelongingToTagId(tagReaderTagId, node)
 {
@@ -810,4 +824,36 @@ function searchUserBelongingToTagId(tagReaderTagId, node)
 		tagId: tagReaderTagIdInt,
 		deviceId: node.instance.token
 	};
+}
+
+/**
+* Sets the device status reports after a report came in.
+* @param nodeToken; the unique id from the device in the event
+* @param statusName; the type of status (BASIC or GATEWAY)
+*/
+function setDeviceReport(nodeToken, statusName)
+{
+	var devices = getTagReaders();
+	if(typeof devices === 'undefined' || devices === null || typeof devices.length === 'undefined')
+	{
+		devices = new Array();
+	}
+	
+	var match = false;
+	for(var i = 0; i < devices.length; i++) {
+		if(devices[i].id === nodeToken)
+		{
+			devices[i].state = statusName;
+			devices[i].lastUpdate = new Date();
+			match = true;
+			i = devices.length + 1;
+		}
+	}
+	
+	if(match === false)
+	{
+		devices.push({ id: nodeToken, state: statusName, lastUpdate: new Date(), name: "" });
+	}
+	
+	setTagReaders(devices);
 }

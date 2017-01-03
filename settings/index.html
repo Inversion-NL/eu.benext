@@ -2,9 +2,9 @@
 <head>
 
 <style>
-	table.benext th, table.benext td { font-size: 14px; text-align: left; padding-right: 10px; }
-	table.benext tr { font-size: 14px; }
-	button.benext { margin-right: 10px; }
+table.benext th, table.benext td { font-size: 14px; text-align: left; padding-right: 10px; }
+table.benext tr { font-size: 14px; }
+button.benext { margin-right: 10px; }
 	
 .alert {
   padding: 15px;
@@ -168,6 +168,25 @@
 		</table>
     </fieldset>
 	<br /><br />
+	<fieldset>
+		<legend data-i18n="settings.devices.title"></legend>
+        <table id="systemDevices" class="benext">
+			<thead>
+				<tr>
+					<th data-i18n="settings.devices.table.deviceId"></th>
+					<th data-i18n="settings.devices.table.status"></th>
+					<th data-i18n="settings.devices.table.lastUpdated"></th>
+				</tr>
+			</thead>
+			<tbody id="systemDevicesBody">
+			</tbody>
+		</table>
+		
+		<br /><br />
+		<button class="left benext" style="display:block" onclick="addNewUserRow()" data-i18n="settings.buttons.addUser"></button>
+		<button class="left benext" style="display:block" onclick="saveUsers()" data-i18n="settings.buttons.saveSettings" ></button>
+    </fieldset>
+	<br /><br />
 	<script type="text/javascript">
 		var tagsLoaded = false;
 		var tagSelect = document.createElement('select');
@@ -206,7 +225,32 @@
 				tagsLoaded = true;
 				
 				// If rows are already in place, add the tags to the rows (replace them, makes reload in future possible).
+				if(document.getElementById("systemUserBody").getElementsByTagName("tr").length > 0)
+				{
+					// Add tags to document rows
+					loadTagsForUsers();
+				}
+			});
+			
+			Homey.get('tagReaders', function(err, devices)
+			{
+				if(err)
+        		{
+        			console.log("Can't retrieve devices.");
+        			return console.error(err);
+        		}
+        		
+				if(typeof devices === 'undefined' || devices === null || devices.length <= 0)
+				{
+					document.getElementById('systemDevicesBody').innerHTML = '<tr><td colspan="5">' + __('settings.devices.messages.noDevicesYet') + '</td></tr>';
+					return;
+				}
 				
+				for (var i = 0; i < devices.length; i++)
+				{
+					var deviceEntry = devices[i];
+					addDevicesRow(deviceEntry);
+				}
 			});
 			
 			Homey.get('tagStatus', function(err, tagStatus)
@@ -254,6 +298,22 @@
 			Homey.ready();
 		}
 		
+		function addDevicesRow(deviceEntry)
+		{
+			// Remove 'empty message' if there is any.
+			removeEmptyMessageFromTable('systemDevicesBody');
+		
+			var tableRow = document.createElement("tr");
+			console.log(deviceEntry);
+													
+			tableRow.innerHTML += '<td>' + deviceEntry.id + '</td>';
+			tableRow.innerHTML += '<td>' + deviceEntry.statusName + '</td>';
+			tableRow.innerHTML += '<td>' + deviceEntry.lastUpdate + '</td>';
+			
+			var tableBody = document.getElementById('systemDevicesBody');
+			tableBody.appendChild(tableRow);
+		}
+		
 		function addUserRow(userEntry)
 		{
 			// Remove 'empty message' if there is any.
@@ -264,7 +324,20 @@
 			tableRow.setAttribute('data-id', userEntry.id);
 			
 			console.log(userEntry);
+													
+			tableRow.innerHTML += '<td>' + userEntry.id + '</td>';
+			tableRow.innerHTML += '<td><input type="text" name="username_'+userEntry.id+'" id="username_'+userEntry.id+'" value="' + userEntry.name + '"></input></td>';
+			tableRow.innerHTML += '<td id="tagDataColumn_' + userEntry.id + '"></td>';
+			tableRow.innerHTML += '<td>' + __('settings.systemEventLog.eventTypes.s' + userEntry.statusCode) + '</td>';
+			tableRow.innerHTML += '<td onclick="return removeUserRow(' + userEntry.id + ');"><a href="javascript:void(0);">X</a></td>';
 			
+			var tableBody = document.getElementById('systemUserBody');
+			tableBody.appendChild(tableRow);
+			addTagElement(userEntry);
+		}
+		
+		function addTagElement(userEntry)
+		{
 			var tagElement = null;
 			if(tagsLoaded)
 			{
@@ -275,19 +348,11 @@
 				// Set selected tags as selected values in tagElement
 				setSelectValues(tagElement, userEntry.tagIds);
 			}
-													
-			tableRow.innerHTML += '<td>' + userEntry.id + '</td>';
-			tableRow.innerHTML += '<td><input type="text" name="username_'+userEntry.id+'" id="username_'+userEntry.id+'" value="' + userEntry.name + '"></input></td>';
-			tableRow.innerHTML += '<td id="tagDataColumn_' + userEntry.id + '"></td>';
-			tableRow.innerHTML += '<td>' + __('settings.systemEventLog.eventTypes.s' + userEntry.statusCode) + '</td>';
-			tableRow.innerHTML += '<td onclick="return removeUserRow(' + userEntry.id + ');"><a href="javascript:void(0);">X</a></td>';
-			
-			var tableBody = document.getElementById('systemUserBody');
-			tableBody.appendChild(tableRow);
-			
+		
 			if(tagElement !== null)
 			{
 				var tagColumn = document.getElementById('tagDataColumn_'+ userEntry.id);
+				tagColumn.innerHTML = "";
 				tagColumn.appendChild(tagElement);
 			}
 		}
@@ -429,7 +494,8 @@
 			element.parentNode.removeChild(element);
 		}
 		
-		function getSelectValues(select) {
+		function getSelectValues(select)
+		{
 			var result = [];
 			var options = select && select.options;
 
@@ -442,7 +508,8 @@
 			return result;
 		}
 		
-		function setSelectValues(select, values) {
+		function setSelectValues(select, values)
+		{
 			var options = select && select.options;
 			
 			if(typeof values === 'undefined' || values === null || values.length <= 0)
@@ -568,6 +635,30 @@
 					showMessage(__('settings.advanced.messages.toggleTagStatusConfirmedTitle'), __('settings.advanced.messages.allowTags'), 'success');					
 				}		
 			});
+		}
+		
+		function loadTagsForUsers()
+		{
+			Homey.get('userContainer', function (err, users)
+			{
+				if(err)
+				{
+					console.log("Can't retrieve users to add tags.");
+					return console.error(err);
+				}
+				
+				if(typeof users === 'undefined' || users === null || users.length <= 0)
+				{
+					return;
+				}
+				
+				for (var i = 0; i < users.length; i++)
+				{
+					// NOTICE: ONLY UPDATE TAG ELEMENT, THIS PREVENTS MULTIPLE DATA LOSS
+					var userEntry = users[i];
+					addTagElement(userEntry);
+				}
+			}
 		}
 		
 		/**
