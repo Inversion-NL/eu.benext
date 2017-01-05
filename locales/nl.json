@@ -11,7 +11,7 @@
 				"event": "Event",
 				"device": "Apparaat",
 				"person": "Gebruiker",
-				"tagOrCode": "Tag/Code ID"
+				"tagOrCode": "Tag/Code ID or Scene"
 			},
 			"eventTypes":
 			{
@@ -43,6 +43,21 @@
 			{
 				"noUsersYet": "Geen gebruikers bekend binnen Homey. Voeg een gebruiker toe via toevoegen.",
 				"confirmDeteleUser": "Weet je zeker dat je deze gebruiker wilt verwijderen?"
+			}
+		},
+		"devices":
+		{
+			"title": "Apparaten",
+			"description": "",
+			"table":
+			{
+				"deviceId": "#",
+				"status": "Huidige Report Status",
+				"lastUpdated": "Laatst Bijgewerkt"
+			},
+			"messages":
+			{
+				"noDevicesYet": "Er zijn nog geen events binnengekomen bij Homey, op dit moment kunnen we de de apparaten en status daarvan nog niet bepalen."
 			}
 		},
 		"advanced":

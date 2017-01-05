@@ -151,22 +151,25 @@ button.benext { margin-right: 10px; }
 		</table>
     </fieldset>
 	<br /><br />
-	<fieldset>
-		<legend data-i18n="settings.systemEventLog.title"></legend>
-        <table id="systemEventLog" class="benext">
-			<thead>
-				<tr>
-					<th data-i18n="settings.systemEventLog.table.datetime"></th>
-					<th data-i18n="settings.systemEventLog.table.event"></th>
-					<th data-i18n="settings.systemEventLog.table.device"></th>
-					<th data-i18n="settings.systemEventLog.table.tagOrCode"></th>
-					<th data-i18n="settings.systemEventLog.table.person"></th>
-				</tr>
-			</thead>
-			<tbody id="systemEventLogBody">
-			</tbody>
-		</table>
-    </fieldset>
+	<div class="table-container">
+		<fieldset>
+			<legend data-i18n="settings.systemEventLog.title"></legend>
+			<table id="systemEventLog" class="benext flex">
+				<thead>
+					<tr>
+						<th data-i18n="settings.systemEventLog.table.datetime"></th>
+						<th data-i18n="settings.systemEventLog.table.event"></th>
+						<th data-i18n="settings.systemEventLog.table.device"></th>
+						<th data-i18n="settings.systemEventLog.table.tagOrCode"></th>
+						<th data-i18n="settings.systemEventLog.table.person"></th>
+					</tr>
+				</thead>
+				<tbody id="systemEventLogBody">
+				</tbody>
+			</table>
+		</fieldset>
+		<br />
+	</div>
 	<br /><br />
 	<fieldset>
 		<legend data-i18n="settings.devices.title"></legend>
@@ -181,10 +184,6 @@ button.benext { margin-right: 10px; }
 			<tbody id="systemDevicesBody">
 			</tbody>
 		</table>
-		
-		<br /><br />
-		<button class="left benext" style="display:block" onclick="addNewUserRow()" data-i18n="settings.buttons.addUser"></button>
-		<button class="left benext" style="display:block" onclick="saveUsers()" data-i18n="settings.buttons.saveSettings" ></button>
     </fieldset>
 	<br /><br />
 	<script type="text/javascript">
@@ -307,7 +306,7 @@ button.benext { margin-right: 10px; }
 			console.log(deviceEntry);
 													
 			tableRow.innerHTML += '<td>' + deviceEntry.id + '</td>';
-			tableRow.innerHTML += '<td>' + deviceEntry.statusName + '</td>';
+			tableRow.innerHTML += '<td>' + deviceEntry.state + '</td>';
 			tableRow.innerHTML += '<td>' + deviceEntry.lastUpdate + '</td>';
 			
 			var tableBody = document.getElementById('systemDevicesBody');
@@ -658,7 +657,7 @@ button.benext { margin-right: 10px; }
 					var userEntry = users[i];
 					addTagElement(userEntry);
 				}
-			}
+			});
 		}
 		
 		/**

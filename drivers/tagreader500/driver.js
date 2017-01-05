@@ -288,12 +288,21 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 						console.log(sceneId);
 						
 						// Now we have to set the tokens to toggle the events
-						var tokens = { "sceneId": sceneId };
+						var tokens = { sceneId: parseInt(sceneId) };
 						var state = {};
 						
 						Homey.manager('flow').triggerDevice('start_scene', tokens, state, node.device_data, function(err, result) {
 							if( err ){ console.log(err); return Homey.error(err); }
 						});
+						
+						writeToLogFile(
+								null,
+								node.instance.token,
+								parseInt(sceneId),
+								3,
+								null,
+								null
+							);
 					break;
 				}
 			}
@@ -453,7 +462,7 @@ function getTagReaders()
 	return Homey.manager('settings').get('tagReaders');
 }
 
-function setTagReaders()
+function setTagReaders(value)
 {
 	Homey.manager('settings').set('tagReaders', value);
 }
