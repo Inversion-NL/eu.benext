@@ -322,7 +322,7 @@
 			"productTypeId": 7,
 			"productId": 512,
 			"learnmode": {
-				"image": "/drivers/tagreader500/assets/TODO!.svg",
+				"image": "/drivers/tagreader500/assets/add.svg",
 				"instruction": {
 					"en": "Press and hold the enter button for two seconds (indication LED blinks shortly) and release to start the add/remove routine.",
 					"nl": "Druk en houdt de enter knop (op de Tag Reader 500) ingedrukt voor twee seconden (LED indicatie knippert kort) om de toevoegen/verwijder modus te starten."
