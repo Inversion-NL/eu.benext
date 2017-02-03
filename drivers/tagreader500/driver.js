@@ -240,6 +240,8 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 										if( err ){ console.log(err); return Homey.error(err); }
 									});
 									
+									
+									sendLedFeedback(node.instance, 1, true);
 								break;
 								case 0: // Away								
 									// Toggle event, "User X went away"
@@ -251,6 +253,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 										if( err ){ console.log(err); return Homey.error(err); }
 									});
 									
+									sendLedFeedback(node.instance, 0, true);
 								break;
 							}
 							
@@ -311,31 +314,38 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
     settings: {
 		"set_to_default" : {
 			"index": 1,
-			"size": 1
+			"size": 1,
+			"signed": false
 		},
 		"feedback_time" : {
 			"index": 2,
-			"size": 1
+			"size": 1,
+			"signed": false
 		},
 		"feedback_timeout" : {
 			"index": 3,
-			"size": 1
+			"size": 1,
+			"signed": false
 		},
 		"feedback_beeps_per_second" : {
 			"index": 4,
-			"size": 1
+			"size": 1,
+			"signed": false
 		},
 		"always_awake_mode" : {
 			"index": 5,
-			"size": 1
+			"size": 1,
+			"signed": false
 		},
 		"operation_mode" : {
 			"index": 7,
-			"size": 1
+			"size": 1,
+			"signed": false
 		},
 		"gateway_confirmation" : {
 			"index": 8,
-			"size": 1
+			"size": 1,
+			"signed": false
 		}
     }
 });
@@ -495,9 +505,11 @@ function writeToLogFile(userId, deviceId, tagId, statusCode, userName, deviceNam
 	}
 	
 	log.push(logEntry);
+	log = log.slice(Math.max(log.length - 50, 0)); // Only keep last 50 events from event log
+	Homey.manager('settings').set('systemEventLog', log);
+	
 	console.log("Just logged entry:");
 	console.log(logEntry);
-	Homey.manager('settings').set('systemEventLog', log);
 }
 
 /**
@@ -594,12 +606,12 @@ function sendGatewayApprovalDisaproval(node, type, override, overrideValue)
 	
 	// Via a response: INDICATOR_SET ; ID: (0x06), value: (0x06) : allow
 	// or via: INDICATOR_SET; ID: (0x04), value: 8 : deny
-	var indicatorId = 0x04;
-	var indicatorValue = 0x08;
+	var indicatorId = 4;
+	var indicatorValue = 8;
 	if(allow === true)
 	{
-		indicatorId = 0x06;
-		indicatorValue = 0x06;
+		indicatorId = 6;
+		indicatorValue = 6;
 	}
 	
 	console.log("Sending information");
@@ -607,14 +619,14 @@ function sendGatewayApprovalDisaproval(node, type, override, overrideValue)
 	
 	node.CommandClass.COMMAND_CLASS_INDICATOR.INDICATOR_SET({
 			"Indicator 0 Value": 0,
-			"Indicator ID 1": 0x03,
-			"Property ID 1": 0x03,
-			"Value 1": 0x14,
+			"Indicator ID 1": indicatorId,
+			"Property ID 1": 1,
+			"Value 1": indicatorValue,
 			"Properties1": { "Indicator Object Count": 1 }
 		},
 		function( err, result )
 		{
-			console.log("Done sending information");
+			console.log("Done sending information - Indicator Set");
 			console.log(err);
 			console.log(result);
 			
@@ -638,16 +650,36 @@ function sendLedFeedback(node, eventType, success)
 	3. Ready for arm/disarm (enter rfid/pin) red on for 5 seconds (indicator: ENTER_ID)
 	4. Valid rfid/pin received  green on for 1 second (indicator: READY) Note: above values are default values
 	*/
+	
+	var indicatorId = 0;
+	var propertyId = 0;
+	var indicatorValue = 0;
+	if(eventType === 0)
+	{
+		indicatorId = 1;
+		propertyId = 4;
+		indicatorValue = 5;
+	}
+	else if (eventType === 1)
+	{
+		indicatorId = 3;
+		propertyId = 3;
+		indicatorValue = 2;
+	}
+	
+	console.log("Sending LED confirmation");
+	console.log(indicatorId + " -- " + indicatorValue);
+	
 	node.CommandClass.COMMAND_CLASS_INDICATOR.INDICATOR_SET({
 			"Indicator 0 Value": 0,
 			"Indicator ID 1": indicatorId,
-			"Property ID 1": indicatorId,
+			"Property ID 1": propertyId,
 			"Value 1": indicatorValue,
 			"Properties1": { "Indicator Object Count": 1 }
 		},
 		function( err, result )
 		{
-			console.log("Done sending information");
+			console.log("Done sending information - LED Confirmation");
 			console.log(err);
 			console.log(result);
 			
@@ -699,7 +731,7 @@ function addTag(tagCode, tagType)
 {
 	var tags = getTagContainer();
 	
-	if(tagType !== 0 || tagType !== 1) // 0 = tag, 1 = user code, -1 = unknown
+	if(tagType !== 0 && tagType !== 1) // 0 = tag, 1 = user code, -1 = unknown
 	{
 		tagType = -1;
 	}

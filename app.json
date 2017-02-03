@@ -3,8 +3,8 @@
 	"name": {
 		"en": "BeNext"
 	},
-	"version": "0.2.1",
-	"compatibility": ">=1.1.0",
+	"version": "0.2.2",
+	"compatibility": ">=1.1.4",
 	"description": {
 		"en": "BeNext devices for Homey",
 		"nl": "BeNext apparaten voor Homey"
@@ -555,8 +555,8 @@
 				"nl": "Systeem gedeactiveerd"
 			},
 			"hint": {
-				"en": "Triggered when a user presses the home button of this tag reader.",
-				"nl": "Wordt uitgevoerd wanneer iemand op de thuis knop van deze tag reader drukt."
+				"en": "Triggered when a user presses the home button of this tag reader and enters a valid code / presents a valid tag.",
+				"nl": "Wordt uitgevoerd wanneer iemand op de thuis knop van deze tag reader drukt en een geldige code / tag ingevoerd wordt."
 			},
 			"args": [{
 				"name": "device",
@@ -597,8 +597,8 @@
 				"nl": "Systeem geactiveerd"
 			},
 			"hint": {
-				"en": "Triggered when a user presses the away button of this tag reader.",
-				"nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop van deze tag reader drukt."
+				"en": "Triggered when a user presses the away button of this tag reader and presents a valid code / tag.",
+				"nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop van deze tag reader drukt en een geldige code / tag invoert."
 			},
 			"args": [{
 				"name": "device",
@@ -639,8 +639,8 @@
 				"nl": "Systeem gedeactiveerd"
 			},
 			"hint": {
-				"en": "Triggered when a user presses the home button on a tag reader.",
-				"nl": "Wordt uitgevoerd wanneer iemand op de thuis knop op de tag reader drukt."
+				"en": "Triggered when a user presses the home button on a tag reader and presents a valid code / tag.",
+				"nl": "Wordt uitgevoerd wanneer iemand op de thuis knop op de tag reader drukt en een geldige code / tag invoert."
 			},
 			"tokens": [{
 				"name": "userId",
@@ -687,8 +687,8 @@
 				"nl": "Systeem geactiveerd"
 			},
 			"hint": {
-				"en": "Triggered when a user presses the away button on a tag reader.",
-				"nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop op de tag reader drukt."
+				"en": "Triggered when a user presses the away button on a tag reader and presents a valid code / tag.",
+				"nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop op de tag reader drukt en een geldige code / tag invoert."
 			},
 			"tokens": [{
 				"name": "userId",
@@ -759,8 +759,8 @@
 				"nl": "Is !{{|niet}} thuis"
 			},
 			"hint": {
-				"en": "Select a person to check if this person is home or away. This card doesn't work well if the person checked is the one that just came home/went away.",
-				"nl": "Selecteer een persoon om te controleren of deze persoon thuis of afwezig is. Deze kaart werkt niet goed samen als de persoon die hier gecontroleerd wordt net thuis komt/weg gaat."
+				"en": "Select a person to check if this person is home or away.",
+				"nl": "Selecteer een persoon om te controleren of deze persoon thuis of afwezig is."
 			},
 			"args": [{
 				"name": "person",
