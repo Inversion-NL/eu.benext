@@ -158,14 +158,14 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 						// As gateway we can allow or deny this request.
 							// Via a response: INDICATOR_SET ; ID: (0x06), value: (0x06) : allow
 							// or via: INDICATOR_SET; ID: (0x04), value: 8 : deny
-						return sendGatewayApprovalDisaproval(node.instance, 1, false, false);
+						return sendGatewayApprovalDisaproval(node.instance, 1, true, true);
 					break;
 					case "ARM_AWAY": // (0x05)
 						// Announces away rfid/enter coming.
 						// As gateway we can allow or deny this request.
 							// Via a response: INDICATOR_SET ; ID: (0x06), value: (0x06) : allow
 							// or via: INDICATOR_SET; ID: (0x04), value: 8 : deny
-						return sendGatewayApprovalDisaproval(node.instance, 0, false, false);
+						return sendGatewayApprovalDisaproval(node.instance, 0, true, true);
 					break;
 					case "ARM_6": // (0x0D)
 					case "ENTER":
@@ -585,7 +585,7 @@ function sendGatewayApprovalDisaproval(node, type, override, overrideValue)
 	var allow = getTagStatus();
 	if(override === true)
 	{
-		// always allowed
+		allow = overrideValue;
 	}
 	else
 	{
@@ -595,19 +595,21 @@ function sendGatewayApprovalDisaproval(node, type, override, overrideValue)
 	// Via a response: INDICATOR_SET ; ID: (0x06), value: (0x06) : allow
 	// or via: INDICATOR_SET; ID: (0x04), value: 8 : deny
 	var indicatorId = 0x04;
-	var indicatorValue = 8;
-	if(allow)
+	var indicatorValue = 0x08;
+	if(allow === true)
 	{
 		indicatorId = 0x06;
 		indicatorValue = 0x06;
 	}
 	
 	console.log("Sending information");
+	console.log(indicatorId + " -- " + indicatorValue);
+	
 	node.CommandClass.COMMAND_CLASS_INDICATOR.INDICATOR_SET({
 			"Indicator 0 Value": 0,
-			"Indicator ID 1": indicatorId,
-			"Property ID 1": indicatorId,
-			"Value 1": indicatorValue,
+			"Indicator ID 1": 0x03,
+			"Property ID 1": 0x03,
+			"Value 1": 0x14,
 			"Properties1": { "Indicator Object Count": 1 }
 		},
 		function( err, result )
