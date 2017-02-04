@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 476.7 476.7" style="enable-background:new 0 0 476.7 476.7;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#231F20;stroke-width:8;stroke-linecap:round;stroke-miterlimit:10;}
+	.st1{font-family:'Geneva';}
+	.st2{font-size:60px;}
+	.st3{fill:#231F20;stroke:#231F20;stroke-linecap:round;stroke-miterlimit:10;}
+	.st4{fill:none;stroke:#231F20;stroke-width:6;stroke-linecap:round;stroke-miterlimit:10;}
+	.st5{font-size:21px;}
+</style>
+<g id="Layer_1">
+</g>
+<g id="Layer_2">
+	<path class="st0" d="M467.3,38.2v400c0,16.3-13.2,29.5-29.5,29.5h-400c-16.3,0-29.5-13.2-29.5-29.5v-400
+		c0-16.3,13.2-29.5,26.2-29.5h400C454.1,8.7,467.3,21.9,467.3,38.2z"/>
+	<text transform="matrix(1 0 0 1 216.335 233.6683)" class="st1 st2">1</text>
+	<text transform="matrix(1 0 0 1 127.7076 319.335)" class="st1 st2">2</text>
+	<text transform="matrix(1 0 0 1 302.4156 319.335)" class="st1 st2">3</text>
+	<text transform="matrix(1 0 0 1 216.335 405.335)" class="st1 st2">4</text>
+	<circle class="st3" cx="237.8" cy="37.1" r="9.1"/>
+</g>
+<g id="Layer_3">
+	<circle class="st4" cx="168.2" cy="100.2" r="41.5"/>
+	<text transform="matrix(1 0 0 1 139.335 107.6683)" class="st1 st5">Home</text>
+	<text transform="matrix(1 0 0 1 278.335 107.6683)" class="st1 st5">Away</text>
+</g>
+<g id="Layer_4">
+	<circle class="st4" cx="305.3" cy="100.2" r="41.5"/>
+</g>
+<g id="Layer_5">
+	<rect x="203.2" y="266.2" class="st4" width="67.2" height="67.2"/>
+	<text transform="matrix(1 0 0 1 209.7076 306.6683)" class="st1 st5">Enter</text>
+</g>
+<g id="Layer_6">
+	<path class="st4" d="M302.4,192.2L269.6,249H204l-32.8-56.8c9-6.2,25.6-16,48.7-19.6c33.7-5.2,60,6.1,70,11
+		C294.1,186.5,298.2,189.4,302.4,192.2z"/>
+	<path class="st4" d="M127.1,233.5l56.6,33.1l-0.3,65.6l-57,32.5c-6.2-9-15.9-25.7-19.3-48.8c-5-33.7,6.4-60,11.4-69.9
+		C121.4,241.9,124.2,237.7,127.1,233.5z"/>
+	<path class="st4" d="M344.4,363.3l-57.8-30.9l-2.2-65.5l55.7-34.6c6.5,8.7,16.8,25.1,21.1,48c6.3,33.5-4.1,60.2-8.7,70.3
+		C349.8,354.8,347.1,359,344.4,363.3z"/>
+	<path class="st4" d="M171.6,404.5l32.1-57.2l65.6-0.8l33.5,56.4c-8.9,6.3-25.4,16.3-48.4,20.2c-33.6,5.6-60.1-5.4-70.1-10.1
+		C180,410.1,175.8,407.3,171.6,404.5z"/>
+</g>
+<g id="Layer_7">
+</g>
+</svg>

@@ -1,1 +1,106 @@
-{}
+{
+	"settings": {
+		"title": "BeNext Device Settings",
+		"description": "On this page you see the settings for BeNext devices. Currently only the Tag Reader 500 is supported for advanced global settings.",
+		"systemEventLog":
+		{
+			"title": "Event Log",
+			"table":
+			{
+				"datetime": "Date",
+				"event": "Event",
+				"device": "Device",
+				"person": "User",
+				"tagOrCode": "Tag/Code ID or Scene"
+			},
+			"eventTypes":
+			{
+				"s-1": "Unknown",
+				"s0": "Away",
+				"s1": "Home",
+				"s2": "Tag Paired",
+				"s3": "Scene Started"
+			},
+			"messages":
+			{
+				"noEventsYet": "No events yet available, add a Tag Reader to your Homey to start collecting events.",
+				"userNameUnknown": "Unknown",
+				"deviceUnknown": "Unknown"
+			}
+		},
+		"users":
+		{
+			"title": "Manage Users",
+			"table":
+			{
+				"userId": "#",
+				"userName": "Name",
+				"tags": "Tags belonging to user",
+				"status": "Current status",
+				"edit": "Remove"
+			},
+			"messages":
+			{
+				"noUsersYet": "No users known in Homey yet, add a user via the add button.",
+				"confirmDeteleUser": "Are you sure you want to remove this user?"
+			}
+		},
+		"devices":
+		{
+			"title": "Devices",
+			"description": "",
+			"table":
+			{
+				"deviceId": "#",
+				"status": "Current Reporting Status",
+				"lastUpdated": "Last Updated"
+			},
+			"messages":
+			{
+				"noDevicesYet": "No reports reported to Homey yet, couldn't determine devices and their reporting status."
+			}
+		},
+		"advanced":
+		{
+			"title": "Advanced Settings",
+			"description": "Please use the below settings only when you are really sure you want to reset the settings of Homey (and therefore in most cases need to rebuild your flows and reset your Tag Readers as well).",
+			"table":
+			{
+				"eventLog": "Event Log",
+				"tags": "Tags",
+				"tagApproval": "Tag Approval",
+				"tagApprovalStatus": "Current status: Unknown"
+			},
+			"messages":
+			{
+				"confirmClearEventLog": "Are you sure you want to clear the entire event log?",
+				"eventLogClearedConfirmation": "The event log is cleared.",
+				"confirmClearTags": "Clear all tags from the Homey cache. Please note that you should reset all your devices to factory settings and start adding the tags and codes again. Are you sure?",
+				"tagsClearedConfirmation": "The tags are all removed from Homey. Please reset your Tag Readers manually.",
+				"allowTags": "Registration of new tags is allowed",
+				"denyTags": "Registration of new tags is not allowed",
+				"toggleTagStatusConfirmedTitle": "Tag registration status switched: "
+			},
+			"buttons":
+			{
+				"clearEventLog": "Clear event log",
+				"clearTags": "Clear tags",
+				"toggleTag": "Toggle tag registration on/off"
+			}
+		},
+		"buttons":
+		{
+			"addUser": "Add user",
+			"removeUser": "Remove user",
+			"saveSettings": "Save user settings"
+		}
+	},
+	"flow":
+	{
+		"condition":
+		{
+			"userNotFound": "Can't find user with given ID.",
+			"unknownUserStatus": "The status of the user is unknown. Please toggle the user status first before using this condition card."
+		}
+	}
+}

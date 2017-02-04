@@ -1,0 +1,106 @@
+{
+	"settings": {
+		"title": "BeNext Instellingen",
+		"description": "Op deze pagina kan je globale instellingen bepalen van diverse BeNext apparaten. Op dit moment werkt het alleen met de Tag Reader 500.",
+		"systemEventLog":
+		{
+			"title": "Event Log",
+			"table":
+			{
+				"datetime": "Datum",
+				"event": "Event",
+				"device": "Apparaat",
+				"person": "Gebruiker",
+				"tagOrCode": "Tag/Code ID or Scene"
+			},
+			"eventTypes":
+			{
+				"s-1": "Onbekend",
+				"s0": "Afwezig",
+				"s1": "Thuis",
+				"s2": "Tag Toegevoegd",
+				"s3": "Scene Gestart"
+			},
+			"messages":
+			{
+				"noEventsYet": "Geen evenementen tot noch toe, voeg een tag reader toe aan je Homey en begin met het verzamelen van events.",
+				"userNameUnknown": "Onbekend",
+				"deviceUnknown": "Onbekend"
+			}
+		},
+		"users":
+		{
+			"title": "Beheer Gebruikers",
+			"table":
+			{
+				"userId": "#",
+				"userName": "Naam",
+				"tags": "Tags behorende bij gebruiker",
+				"status": "Huidige status",
+				"edit": "Verwijderen"
+			},
+			"messages":
+			{
+				"noUsersYet": "Geen gebruikers bekend binnen Homey. Voeg een gebruiker toe via toevoegen.",
+				"confirmDeteleUser": "Weet je zeker dat je deze gebruiker wilt verwijderen?"
+			}
+		},
+		"devices":
+		{
+			"title": "Apparaten",
+			"description": "",
+			"table":
+			{
+				"deviceId": "#",
+				"status": "Huidige Report Status",
+				"lastUpdated": "Laatst Bijgewerkt"
+			},
+			"messages":
+			{
+				"noDevicesYet": "Er zijn nog geen events binnengekomen bij Homey, op dit moment kunnen we de de apparaten en status daarvan nog niet bepalen."
+			}
+		},
+		"advanced":
+		{
+			"title": "Geavanceerde Instellingen",
+			"description": "Gebruik onderstaande instellingen alleen als je zeker weet dat je apparaten (Tag Reader) opnieuw aan je Homey wil toevoegen en mogelijk ook je flows opnieuw moet inrichten.",
+			"table":
+			{
+				"eventLog": "Evenementen Logboek",
+				"tags": "Tags",
+				"tagApproval": "Tags Toevoegen",
+				"tagApprovalStatus": "Huidige status: onbekend"
+			},
+			"messages":
+			{
+				"confirmClearEventLog": "Weet je zeker dat je het hele evenementenlogboek wilt wissen?",
+				"eventLogClearedConfirmation": "Het evenementenlogboek is gewist.",
+				"confirmClearTags": "Verwijder alle tags uit Homey. Let erop, hierdoor moet je mogelijk ook je tag reader opnieuw instellen (factory reset) en hiermee mogelijk ook je flows opnieuw opbouwen. Weet je het zeker?",
+				"tagsClearedConfirmation": "De tags zijn verwijderd uit Homey. Stel je Tag Reader opnieuw in.",
+				"allowTags": "Registratie van tags is toegestaan.",
+				"denyTags": "Registratie van tags is niet toegestaan.",
+				"toggleTagStatusConfirmedTitle": "Tag registratie is verwisseld naar: "
+			},
+			"buttons":
+			{
+				"clearEventLog": "Wis evenementenlogboek",
+				"clearTags": "Wis tags",
+				"toggleTag": "Switch tag registratie aan/uit"
+			}
+		},
+		"buttons":
+		{
+			"addUser": "Voeg gebruiker toe",
+			"removeUser": "Verwijder gebruiker",
+			"saveSettings": "Sla gebruiker instellingen op"
+		}
+	},
+	"flow":
+	{
+		"condition":
+		{
+			"userNotFound": "Kan gebruiker met de gegeven ID niet vinden.",
+			"unknownUserStatus": "De status van de gebruiker is onbekend. Zet de status van de gebruiker eerst voordat je deze kaart gebruikt."
+		}
+	}
+}
