@@ -175,7 +175,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 						// Check previous event to see if we have to arm home or away
 						var indexPreviousEvent = eventIdsRecieved.indexOf(report["Sequence Number"]-1);
 						var previousEvent = eventsRecieved[indexPreviousEvent];
-						if(typeof previousEvent !== 'undefined' && typeof previousEvent["Event Type"] !== undefined)
+						if(typeof previousEvent !== 'undefined' && typeof previousEvent["Event Type"] !== undefined && typeof report["Event Data"] !== undefined)
 						{
 							var eventType = previousEvent["Event Type"] === "ARM_HOME" ? 1 : 0; // 1 = home, 0 = away
 							var tagType = eventName === "ARM_6" ? 0 : 1; // 0 = tag, 1 = user code
@@ -782,6 +782,12 @@ function searchUser(tagId)
 	}
 	
 	for(var i = 0; i < users.length; i++) {
+		
+		if(typeof users[i].tagIds === undefined || typeof users[i].tagIds.indexOf !== "function")
+		{
+			continue;
+		}
+		
 		var match = users[i].tagIds.indexOf(tagId);
 		if(match > -1)
 		{
