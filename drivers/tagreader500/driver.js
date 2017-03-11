@@ -782,6 +782,12 @@ function searchUser(tagId)
 	}
 	
 	for(var i = 0; i < users.length; i++) {
+		
+		if(typeof users[i].tagIds === undefined || typeof users[i].tagIds.indexOf !== "function")
+		{
+			continue;
+		}
+		
 		var match = users[i].tagIds.indexOf(tagId);
 		if(match > -1)
 		{
