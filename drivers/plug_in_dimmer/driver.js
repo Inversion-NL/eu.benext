@@ -3,6 +3,8 @@
 const path = require('path');
 const ZwaveDriver = require('homey-zwavedriver');
 
+// Documentation: http://www.benext.eu/static/manual/plugindimmer.pdf
+
 module.exports = new ZwaveDriver(path.basename(__dirname), {
 	capabilities: {
 		onoff: {
@@ -70,7 +72,6 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				if (report.hasOwnProperty('Properties2') &&
 					report.Properties2.hasOwnProperty('Scale') &&
 					report.Properties2['Scale'] === 2) {
-					console.log('W', report['Meter Value (Parsed)'])
 					return report['Meter Value (Parsed)'];
 				}
 				return null;
@@ -90,7 +91,6 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				if (report.hasOwnProperty('Properties2') &&
 					report.Properties2.hasOwnProperty('Scale') &&
 					report.Properties2['Scale'] === 0) {
-					console.log('kWh', report['Meter Value (Parsed)'])
 					return report['Meter Value (Parsed)'];
 				}
 				return null;
