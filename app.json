@@ -575,7 +575,7 @@
           }
         },
         "associationGroups": [
-          1
+          1, 2
         ]
       },
       "class": "light",
@@ -611,6 +611,63 @@
       "images": {
         "large": "/drivers/plug_in_dimmer/assets/images/large.png",
         "small": "/drivers/plug_in_dimmer/assets/images/small.png"
+      },
+      "settings": []
+    },
+    {
+      "id": "built_in_dimmer",
+      "name": {
+        "en": "Built-in Dimmer",
+        "nl": "Built-in Dimmer"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 13,
+        "productId": 256,
+        "learnmode": {
+          "image": "/drivers/built_in_dimmer/assets/learnmode.svg",
+          "instruction": {
+            "en": "TODO",
+            "nl": "TODO"
+          }
+        },
+        "associationGroups": [
+          1, 2
+        ]
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "measure_power",
+        "meter_power"
+      ],
+      "mobile": {
+        "components": [
+          {
+            "capabilities": [
+              "onoff"
+            ],
+            "id": "icon"
+          },
+          {
+            "capabilities": [
+              "dim"
+            ],
+            "id": "slider"
+          },
+          {
+            "capabilities": [
+              "measure_power",
+              "meter_power"
+            ],
+            "id": "sensor"
+          }
+        ]
+      },
+      "images": {
+        "large": "/drivers/built_in_dimmer/assets/images/large.png",
+        "small": "/drivers/built_in_dimmer/assets/images/small.png"
       },
       "settings": []
     }
