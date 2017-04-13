@@ -575,7 +575,8 @@
           }
         },
         "associationGroups": [
-          1, 2
+          1,
+          2
         ]
       },
       "class": "light",
@@ -627,12 +628,20 @@
         "learnmode": {
           "image": "/drivers/built_in_dimmer/assets/learnmode.svg",
           "instruction": {
-            "en": "TODO",
-            "nl": "TODO"
+            "en": "When the light is off switch the wall switch once, after two seconds switch back the wall switch to start the inclusion process.",
+            "nl": "Zet het licht uit met de schakelaar, schakel het licht vervolgens in met de schakelaar en na 2 seconden weer uit om het apparaat toe te voegen."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/built_in_dimmer/assets/learnmode.svg",
+          "instruction": {
+            "en": "When the light is off switch the wall switch once, after two seconds switch back the wall switch to start the exclusion process.",
+            "nl": "Zet het licht uit met de schakelaar, schakel het licht vervolgens in met de schakelaar en na 2 seconden weer uit om het apparaat te verwijderen."
           }
         },
         "associationGroups": [
-          1, 2
+          1,
+          2
         ]
       },
       "class": "light",
@@ -668,6 +677,64 @@
       "images": {
         "large": "/drivers/built_in_dimmer/assets/images/large.png",
         "small": "/drivers/built_in_dimmer/assets/images/small.png"
+      },
+      "settings": []
+    },
+    {
+      "id": "energy_switch_plus",
+      "name": {
+        "en": "Energy Switch+",
+        "nl": "Energy Switch+"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 32,
+        "productId": 1,
+        "learnmode": {
+          "image": "/drivers/energy_switch_plus/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start inclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het installatie proces te starten."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/energy_switch_plus/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start exclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het verwijder proces te starten."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ]
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power"
+      ],
+      "mobile": {
+        "components": [
+          {
+            "capabilities": [
+              "onoff"
+            ],
+            "id": "icon"
+          },
+          {
+            "capabilities": [
+              "measure_power",
+              "meter_power"
+            ],
+            "id": "sensor"
+          }
+        ]
+      },
+      "images": {
+        "large": "/drivers/energy_switch_plus/assets/images/large.png",
+        "small": "/drivers/energy_switch_plus/assets/images/small.png"
       },
       "settings": []
     }
