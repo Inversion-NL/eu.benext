@@ -20,6 +20,17 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				command_report_parser: report => report.Value === 255,
 			},
 		],
+		alarm_water: {
+			getOnWakeUp: true,
+			optional: true,
+			command_class: 'COMMAND_CLASS_ALARM',
+			command_get: 'ALARM_GET',
+			command_get_parser: () => ({
+				'Alarm Type': 2,
+			}),
+			command_report: 'ALARM_REPORT',
+			command_report_parser: report => report['Alarm Level'] === 0,
+		},
 		measure_temperature: {
 			getOnWakeUp: true,
 			command_class: 'COMMAND_CLASS_SENSOR_MULTILEVEL',
