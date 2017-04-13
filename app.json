@@ -780,6 +780,47 @@
         "small": "/drivers/molite_sensor/assets/images/small.png"
       },
       "settings": []
+    },
+    {
+      "id": "window_door_sensor",
+      "name": {
+        "en": "Window/Door Sensor",
+        "nl": "Window/Door Sensor"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 4,
+        "productId": 257,
+        "learnmode": {
+          "image": "/drivers/window_door_sensor/assets/learnmode.svg",
+          "instruction": {
+            "en": "Remove the backplate of the device and hold the tamper button for 2 seconds.",
+            "nl": "Verwijder de achterkant van het apparaat en houd de knop ongeveer 2 seconden ingedrukt."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/window_door_sensor/assets/learnmode.svg",
+          "instruction": {
+            "en": "Remove the backplate of the device and hold the tamper button for 2 seconds.",
+            "nl": "Verwijder de achterkant van het apparaat en houd de knop ongeveer 2 seconden ingedrukt."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ]
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_contact",
+        "measure_temperature",
+        "measure_battery"
+      ],
+      "images": {
+        "large": "/drivers/window_door_sensor/assets/images/large.png",
+        "small": "/drivers/window_door_sensor/assets/images/small.png"
+      },
+      "settings": []
     }
   ],
   "capabilities": {

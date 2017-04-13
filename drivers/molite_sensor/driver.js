@@ -6,7 +6,6 @@ const ZwaveDriver = require('homey-zwavedriver');
 // Documentation: http://www.benext.eu/static/manual/molitesensor-nl.pdf
 
 module.exports = new ZwaveDriver(path.basename(__dirname), {
-	debug: true,
 	capabilities: {
 		alarm_motion: [{
 			command_class: 'COMMAND_CLASS_SENSOR_BINARY',
