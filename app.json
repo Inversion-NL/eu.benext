@@ -24,6 +24,14 @@
     "name": "Robin van Kekem",
     "email": "nl.inversion@gmail.com"
   },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Athom B.V.",
+        "email": "apps@athom.com"
+      }
+    ]
+  },
   "capabilities": {
     "user_code_report": {
       "type": "number",
