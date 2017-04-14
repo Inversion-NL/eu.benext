@@ -1,6 +1,6 @@
 'use strict';
 
-//Documentation: http://www.benext.eu/static/manual/energyswitchrs-nl.pdf
+// Documentation: http://www.benext.eu/static/manual/energyswitchrs-nl.pdf
 
 const path = require('path');
 const ZwaveDriver = require('homey-zwavedriver');
@@ -73,5 +73,5 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			},
 		},
 	},
-	settings: {}
+	settings: {},
 });

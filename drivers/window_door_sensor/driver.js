@@ -62,5 +62,5 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			},
 		},
 	},
-	settings: {}
+	settings: {},
 });
