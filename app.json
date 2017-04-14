@@ -164,18 +164,18 @@
     {
       "id": "p1_dongle",
       "name": {
-        "en": "BeNext P1 Dongle",
-        "nl": "BeNext P1 Dongle"
+        "en": "P1 Dongle",
+        "nl": "P1 Dongle"
       },
       "zwave": {
         "manufacturerId": 138,
         "productTypeId": 47,
         "productId": 256,
         "learnmode": {
-          "image": "/drivers/p1_dongle/assets/wakeup.svg",
+          "image": "/drivers/p1_dongle/assets/learnmode.svg",
           "instruction": {
-            "en": "Press and hold the button on your BeNext P1 Dongle for three seconds",
-            "nl": "Druk en hou de knop op de BeNext P1 Dongle vast voor drie seconden"
+            "en": "Press and hold the button on your P1 Dongle for three seconds, release to include the device.",
+            "nl": "Houd de knop op de P1 Dongle drie seconden vast, laat los om het apparaat toe te voegen."
           }
         },
         "associationGroups": [
@@ -193,37 +193,33 @@
         "meter_power.normal": {
           "title": {
             "en": "Power Meter Normal",
-            "nl": "Stroommeter normaal"
+            "nl": "Stroommeter Normaal"
           }
         },
         "meter_power.low": {
           "title": {
-            "en": "Power Meter low",
-            "nl": "Stroommeter laag"
+            "en": "Power Meter Low",
+            "nl": "Stroommeter Laag"
           }
         }
       },
       "images": {
-        "large": "/drivers/p1_dongle/assets/images/large.jpg",
-        "small": "/drivers/p1_dongle/assets/images/small.jpg"
+        "large": "/drivers/p1_dongle/assets/images/large.png",
+        "small": "/drivers/p1_dongle/assets/images/small.png"
       },
       "settings": [
         {
-          "id": "HW_pullup",
-          "type": "number",
+          "id": "hw_pullup",
+          "type": "checkbox",
           "label": {
-            "en": "HW pullup",
-            "nl": "HW pullup"
+            "en": "Enable HW pullup",
+            "nl": "Bied HW pullup aan"
           },
           "hint": {
-            "en": "It is possible to provide a pullup to your smart meter.\nRange: 0 - 1",
-            "nl": "Het is mogelijk om een pullup aan te bieden aan uw slimme meter.\nBereik: 0 - 1"
+            "en": "It is possible to provide a pullup to your smart meter.",
+            "nl": "Het is mogelijk om een pullup aan te bieden aan uw slimme meter."
           },
-          "attr": {
-            "min": 0,
-            "max": 1
-          },
-          "value": 0
+          "value": false
         },
         {
           "id": "baud_rate",
@@ -233,8 +229,8 @@
             "nl": "Standaard Baud rate"
           },
           "hint": {
-            "en": "Kamstrup and Iskra = BAUD rate 9600   Kaifa, Landis, Gyr = BAUD rate 115200",
-            "nl": "Kamstrup en Iskra = BAUD rate 9600   Kaifa, Landis, Gyr = BAUD rate 115200"
+            "en": "The speed of the communication between de P1 and your smart meter. Kamstrup and Iskra = Baud rate 9600, aifa, Landis, Gyr = Baud rate 115200.",
+            "nl": "De snelheid van de P1 communicatie tussen slimme meter en de P1 to Z-Wave. Kamstrup en Iskra = Baud rate 9600, Kaifa, Landis, Gyr = Baud rate 115200."
           },
           "value": "1152",
           "values": [
@@ -253,134 +249,55 @@
           ]
         },
         {
-          "id": "channel_1_unasked_Report_use_w",
+          "id": "poll_interval_channel_1",
           "type": "number",
+          "attr": {
+            "min": 0,
+            "max": 86400
+          },
+          "value": 36000,
           "label": {
-            "en": "Channel 1 unasked Meter Report consumed W.",
-            "nl": "Channel 1 ongevraagd Meter Report verbruikt W."
+            "en": "Poll interval channel 1",
+            "nl": "Poll interval channel 1"
           },
           "hint": {
-            "en": "The conditions to be automatically reported current consumption.\nChannel 1 = normal electricity rate",
-            "nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
-          },
-          "value": 100
+            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling. \nRange: 0 - 86400.\nDefault: 3600 seconds.",
+            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen. \nBereik: 0 - 86400.\nStandaard waarde: 3600 seconden."
+          }
         },
         {
-          "id": "channel_1_unasked_Report_use_kwh",
+          "id": "poll_interval_channel_2",
           "type": "number",
+          "attr": {
+            "min": 0,
+            "max": 86400
+          },
+          "value": 36000,
           "label": {
-            "en": "Channel 1 unasked Meter Report consumed kWh.",
-            "nl": "Channel 1 ongevraagd Meter Report verbruikt kWh."
+            "en": "Poll interval channel 2",
+            "nl": "Poll interval channel 2"
           },
           "hint": {
-            "en": "The condition that total consumption is automatically reported.\nChannel 1 = normal electricity rate",
-            "nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
-          },
-          "value": 100
+            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling. \nRange: 0 - 86400.\nDefault: 3600 seconds.",
+            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen. \nBereik: 0 - 86400.\nStandaard waarde: 3600 seconden."
+          }
         },
         {
-          "id": "channel_1_unasked_Report_returned_w",
+          "id": "poll_interval_channel_3",
           "type": "number",
+          "attr": {
+            "min": 0,
+            "max": 86400
+          },
+          "value": 36000,
           "label": {
-            "en": "Channel 1 unasked Meter Report returned W.",
-            "nl": "Channel 1 ongevraagd Meter Report teruggeleverd W."
+            "en": "Poll interval channel 3",
+            "nl": "Poll interval channel 3"
           },
           "hint": {
-            "en": "The conditions which currently returned reported automatically.\nChannel 1 = normal electricity rate",
-            "nl": "De voorwaarden dat huidig teruggeleverd automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
-          },
-          "value": 100
-        },
-        {
-          "id": "channel_1_unasked_Report_returned_kwh",
-          "type": "number",
-          "label": {
-            "en": "Channel 1 unasked Meter Report returned kWh.",
-            "nl": "Channel 1 ongevraagd Meter Report teruggeleverd kWh."
-          },
-          "hint": {
-            "en": "The conditions totally returned is reported automatically.\nChannel 1 = normal electricity rate",
-            "nl": "De voorwaarden dat totaal teruggeleverd automatisch wordt gerapporteerd.\nChannel 1 = Normaal tarief"
-          },
-          "value": 100
-        },
-        {
-          "id": "channel_2_unasked_Report_use_w",
-          "type": "number",
-          "label": {
-            "en": "Channel 2 unasked Meter Report consumed W.",
-            "nl": "Channel 2 ongevraagd Meter Report verbruikt W."
-          },
-          "hint": {
-            "en": "The conditions to be automatically reported current consumption.\nChannel 2 = low electricity rate",
-            "nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
-          },
-          "value": 100
-        },
-        {
-          "id": "channel_2_unasked_Report_use_kwh",
-          "type": "number",
-          "label": {
-            "en": "Channel 2 unasked Meter Report consumed kWh.",
-            "nl": "Channel 2 ongevraagd Meter Report verbruikt kWh."
-          },
-          "hint": {
-            "en": "The condition that total consumption is automatically reported.\nChannel 2 = low electricity rate",
-            "nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
-          },
-          "value": 100
-        },
-        {
-          "id": "channel_2_unasked_Report_returned_w",
-          "type": "number",
-          "label": {
-            "en": "Channel 2 unasked Meter Report returned W.",
-            "nl": "Channel 2 ongevraagd Meter Report teruggeleverd W."
-          },
-          "hint": {
-            "en": "The conditions which currently returned reported automatically.\nChannel 2 = low electricity rate",
-            "nl": "De voorwaarden dat huidig teruggeleverd automatisch wordt gerapporteerd"
-          },
-          "value": 100
-        },
-        {
-          "id": "channel_2_unasked_Report_returned_kwh",
-          "type": "number",
-          "label": {
-            "en": "Channel 2 unasked Meter Report returned kWh",
-            "nl": "Channel 2 ongevraagd Meter Report teruggeleverd kWh"
-          },
-          "hint": {
-            "en": "The conditions totally returned is reported automatically.\nChannel 2 = low electricity rate",
-            "nl": "De voorwaarden dat totaal teruggeleverd automatisch wordt gerapporteerd.\nChannel 2 = Laag tarief"
-          },
-          "value": 100
-        },
-        {
-          "id": "channel_3_unasked_Report_use_w",
-          "type": "number",
-          "label": {
-            "en": "Channel 3 unasked Meter Report consumed W.",
-            "nl": "Channel 3 ongevraagd Meter Report verbruikt W."
-          },
-          "hint": {
-            "en": "The conditions to be automatically reported current consumption.\nChannel 3 = Gas",
-            "nl": "De voorwaarden dat huidig verbruik automatisch wordt gerapporteerd.\nChannel 3 = Gas"
-          },
-          "value": 100
-        },
-        {
-          "id": "channel_3_unasked_Report_use_kwh",
-          "type": "number",
-          "label": {
-            "en": "Channel 3 unasked Meter Report consumed kWh.",
-            "nl": "Channel 3 ongevraagd Meter Report verbruikt kWh."
-          },
-          "hint": {
-            "en": "The condition that total consumption is automatically reported.\nChannel 3 = Gas",
-            "nl": "De voorwaarden dat totaal verbruik automatisch wordt gerapporteerd.\nChannel 3 = Gas"
-          },
-          "value": 100
+            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling. \nRange: 0 - 86400.\nDefault: 3600 seconds.",
+            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen. \nBereik: 0 - 86400.\nStandaard waarde: 3600 seconden."
+          }
         }
       ]
     },
