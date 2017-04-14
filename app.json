@@ -24,6 +24,56 @@
     "name": "Robin van Kekem",
     "email": "nl.inversion@gmail.com"
   },
+  "capabilities": {
+    "user_code_report": {
+      "type": "number",
+      "title": {
+        "en": "User Code Report",
+        "nl": "Gebruikerscode Rapport"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "status",
+        "nl": "status"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    "alarm_report": {
+      "type": "number",
+      "title": {
+        "en": "Alarm Report User ID",
+        "nl": "Alarm Rapport Gebruiker ID"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "status",
+        "nl": "status"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    "my_gateway_control": {
+      "type": "number",
+      "title": {
+        "en": "Gateway Events",
+        "nl": "Gateway Events"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "event",
+        "nl": "event"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1
+    }
+  },
   "drivers": [
     {
       "id": "alarm_sound",
@@ -527,6 +577,13 @@
         "associationGroups": [
           1,
           2
+        ],
+        "defaultConfiguration": [
+          {
+            "id": 11,
+            "size": 1,
+            "value": 20
+          }
         ]
       },
       "class": "light",
@@ -563,7 +620,71 @@
         "large": "/drivers/plug_in_dimmer/assets/images/large.png",
         "small": "/drivers/plug_in_dimmer/assets/images/small.png"
       },
-      "settings": []
+      "settings": [
+        {
+          "id": "meter_report_percentage",
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (%)",
+            "nl": "Wattage verzending drempel (%)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in percentage) before the value is being send. Range: 1 - 100",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in percentage) voor de waarde wordt verzonden. Bereik: 1 - 100"
+          },
+          "attr": {
+            "min": 1,
+            "max": 100
+          },
+          "value": 20
+        },
+        {
+          "id": "meter_report_watt",
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (W)",
+            "nl": "Wattage verzending drempel (W)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255"
+          },
+          "attr": {
+            "min": 5,
+            "max": 255
+          },
+          "value": 5
+        },
+        {
+          "id": "save_state",
+          "type": "dropdown",
+          "label": {
+            "en": "Save power-off state",
+            "nl": "Onthoud status na stroomonderbreking"
+          },
+          "hint": {
+            "en": "State after power disruption.",
+            "nl": "Status na stroomonderbreking"
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Always off",
+                "nl": "Altijd uit"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Restore previous state",
+                "nl": "Herstel vorige status"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "built_in_dimmer",
@@ -592,6 +713,13 @@
         "associationGroups": [
           1,
           2
+        ],
+        "defaultConfiguration": [
+          {
+            "id": 11,
+            "size": 1,
+            "value": 20
+          }
         ]
       },
       "class": "light",
@@ -628,7 +756,71 @@
         "large": "/drivers/built_in_dimmer/assets/images/large.png",
         "small": "/drivers/built_in_dimmer/assets/images/small.png"
       },
-      "settings": []
+      "settings": [
+        {
+          "id": "meter_report_percentage",
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (%)",
+            "nl": "Wattage verzending drempel (%)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in percentage) before the value is being send. Range: 1 - 100",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in percentage) voor de waarde wordt verzonden. Bereik: 1 - 100"
+          },
+          "attr": {
+            "min": 1,
+            "max": 100
+          },
+          "value": 20
+        },
+        {
+          "id": "meter_report_watt",
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (W)",
+            "nl": "Wattage verzending drempel (W)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255"
+          },
+          "attr": {
+            "min": 5,
+            "max": 255
+          },
+          "value": 5
+        },
+        {
+          "id": "save_state",
+          "type": "dropdown",
+          "label": {
+            "en": "Save power-off state",
+            "nl": "Onthoud status na stroomonderbreking"
+          },
+          "hint": {
+            "en": "State after power disruption.",
+            "nl": "Status na stroomonderbreking"
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Always off",
+                "nl": "Altijd uit"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Restore previous state",
+                "nl": "Herstel vorige status"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "energy_switch_plus",
@@ -686,7 +878,71 @@
         "large": "/drivers/energy_switch_plus/assets/images/large.png",
         "small": "/drivers/energy_switch_plus/assets/images/small.png"
       },
-      "settings": []
+      "settings": [
+        {
+          "id": "meter_report_percentage",
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (%)",
+            "nl": "Wattage verzending drempel (%)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in percentage) before the value is being send. Range: 10 - 100",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in percentage) voor de waarde wordt verzonden. Bereik: 10 - 100"
+          },
+          "attr": {
+            "min": 10,
+            "max": 100
+          },
+          "value": 20
+        },
+        {
+          "id": "meter_report_watt",
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (W)",
+            "nl": "Wattage verzending drempel (W)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255"
+          },
+          "attr": {
+            "min": 10,
+            "max": 255
+          },
+          "value": 5
+        },
+        {
+          "id": "save_state",
+          "type": "dropdown",
+          "label": {
+            "en": "Save power-off state",
+            "nl": "Onthoud status na stroomonderbreking"
+          },
+          "hint": {
+            "en": "State after power disruption.",
+            "nl": "Status na stroomonderbreking"
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Always off",
+                "nl": "Altijd uit"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Restore previous state",
+                "nl": "Herstel vorige status"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "molite_sensor",
@@ -774,56 +1030,6 @@
       "settings": []
     }
   ],
-  "capabilities": {
-    "user_code_report": {
-      "type": "number",
-      "title": {
-        "en": "User Code Report",
-        "nl": "Gebruikerscode Rapport"
-      },
-      "getable": true,
-      "setable": false,
-      "units": {
-        "en": "status",
-        "nl": "status"
-      },
-      "min": 0,
-      "max": 100,
-      "step": 1
-    },
-    "alarm_report": {
-      "type": "number",
-      "title": {
-        "en": "Alarm Report User ID",
-        "nl": "Alarm Rapport Gebruiker ID"
-      },
-      "getable": true,
-      "setable": false,
-      "units": {
-        "en": "status",
-        "nl": "status"
-      },
-      "min": 0,
-      "max": 100,
-      "step": 1
-    },
-    "my_gateway_control": {
-      "type": "number",
-      "title": {
-        "en": "Gateway Events",
-        "nl": "Gateway Events"
-      },
-      "getable": true,
-      "setable": false,
-      "units": {
-        "en": "event",
-        "nl": "event"
-      },
-      "min": 0,
-      "max": 100,
-      "step": 1
-    }
-  },
   "flow": {
     "triggers": [
       {

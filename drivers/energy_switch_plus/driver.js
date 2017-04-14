@@ -73,5 +73,18 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			},
 		},
 	},
-	settings: {},
+	settings: {
+		save_state: {
+			index: 4,
+			size: 1,
+		},
+		meter_report_percentage: {
+			index: 6,
+			size: 1,
+		},
+		meter_report_watt: {
+			index: 7,
+			size: 1,
+		}
+	},
 });
