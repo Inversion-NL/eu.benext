@@ -18,7 +18,6 @@ const eventsRecieved = new Array();
 const eventIdsRecieved = new Array();
 
 module.exports = new ZwaveDriver(path.basename(__dirname), {
-	debug: true,
 	capabilities: {
 		measure_battery: {
 			command_class: 'COMMAND_CLASS_BATTERY',

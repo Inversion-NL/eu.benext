@@ -302,7 +302,7 @@
       ]
     },
     {
-      "id": "tagreader500",
+      "id": "tag_reader_500",
       "name": {
         "en": "Tag Reader 500",
         "nl": "Tag Reader 500"
@@ -312,10 +312,10 @@
         "productTypeId": 7,
         "productId": 512,
         "learnmode": {
-          "image": "/drivers/tagreader500/assets/add.svg",
+          "image": "/drivers/tag_reader_500/assets/learnmode.svg",
           "instruction": {
             "en": "Press and hold the enter button for two seconds (indication LED blinks shortly) and release to start the add/remove routine.",
-            "nl": "Druk en houdt de enter knop (op de Tag Reader 500) ingedrukt voor twee seconden (LED indicatie knippert kort) om de toevoegen/verwijder modus te starten."
+            "nl": "Druk en houd de enter knop ingedrukt voor twee seconden (LED indicatie knippert kort) om de toevoegen/verwijder modus te starten."
           }
         },
         "associationGroups": [
@@ -338,8 +338,8 @@
         "my_gateway_control"
       ],
       "images": {
-        "large": "/drivers/tagreader500/assets/images/large.jpg",
-        "small": "/drivers/tagreader500/assets/images/small.jpg"
+        "large": "/drivers/tag_reader_500/assets/images/large.png",
+        "small": "/drivers/tag_reader_500/assets/images/small.png"
       },
       "settings": [
         {
@@ -350,8 +350,8 @@
             "nl": "Fabrieksinstellingen terugzetten"
           },
           "hint": {
-            "en": "Set all configuration values to default values (factory settings). Read more in chapter Configuration Reset. (Any value other than 85, 170 set all parameters to default).",
-            "nl": "Zet alle configuratie waarden terug naar de standaard instellingen. Elke waarde anders dan 85 of 170 zal dit bewerkstelligen."
+            "en": "Set all configuration values to default values (factory settings).",
+            "nl": "Zet alle configuratie waarden terug naar de standaard instellingen."
           },
           "value": "170",
           "values": [
@@ -379,8 +379,8 @@
             "nl": "Terugkoppel tijd"
           },
           "hint": {
-            "en": "To configure the time the beep is automatically turned off in seconds. (0 = off, 1-244 = value in seconds, 255 = not turned off, default 15)",
-            "nl": "Stelt de tijd in waarna de beep automatisch uitgezet wordt. (0 = uit, 1-244 = na x-seconden, 255 = nooit uit, standaard: 15)."
+            "en": "To configure the time the beep is automatically turned off in seconds (0 = off, 1 - 244 = value in seconds, 255 = not turned off, default 15).",
+            "nl": "De tijd waarna de piep automatisch uitgezet wordt. (0 = uit, 1 - 244 = waarde in seconden, 255 = nooit, standaard: 15)."
           },
           "attr": {
             "min": 0,
@@ -396,8 +396,8 @@
             "nl": "Terugkoppel timeout"
           },
           "hint": {
-            "en": "To configure the timeout to wait for a WAKEUP_NO_MORE_INFORMATION before the error beep is automatically sound. The error beeps are fixed 8 beeps shortly after each other. (0 = off, 1-255 = value in seconds. Default 0)",
-            "nl": "Hoe lang de Tagreader wacht op een WAKEUP_NO_MORE_INFORMATION frame van Homey voordat de error piepjes automatisch gaan. De error piep is altijd 8 beeps kort na elkaar. (0 = uit, 1-255 = waarde in seconden, standaard: 0)."
+            "en": "To configure the timeout to wait for a WAKEUP_NO_MORE_INFORMATION before the error beep is automatically sound. The error beeps are fixed 8 beeps shortly after each other (0 = off, 1 - 255 = value in seconds. Default 0).",
+            "nl": "Tijd waarna, bij het niet ontvangen van een WAKEUP_NO_MORE_INFORMATION frame van Homey, het apparaat error geluiden laad horen. De error piep is altijd 8 piepjes kort na elkaar (0 = uit, 1 - 255 = waarde in seconden, standaard: 0)."
           },
           "attr": {
             "min": 0,
@@ -413,8 +413,8 @@
             "nl": "Terugekoppeling piepjes per seconde"
           },
           "hint": {
-            "en": "To configure the number of beeps per second. Every beep is fixed about 10ms. (0 = off, 1-255 = number of beeps per second. Default 2)",
-            "nl": "Het aantal piepjes per seconde. Elke piep duurt 10ms. (0 = uit, 1-255 = aantal piepjes per seconde. Standaard 2)."
+            "en": "To configure the number of beeps per second. Every beep is fixed about 10ms (0 = off, 1 - 255 = number of beeps per second. Default: 2)",
+            "nl": "Het aantal piepjes per seconde. Elke piep duurt 10ms (0 = uit, 1 - 255 = aantal piepjes per seconde. Standaard: 2)."
           },
           "attr": {
             "min": 0,
@@ -429,10 +429,6 @@
             "en": "Always awake mode",
             "nl": "Altijd wakker modus"
           },
-          "hint": {
-            "en": "To configure the always awake mode.",
-            "nl": "Om in te stellen of de Tagreader altijd wakker blijft."
-          },
           "value": "0",
           "values": [
             {
@@ -445,7 +441,7 @@
             {
               "id": "3",
               "label": {
-                "en": "Always awake mode, Z-Wave chip is always on to request e.g. version or manufacturer id.",
+                "en": "Always awake mode, Z-Wave chip is always on to request e.g. version or manufacturer id",
                 "nl": "Altijd wakker modus, Z-Wave chip is altijd klaar om een verzoek te ontvangen"
               }
             }
@@ -467,14 +463,14 @@
             {
               "id": "0",
               "label": {
-                "en": "The RFID and Numeric codes are reported in gateway mode",
+                "en": "The RFID and numeric codes are reported in gateway mode",
                 "nl": "De RFID en numerieke codes worden geraporteerd in gateway modus"
               }
             },
             {
               "id": "1",
               "label": {
-                "en": "The RFID and Numeric codes are reported in local mode",
+                "en": "The RFID and numeric codes are reported in local mode",
                 "nl": "De RFID en numerieke codes worden lokaal verwerkt"
               }
             }
@@ -844,7 +840,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=tagreader500"
+            "filter": "driver_id=tag_reader_500"
           }
         ],
         "tokens": [
@@ -893,7 +889,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=tagreader500"
+            "filter": "driver_id=tag_reader_500"
           }
         ],
         "tokens": [
@@ -1049,7 +1045,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=tagreader500"
+            "filter": "driver_id=tag_reader_500"
           }
         ],
         "tokens": [
