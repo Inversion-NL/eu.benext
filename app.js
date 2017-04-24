@@ -1,5 +1,5 @@
-"use strict";
+'use strict';
 
-module.exports.init = function() {
-	Homey.log("eu.benext running...");
-}
+module.exports.init = () => {
+	console.log(`${Homey.manifest.id} running...`);
+};
