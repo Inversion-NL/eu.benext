@@ -4,7 +4,7 @@
   "description": "This app adds support for BeNext devices in Homey.",
   "main": "app.js",
   "dependencies": {
-    "homey-zwavedriver": "^1.1.4"
+    "homey-zwavedriver": "git+https://github.com/athombv/node-homey-zwavedriver.git"
   },
   "devDependencies": {},
   "scripts": {
