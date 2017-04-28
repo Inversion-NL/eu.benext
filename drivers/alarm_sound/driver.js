@@ -39,9 +39,9 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 });
 
 Homey.manager('flow').on('action.sound_alarm', (callback, args) => {
-	Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, true, callback);
+	Homey.manager('drivers').getDriver('alarm_sound').capabilities.onoff.set(args.device, true, callback);
 });
 
 Homey.manager('flow').on('action.silence_alarm', (callback, args) => {
-	Homey.manager('drivers').getDriver('alarmsound').capabilities.onoff.set(args.device, false, callback);
+	Homey.manager('drivers').getDriver('alarm_sound').capabilities.onoff.set(args.device, false, callback);
 });
