@@ -59,7 +59,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			}),
 			command_report: 'SENSOR_MULTILEVEL_REPORT',
 			command_report_parser: report => {
-				if (report['Sensor Value (Parsed)'] === -999.9) return null;
+				if (report['Sensor Type'] !== 'Temperature (version 1)' || report['Sensor Value (Parsed)'] === -999.9) return null;
 				return report['Sensor Value (Parsed)'];
 			},
 			optional: true,
@@ -75,7 +75,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			}),
 			command_report: 'SENSOR_MULTILEVEL_REPORT',
 			command_report_parser: report => {
-				if (report['Sensor Value (Parsed)'] === -999.9) return null;
+				if (report['Sensor Type'] !== 'Barometric pressure (version 2) ' || report['Sensor Value (Parsed)'] === -999.9) return null;
 				return report['Sensor Value (Parsed)'];
 			},
 			optional: true,
@@ -91,7 +91,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			}),
 			command_report: 'SENSOR_MULTILEVEL_REPORT',
 			command_report_parser: report => {
-				if (report['Sensor Value (Parsed)'] === -999.9) return null;
+				if (report['Sensor Type'] !== 'Target Temperature (v6)' || report['Sensor Value (Parsed)'] === -999.9) return null;
 				return report['Sensor Value (Parsed)'];
 			},
 			optional: true,
