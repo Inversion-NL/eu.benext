@@ -41,16 +41,13 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 				if (report.Value === 'on/enable') {
 					module.exports.realtime(node.device_data, 'onoff', true);
 					return 1.0;
-				}
-				else if (report.Value === 'off/disable') {
+				} else if (report.Value === 'off/disable') {
 					module.exports.realtime(node.device_data, 'onoff', false);
 					return 0.0;
-				}
-				else if (typeof report.Value === 'number') {
+				} else if (typeof report.Value === 'number') {
 					module.exports.realtime(node.device_data, 'onoff', report.Value > 0);
 					return report.Value / 99;
-				}
-				else if (typeof report['Value (Raw)'] !== 'undefined') {
+				} else if (typeof report['Value (Raw)'] !== 'undefined') {
 					module.exports.realtime(node.device_data, 'onoff', report['Value (Raw)'][0] > 0);
 					if (report['Value (Raw)'][0] === 255) return 1.0;
 					return report['Value (Raw)'][0] / 99;
@@ -71,7 +68,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			command_report_parser: report => {
 				if (report.hasOwnProperty('Properties2') &&
 					report.Properties2.hasOwnProperty('Scale') &&
-					report.Properties2['Scale'] === 2) {
+					report.Properties2.Scale === 2) {
 					return report['Meter Value (Parsed)'];
 				}
 				return null;
@@ -90,12 +87,25 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			command_report_parser: report => {
 				if (report.hasOwnProperty('Properties2') &&
 					report.Properties2.hasOwnProperty('Scale') &&
-					report.Properties2['Scale'] === 0) {
+					report.Properties2.Scale === 0) {
 					return report['Meter Value (Parsed)'];
 				}
 				return null;
 			},
 		},
 	},
-	settings: {}
+	settings: {
+		meter_report_percentage: {
+			index: 11,
+			size: 1,
+		},
+		meter_report_watt: {
+			index: 12,
+			size: 1,
+		},
+		save_state: {
+			index: 14,
+			size: 1,
+		}
+	},
 });
