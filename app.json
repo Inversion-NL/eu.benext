@@ -1036,6 +1036,109 @@
         "small": "/drivers/window_door_sensor/assets/images/small.png"
       },
       "settings": []
+    },
+    {
+      "id": "heating_control",
+      "name": {
+        "en": "Heating Control",
+        "nl": "Heating Control"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 33,
+        "productId": 258,
+        "learnmode": {
+          "image": "/drivers/heating_control/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start inclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het installatie proces te starten."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/heating_control/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start exclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het verwijder proces te starten."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ],
+        "defaultConfiguration": [
+          {
+            "id": 7,
+            "size": 1,
+            "value": 1
+          }
+        ]
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "measure_temperature",
+        "target_temperature",
+        "measure_pressure",
+        "measure_temperature.outside"
+      ],
+      "capabilitiesOptions": {
+        "target_temperature": {
+          "min": 7,
+          "max": 32
+        }
+      },
+      "mobile": {
+        "components": [
+          {
+            "capabilities": [],
+            "id": "icon"
+          },
+          {
+            "capabilities": [
+              "measure_temperature",
+              "measure_temperature.outside",
+              "measure_pressure"
+            ],
+            "id": "sensor"
+          },
+          {
+            "capabilities": [
+              "target_temperature"
+            ],
+            "id": "thermostat"
+          }
+        ]
+      },
+      "images": {
+        "large": "/drivers/heating_control/assets/images/large.png",
+        "small": "/drivers/heating_control/assets/images/small.png"
+      },
+      "settings": [
+        {
+          "id": "override_mode",
+          "type": "dropdown",
+          "label": {
+            "en": "Temperature schedule override",
+            "nl": "Temperatuur schema overschrijven"
+          },
+          "value": "1",
+          "values": [
+            {
+              "id": "1",
+              "label": {
+                "en": "Temporary",
+                "nl": "Tijdelijk"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Permanently",
+                "nl": "Permanent"
+              }
+            }
+          ]
+        }
+      ]
     }
   ],
   "flow": {
