@@ -3,7 +3,7 @@
   "name": {
     "en": "BeNext"
   },
-  "version": "0.2.3",
+  "version": "0.3.1",
   "compatibility": ">=1.1.4",
   "description": {
     "en": "BeNext devices for Homey",
@@ -11,7 +11,7 @@
   },
   "category": [
     "security",
-    "light",
+    "lights",
     "appliances",
     "climate",
     "energy"
@@ -112,7 +112,7 @@
           2
         ]
       },
-      "class": "other",
+      "class": "security",
       "capabilities": [
         "onoff"
       ],
