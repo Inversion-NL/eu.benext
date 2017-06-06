@@ -30,7 +30,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 						console.log('calculated incoming (positive) delta', delta);
 					}
 					console.log('SCHEDULE_OVERRIDE_REPORT -> calculated value ->', DEFAULT_SETPOINT + delta);
-					return Math.max(7, Math.min(DEFAULT_SETPOINT + delta, 32));
+					return Math.max(7.5, Math.min(DEFAULT_SETPOINT + delta, 32.5));
 				}
 			},
 			command_set: 'SCHEDULE_OVERRIDE_SET',
@@ -42,12 +42,12 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 
 				console.log('SCHEDULE_OVERRIDE_SET -> calculated delta ->', delta);
 
-				if (delta < 0 && delta < -130) {
+				if (delta < 0 && delta < -125) {
 					console.error('out_of_range_too_low', delta);
-					delta = -130;
-				} else if (delta > 0 && delta > 120) {
+					delta = -125;
+				} else if (delta > 0 && delta > 125) {
 					console.error('out_of_range_too_high', delta);
-					delta = 120;
+					delta = 125;
 				}
 
 				if (delta < 0) delta = 256 + delta;
