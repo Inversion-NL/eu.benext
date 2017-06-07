@@ -1082,8 +1082,8 @@
       ],
       "capabilitiesOptions": {
         "target_temperature": {
-          "min": 7,
-          "max": 32
+          "min": 7.5,
+          "max": 32.5
         }
       },
       "mobile": {
