@@ -1046,7 +1046,10 @@
       "zwave": {
         "manufacturerId": 138,
         "productTypeId": 33,
-        "productId": 258,
+        "productId": [
+					256,
+					258
+				],
         "learnmode": {
           "image": "/drivers/heating_control/assets/learnmode.svg",
           "instruction": {
