@@ -12,3 +12,4 @@ This app adds support for BeNext devices in Homey.
 * MoLiTe sensor
 * Window/door sensor
 * Heating control
+* Energy switch plus
