@@ -838,8 +838,8 @@
       },
       "zwave": {
         "manufacturerId": 138,
-        "productTypeId": 32,
-        "productId": 1,
+        "productTypeId": [32, 6],
+        "productId": [1, 512],
         "learnmode": {
           "image": "/drivers/energy_switch_plus/assets/learnmode.svg",
           "instruction": {
