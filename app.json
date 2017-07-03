@@ -3,7 +3,7 @@
   "name": {
     "en": "BeNext"
   },
-  "version": "0.4.2",
+  "version": "0.4.3",
   "compatibility": ">=1.1.4",
   "description": {
     "en": "BeNext devices for Homey",
@@ -838,8 +838,8 @@
       },
       "zwave": {
         "manufacturerId": 138,
-        "productTypeId": 32,
-        "productId": 1,
+        "productTypeId": [32, 6],
+        "productId": [1, 512],
         "learnmode": {
           "image": "/drivers/energy_switch_plus/assets/learnmode.svg",
           "instruction": {
