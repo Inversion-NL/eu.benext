@@ -22,3 +22,26 @@
   },
   "homepage": "https://github.com/athombv/eu.benext#readme"
 }
+
+
+
+{
+  "name": "eu.benext",
+  "version": "2.0.0",
+  "description": "This app adds support for BeNext devices in Homey.",
+  "main": "app.js",
+  "dependencies": {
+    "homey-meshdriver": "^1.2.32"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Inversion-NL/eu.benext.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Inversion-NL/eu.benext/issues"
+  },
+  "homepage": "https://github.com/Inversion-NL/eu.benext#readme"
+}
