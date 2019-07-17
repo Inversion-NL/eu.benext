@@ -1,15 +1,12 @@
 # BeNext
 
 This app adds support for BeNext devices in Homey.
+Rewrite vor SDKv2
 
 ## Currently supported devices:
 
 * Alarm sound
 * P1 dongle
-* Tag Reader 500
 * Plug-in dimmer
 * Built-in dimmer
-* MoLiTe sensor
-* Window/door sensor
-* Heating control
-* Energy switch plus
+
