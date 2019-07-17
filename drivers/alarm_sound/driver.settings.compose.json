@@ -1,0 +1,99 @@
+[        
+{
+          "id": "destination_routine_enabled",
+          "zwave": {
+            "index": 2,
+            "size": 1,
+            "signed": false
+          },
+          "type": "dropdown",
+          "label": {
+            "en": "Destination routine enabled",
+            "nl": "Bestemming routine ingeschakeld"
+          },
+          "value": "255",
+          "hint": {
+            "en": "Enables an internal routine that periodically checks the Z-Wave device in association group 2 by sending a test message. If transmission fails, the Alarm Sound will notify the user with a sound.",
+            "nl": "Schakelt een interne routine in die periodiek het Z-Wave apparaat controleert in associatie groep 2 door het verzenden van een test bericht. Als de transmissie mislukt, zal de Alarm Sound de gebruiker informeren door middel van geluid."
+          },
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Routine is disabled",
+                "nl": "Routine is uitgeschakeld"
+              }
+            },
+            {
+              "id": "255",
+              "label": {
+                "en": "Routine is enabled",
+                "nl": "Routine is ingeschakeld"
+              }
+            }
+          ]
+        },
+        {
+          "id": "sound_light_mode_index",
+		  "zwave": {
+            "index": 7,
+            "size": 1
+          },
+          "type": "number",
+          "label": {
+            "en": "Select index sound/light mode",
+            "nl": "Selecteer index geluid/licht modus"
+          },
+          "value": 1,
+          "attr": {
+            "min": 0,
+            "max": 6
+          },
+          "hint": {
+            "en": "The index of the sound mode when a switch binary/basic set frame is received.",
+            "nl": "De index van de geluid modus wanneer een switch binary/basic set frame is ontvangen."
+          }
+        },
+        {
+          "id": "power_offline_sound_light_mode",
+		  "zwave": {
+            "index": 8,
+            "size": 1
+          },
+          "type": "number",
+          "label": {
+            "en": "Power offline sound/light mode",
+            "nl": "Power offline geluid/licht modus"
+          },
+          "value": 1,
+          "attr": {
+            "min": 0,
+            "max": 6
+          },
+          "hint": {
+            "en": "The index of the sound mode the Alarm Sound will start when it is unplugged.",
+            "nl": "De index van de geluidsmodus van de Alarm Sound die zal starten wanneer de stroom wordt onderbroken."
+          }
+        },
+        {
+          "id": "destination_route_failed_sound_light_mode",
+		  "zwave": {
+            "index": 9,
+            "size": 1
+          },
+          "type": "number",
+          "label": {
+            "en": "Error (destination routine failed) sound/light mode",
+            "nl": "Error (destination routine failed) geluid/licht modus"
+          },
+          "value": 1,
+          "attr": {
+            "min": 0,
+            "max": 6
+          },
+          "hint": {
+            "en": "The index of the sound mode the Alarm Sound will play when it is unable to reach the device in association group 2.",
+            "nl": "De index van de geluidsmodus van de Alarm Sound zal afspelen waneer deze onbereikbaar is geworden voor in associatie groep 2."
+          }
+        }
+		]

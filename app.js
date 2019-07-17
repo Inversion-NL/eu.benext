@@ -1,5 +1,15 @@
 'use strict';
 
-module.exports.init = () => {
-	console.log(`${Homey.manifest.id} running...`);
-};
+const Homey = require('homey');
+
+class benext extends Homey.App {
+
+	onInit() {
+
+		this.log('Benext app is running...');
+
+	}
+
+}
+
+module.exports = benext;

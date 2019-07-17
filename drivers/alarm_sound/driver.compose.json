@@ -1,0 +1,38 @@
+{
+      "id": "alarm_sound",
+      "name": {
+        "en": "Alarm Sound",
+        "nl": "Alarm Sound"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 5,
+        "productId": 257,
+        "learnmode": {
+          "image": "/drivers/alarm_sound/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button until the red light starts blinking, then release to start inclusion.",
+            "nl": "Houd de knop ingedrukt tot het rode lampje begint te knipperen, laat vervolgens los om het apparaat toe te voegen."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/alarm_sound/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button until the red light starts blinking, then release to start exclusion.",
+            "nl": "Houd de knop ingedrukt tot het rode lampje begint te knipperen, laat vervolgens los om het apparaat te verwijderen."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ]
+      },
+      "class": "homealarm",
+      "capabilities": [
+        "onoff"
+      ],
+      "images": {
+        "large": "/drivers/alarm_sound/assets/images/large.png",
+        "small": "/drivers/alarm_sound/assets/images/small.png"
+      }
+    }

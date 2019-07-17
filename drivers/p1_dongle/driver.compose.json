@@ -1,0 +1,47 @@
+{
+      "id": "p1_dongle",
+      "name": {
+        "en": "P1 Dongle",
+        "nl": "P1 Dongle"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 47,
+        "productId": 256,
+        "learnmode": {
+          "image": "/drivers/p1_dongle/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on your P1 Dongle for three seconds, release to include the device.",
+            "nl": "Houd de knop op de P1 Dongle drie seconden vast, laat los om het apparaat toe te voegen."
+          }
+        },
+        "associationGroups": [
+          1
+        ]
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_power",
+        "meter_power.normal",
+        "meter_power.low",
+        "meter_gas"
+      ],
+      "capabilitiesOptions": {
+        "meter_power.normal": {
+          "title": {
+            "en": "Power Meter Normal",
+            "nl": "Stroommeter Normaal"
+          }
+        },
+        "meter_power.low": {
+          "title": {
+            "en": "Power Meter Low",
+            "nl": "Stroommeter Laag"
+          }
+        }
+      },
+      "images": {
+        "large": "/drivers/p1_dongle/assets/images/large.png",
+        "small": "/drivers/p1_dongle/assets/images/small.png"
+      }
+    }
