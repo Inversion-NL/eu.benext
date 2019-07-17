@@ -19,7 +19,8 @@
 				"s0": "Afwezig",
 				"s1": "Thuis",
 				"s2": "Tag Toegevoegd",
-				"s3": "Scene Gestart"
+				"s3": "Scene Gestart",
+				"s4": "Unknown Tag"
 			},
 			"messages":
 			{
@@ -79,7 +80,10 @@
 				"tagsClearedConfirmation": "De tags zijn verwijderd uit Homey. Stel je Tag Reader opnieuw in.",
 				"allowTags": "Registratie van tags is toegestaan.",
 				"denyTags": "Registratie van tags is niet toegestaan.",
-				"toggleTagStatusConfirmedTitle": "Tag registratie is verwisseld naar: "
+				"toggleTagStatusConfirmedTitle": "Tag registratie is verwisseld naar: ",
+				"usersSavedErrorTitle": "Error saving users: ",
+				"usersSavedConfirmation": "Users succesfully saved",
+				"userDeleted": "User deleted, click on save user settings to commit the delete"	
 			},
 			"buttons":
 			{

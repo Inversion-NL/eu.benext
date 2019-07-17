@@ -1,0 +1,130 @@
+[
+    {
+        "id": "set_to_default",
+        "zwave": {
+            "index": 1,
+            "size": 1
+        },
+        "type": "dropdown",
+        "label": {
+            "en": "Reset to factory settings",
+            "nl": "Fabrieksinstellingen terugzetten"
+        },
+        "hint": {
+            "en": "Set all configuration values to default values (factory settings).",
+            "nl": "Zet alle configuratie waarden terug naar de standaard instellingen."
+        },
+        "value": "170",
+        "values": [
+            {
+                "id": "170",
+                "label": {
+                    "en": "Don't reset settings",
+                    "nl": "Wis gegevens niet"
+                }
+            },
+            {
+                "id": "3",
+                "label": {
+                    "en": "Reset to factory settings",
+                    "nl": "Fabrieksinstellingen terugzetten"
+                }
+            }
+        ]
+    },
+    {
+        "id": "feedback_time",
+        "zwave": {
+            "index": 2,
+            "size": 1,
+            "signed": false
+        },
+        "type": "number",
+        "label": {
+            "en": "Feedback time",
+            "nl": "Terugkoppel tijd"
+        },
+        "hint": {
+            "en": "To configure the time the beep is automatically turned off in seconds (0 = off, 1 - 244 = value in seconds, 255 = not turned off, default 15).",
+            "nl": "De tijd waarna de piep automatisch uitgezet wordt. (0 = uit, 1 - 244 = waarde in seconden, 255 = nooit, standaard: 15)."
+        },
+        "attr": {
+            "min": 0,
+            "max": 255
+        },
+        "value": 15
+    },
+    {
+        "id": "feedback_timeout",
+        "zwave": {
+            "index": 3,
+            "size": 1,
+            "signed": false
+        },
+        "type": "number",
+        "label": {
+            "en": "Feedback timeout",
+            "nl": "Terugkoppel timeout"
+        },
+        "hint": {
+            "en": "To configure the timeout to wait for a WAKEUP_NO_MORE_INFORMATION before the error beep is automatically sound. The error beeps are fixed 8 beeps shortly after each other (0 = off, 1 - 255 = value in seconds. Default 0).",
+            "nl": "Tijd waarna, bij het niet ontvangen van een WAKEUP_NO_MORE_INFORMATION frame van Homey, het apparaat error geluiden laad horen. De error piep is altijd 8 piepjes kort na elkaar (0 = uit, 1 - 255 = waarde in seconden, standaard: 0)."
+        },
+        "attr": {
+            "min": 0,
+            "max": 255
+        },
+        "value": 0
+    },
+    {
+        "id": "feedback_beeps_per_second",
+        "zwave": {
+            "index": 4,
+            "size": 1,
+            "signed": false
+        },
+        "type": "number",
+        "label": {
+            "en": "Feedback beeps per second",
+            "nl": "Terugekoppeling piepjes per seconde"
+        },
+        "hint": {
+            "en": "To configure the number of beeps per second. Every beep is fixed about 10ms (0 = off, 1 - 255 = number of beeps per second. Default: 2)",
+            "nl": "Het aantal piepjes per seconde. Elke piep duurt 10ms (0 = uit, 1 - 255 = aantal piepjes per seconde. Standaard: 2)."
+        },
+        "attr": {
+            "min": 0,
+            "max": 255
+        },
+        "value": 2
+    },
+    {
+        "id": "always_awake_mode",
+        "zwave": {
+            "index": 5,
+            "size": 1
+        },
+        "type": "dropdown",
+        "label": {
+            "en": "Always awake mode",
+            "nl": "Altijd wakker modus"
+        },
+        "value": "0",
+        "values": [
+            {
+                "id": "0",
+                "label": {
+                    "en": "Mode 1, normal operating mode",
+                    "nl": "Mode 1, normale modus"
+                }
+            },
+            {
+            "id": "3",
+            "label": {
+                "en": "Always awake mode, Z-Wave chip is always on to request e.g. version or manufacturer id",
+                "nl": "Altijd wakker modus, Z-Wave chip is altijd klaar om een verzoek te ontvangen"
+            }
+        }
+        ]
+    }
+]

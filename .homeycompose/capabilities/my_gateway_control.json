@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+	"en": "Gateway Events",
+	"nl": "Gateway Events"
+  },
+  "getable": true,
+  "setable": false,
+  "units": {
+	"en": "event",
+	"nl": "event"
+  },
+  "min": 0,
+  "max": 100,
+  "step": 1
+}

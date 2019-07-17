@@ -1,0 +1,9 @@
+{
+	"title": {
+	  "en": "Is !{{|not}} armed"
+	},
+	"hint": {
+	  "en": "If the system is armed.",
+	  "nl": "If the system is armed."
+	}
+}

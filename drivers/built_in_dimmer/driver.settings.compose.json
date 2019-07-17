@@ -24,7 +24,8 @@
           "id": "meter_report_watt",
           "zwave": {
             "index": 12,
-            "size": 1
+            "size": 1,
+			"signed": false
           },
           "type": "number",
           "label": {
@@ -32,12 +33,12 @@
             "nl": "Wattage verzending drempel (W)"
           },
           "hint": {
-            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255, In order to set values in the range 128 ... 255 the value sent in the application shall be the desired value minus 256.",
-            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255, Om waarden in het bereik 128 .... 255 in te stellen, moet de waarde in de toepassing de gewenste waarde minus 256 zijn"
+            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255"
           },
           "attr": {
-            "min": -128,
-            "max": 127
+            "min": 5,
+            "max": 255
           },
           "value": 5
         },

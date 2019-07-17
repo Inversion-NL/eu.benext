@@ -1,6 +1,6 @@
 {
-  "name": "eu.benext",
-  "version": "2.0.0",
+  "name": "com.benext",
+  "version": "1.0.0",
   "description": "This app adds support for BeNext devices in Homey.",
   "main": "app.js",
   "dependencies": {

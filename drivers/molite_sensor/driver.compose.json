@@ -1,0 +1,42 @@
+  {
+      "id": "molite_sensor",
+      "name": {
+        "en": "MoLiTe Sensor",
+        "nl": "MoLiTe Sensor"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 3,
+        "productId": 257,
+        "learnmode": {
+          "image": "/drivers/molite_sensor/assets/learnmode.svg",
+          "instruction": {
+            "en": "Remove the backplate of the device and hold the tamper button for 2 seconds.",
+            "nl": "Verwijder de achterkant van het apparaat en houd de knop ongeveer 2 seconden ingedrukt."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/molite_sensor/assets/learnmode.svg",
+          "instruction": {
+            "en": "Remove the backplate of the device and hold the tamper button for 2 seconds.",
+            "nl": "Verwijder de achterkant van het apparaat en houd de knop ongeveer 2 seconden ingedrukt."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ]
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_motion",
+        "alarm_tamper",
+        "measure_luminance",
+        "measure_temperature",
+        "measure_battery"
+      ],
+      "images": {
+        "large": "/drivers/molite_sensor/assets/images/large.png",
+        "small": "/drivers/molite_sensor/assets/images/small.png"
+      }
+    }

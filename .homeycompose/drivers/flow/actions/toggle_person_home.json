@@ -1,0 +1,20 @@
+{
+	"title": {
+		"en": "Mark as home",
+		"nl": "Is thuis"
+	},
+	"hint": {
+		"en": "Select a person to set the status of the person to home.",
+		"nl": "Selecteer een persoon om de status van deze persoon op thuis te zetten."
+	},
+	"args": [
+		{
+			"name": "person",
+			"type": "autocomplete",
+			"placeholder": {
+				"en": "Who came home?",
+				"nl": "Wie is er thuis?"
+			}
+		}
+	]
+}

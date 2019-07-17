@@ -1,0 +1,20 @@
+{
+	"title": {
+	  "en": "Is !{{|not}} at home",
+	  "nl": "Is !{{|niet}} thuis"
+	},
+	"hint": {
+	  "en": "Select a person to check if this person is home or away.",
+	  "nl": "Selecteer een persoon om te controleren of deze persoon thuis of afwezig is."
+	},
+	"args": [
+	  {
+		"name": "person",
+		"type": "autocomplete",
+		"placeholder": {
+		  "en": "Who?",
+		  "nl": "Wie?"
+		}
+	  }
+	]
+}

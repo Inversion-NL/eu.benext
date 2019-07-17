@@ -1,0 +1,44 @@
+{
+  "triggers": [
+    {
+      "$extends":"start_scene",
+      "id": "tagReader-start_scene"
+    },
+    {
+      "$extends":"user_away",
+      "id": "tagReader-user_away"
+    },
+    {
+      "$extends":"user_home",
+      "id": "tagReader-user_home"
+    },
+    {
+      "$extends":"user_system_away",
+      "id": "tagReader-user_system_away"
+    },
+    {
+      "$extends":"user_system_home",
+      "id": "tagReader-user_system_home"
+    }
+  ],
+  "conditions": [
+    {
+      "$extends":"is_at_home",
+	  "id": "tagReader-is_at_home"
+    },
+    {
+      "$extends":"system_is_armed",
+	  "id": "tagReader-system_is_armed"
+    }
+  ],
+  "actions": [
+    {
+      "$extends":"toggle_person_away",
+      "id": "tagReader-toggle_person_away"
+    },
+    {
+      "$extends":"toggle_person_home",
+      "id": "tagReader-toggle_person_home"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+      "id": "heating_control",
+      "name": {
+        "en": "Heating Control",
+        "nl": "Heating Control"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 33,
+        "productId": [
+					256,
+					258
+				],
+        "learnmode": {
+          "image": "/drivers/heating_control/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start inclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het installatie proces te starten."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/heating_control/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start exclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het verwijder proces te starten."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ],
+        "defaultConfiguration": [
+          {
+            "id": 7,
+            "size": 1,
+            "value": 1
+          }
+        ]
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "measure_temperature",
+        "target_temperature",
+        "measure_pressure",
+        "measure_temperature.outside"
+      ],
+      "capabilitiesOptions": {
+        "target_temperature": {
+          "min": 7.5,
+          "max": 32.5
+        }
+      },
+      "images": {
+        "large": "/drivers/heating_control/assets/images/large.png",
+        "small": "/drivers/heating_control/assets/images/small.png"
+      }
+    }

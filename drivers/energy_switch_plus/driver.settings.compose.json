@@ -1,8 +1,8 @@
-[
+ [
         {
           "id": "meter_report_percentage",
 		  "zwave": {
-            "index": 11,
+            "index": 6,
             "size": 1
           },
           "type": "number",
@@ -11,11 +11,11 @@
             "nl": "Wattage verzending drempel (%)"
           },
           "hint": {
-            "en": "How much must the Wattage change (in percentage) before the value is being send. Range: 1 - 100",
-            "nl": "Hoeveel moet de Wattage zijn veranderd (in percentage) voor de waarde wordt verzonden. Bereik: 1 - 100"
+            "en": "How much must the Wattage change (in percentage) before the value is being send. Range: 10 - 100",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in percentage) voor de waarde wordt verzonden. Bereik: 10 - 100"
           },
           "attr": {
-            "min": 1,
+            "min": 10,
             "max": 100
           },
           "value": 20
@@ -23,7 +23,7 @@
         {
           "id": "meter_report_watt",
 		  "zwave": {
-            "index": 12,
+            "index": 7,
             "size": 1,
 			"signed": false
           },
@@ -33,11 +33,11 @@
             "nl": "Wattage verzending drempel (W)"
           },
           "hint": {
-            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255.",
-            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden."
+            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255"
           },
           "attr": {
-            "min": 5,
+            "min": 10,
             "max": 255
           },
           "value": 5
@@ -45,7 +45,7 @@
         {
           "id": "save_state",
 		  "zwave": {
-            "index": 14,
+            "index": 4,
             "size": 1
           },
           "type": "dropdown",
@@ -75,4 +75,4 @@
             }
           ]
         }
-		]
+      ]
