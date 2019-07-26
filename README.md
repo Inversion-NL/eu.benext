@@ -8,6 +8,9 @@ Changelog
 V1.0.1
 Rewrite to SDKv2
 
+V1.0.2
+Fix for meter values of P1
+
 
 ## Currently supported devices:
 
