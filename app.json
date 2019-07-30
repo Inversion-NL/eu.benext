@@ -1,5 +1,5 @@
 {
-  "id": "com.benext",
+  "id": "eu.benext",
   "name": {
     "en": "BeNext"
   },
@@ -23,14 +23,18 @@
     "small": "/assets/images/small.png"
   },
   "author": {
-    "name": "Martin Pussamsies",
-    "email": "martin@pussamsies.de"
+    "name": "Robin van Kekem",
+    "email": "nl.inversion@gmail.com"
   },
   "contributors": {
     "developers": [
       {
-        "name": "Martin Pussamsies",
-        "email": "martin@pussamsies.de"
+        "name": "Robin van Kekem",
+        "email": "nl.inversion@gmail.com"
+      },
+      {
+        "name": "Martin P",
+        "email": "mapulu@t-online.de"
       }
     ]
   },
