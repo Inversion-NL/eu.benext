@@ -4,6 +4,8 @@ This app adds support for BeNext devices in Homey.
 It is a rewrite from to SDKv2
 Not all features are implemented at the moment. Please report any problems and suggestions.
 
+If you update from v0.x you may have to recreate your flows containing BeNext devices.
+
 Changelog
 V2.0.0
 Rewrite to SDKv2
