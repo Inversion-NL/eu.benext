@@ -1,0 +1,48 @@
+{
+      "id": "built_in_dimmer",
+      "name": {
+        "en": "Built-in Dimmer",
+        "nl": "Built-in Dimmer"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 13,
+        "productId": 256,
+        "learnmode": {
+          "image": "/drivers/built_in_dimmer/assets/learnmode.svg",
+          "instruction": {
+            "en": "When the light is off switch the wall switch once, after two seconds switch back the wall switch to start the inclusion process.",
+            "nl": "Zet het licht uit met de schakelaar, schakel het licht vervolgens in met de schakelaar en na 2 seconden weer uit om het apparaat toe te voegen."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/built_in_dimmer/assets/learnmode.svg",
+          "instruction": {
+            "en": "When the light is off switch the wall switch once, after two seconds switch back the wall switch to start the exclusion process.",
+            "nl": "Zet het licht uit met de schakelaar, schakel het licht vervolgens in met de schakelaar en na 2 seconden weer uit om het apparaat te verwijderen."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ],
+        "defaultConfiguration": [
+          {
+            "id": 11,
+            "size": 1,
+            "value": 20
+          }
+        ]
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "measure_power",
+        "meter_power"
+      ],
+      "images": {
+        "large": "/drivers/built_in_dimmer/assets/images/large.png",
+        "small": "/drivers/built_in_dimmer/assets/images/small.png"
+      }
+    }

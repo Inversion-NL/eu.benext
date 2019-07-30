@@ -3,8 +3,10 @@
   "name": {
     "en": "BeNext"
   },
-  "version": "0.4.5",
-  "compatibility": ">=1.1.4",
+  "brandColor": "#a6ce3f",
+  "sdk": 2,
+  "version": "1.0.3",
+  "compatibility": ">=2.0.0",
   "description": {
     "en": "BeNext devices for Homey",
     "nl": "BeNext apparaten voor Homey"
@@ -27,60 +29,14 @@
   "contributors": {
     "developers": [
       {
-        "name": "Athom B.V.",
-        "email": "apps@athom.com"
+        "name": "Robin van Kekem",
+        "email": "nl.inversion@gmail.com"
+      },
+      {
+        "name": "Martin P",
+        "email": "mapulu@t-online.de"
       }
     ]
-  },
-  "capabilities": {
-    "user_code_report": {
-      "type": "number",
-      "title": {
-        "en": "User Code Report",
-        "nl": "Gebruikerscode Rapport"
-      },
-      "getable": true,
-      "setable": false,
-      "units": {
-        "en": "status",
-        "nl": "status"
-      },
-      "min": 0,
-      "max": 100,
-      "step": 1
-    },
-    "alarm_report": {
-      "type": "number",
-      "title": {
-        "en": "Alarm Report User ID",
-        "nl": "Alarm Rapport Gebruiker ID"
-      },
-      "getable": true,
-      "setable": false,
-      "units": {
-        "en": "status",
-        "nl": "status"
-      },
-      "min": 0,
-      "max": 100,
-      "step": 1
-    },
-    "my_gateway_control": {
-      "type": "number",
-      "title": {
-        "en": "Gateway Events",
-        "nl": "Gateway Events"
-      },
-      "getable": true,
-      "setable": false,
-      "units": {
-        "en": "event",
-        "nl": "event"
-      },
-      "min": 0,
-      "max": 100,
-      "step": 1
-    }
   },
   "drivers": [
     {
@@ -112,26 +68,10 @@
           2
         ]
       },
-      "class": "security",
+      "class": "homealarm",
       "capabilities": [
         "onoff"
       ],
-      "mobile": {
-        "components": [
-          {
-            "capabilities": [
-              "onoff"
-            ],
-            "id": "icon"
-          },
-          {
-            "capabilities": [
-              "onoff"
-            ],
-            "id": "toggle"
-          }
-        ]
-      },
       "images": {
         "large": "/drivers/alarm_sound/assets/images/large.png",
         "small": "/drivers/alarm_sound/assets/images/small.png"
@@ -139,6 +79,11 @@
       "settings": [
         {
           "id": "destination_routine_enabled",
+          "zwave": {
+            "index": 2,
+            "size": 1,
+            "signed": false
+          },
           "type": "dropdown",
           "label": {
             "en": "Destination routine enabled",
@@ -168,6 +113,10 @@
         },
         {
           "id": "sound_light_mode_index",
+          "zwave": {
+            "index": 7,
+            "size": 1
+          },
           "type": "number",
           "label": {
             "en": "Select index sound/light mode",
@@ -185,6 +134,10 @@
         },
         {
           "id": "power_offline_sound_light_mode",
+          "zwave": {
+            "index": 8,
+            "size": 1
+          },
           "type": "number",
           "label": {
             "en": "Power offline sound/light mode",
@@ -202,6 +155,10 @@
         },
         {
           "id": "destination_route_failed_sound_light_mode",
+          "zwave": {
+            "index": 9,
+            "size": 1
+          },
           "type": "number",
           "label": {
             "en": "Error (destination routine failed) sound/light mode",
@@ -218,6 +175,356 @@
           }
         }
       ]
+    },
+    {
+      "id": "built_in_dimmer",
+      "name": {
+        "en": "Built-in Dimmer",
+        "nl": "Built-in Dimmer"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 13,
+        "productId": 256,
+        "learnmode": {
+          "image": "/drivers/built_in_dimmer/assets/learnmode.svg",
+          "instruction": {
+            "en": "When the light is off switch the wall switch once, after two seconds switch back the wall switch to start the inclusion process.",
+            "nl": "Zet het licht uit met de schakelaar, schakel het licht vervolgens in met de schakelaar en na 2 seconden weer uit om het apparaat toe te voegen."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/built_in_dimmer/assets/learnmode.svg",
+          "instruction": {
+            "en": "When the light is off switch the wall switch once, after two seconds switch back the wall switch to start the exclusion process.",
+            "nl": "Zet het licht uit met de schakelaar, schakel het licht vervolgens in met de schakelaar en na 2 seconden weer uit om het apparaat te verwijderen."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ],
+        "defaultConfiguration": [
+          {
+            "id": 11,
+            "size": 1,
+            "value": 20
+          }
+        ]
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "measure_power",
+        "meter_power"
+      ],
+      "images": {
+        "large": "/drivers/built_in_dimmer/assets/images/large.png",
+        "small": "/drivers/built_in_dimmer/assets/images/small.png"
+      },
+      "settings": [
+        {
+          "id": "meter_report_percentage",
+          "zwave": {
+            "index": 11,
+            "size": 1
+          },
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (%)",
+            "nl": "Wattage verzending drempel (%)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in percentage) before the value is being send. Range: 1 - 100",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in percentage) voor de waarde wordt verzonden. Bereik: 1 - 100"
+          },
+          "attr": {
+            "min": 1,
+            "max": 100
+          },
+          "value": 20
+        },
+        {
+          "id": "meter_report_watt",
+          "zwave": {
+            "index": 12,
+            "size": 1,
+            "signed": false
+          },
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (W)",
+            "nl": "Wattage verzending drempel (W)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255"
+          },
+          "attr": {
+            "min": 5,
+            "max": 255
+          },
+          "value": 5
+        },
+        {
+          "id": "save_state",
+          "zwave": {
+            "index": 14,
+            "size": 1
+          },
+          "type": "dropdown",
+          "label": {
+            "en": "Save power-off state",
+            "nl": "Onthoud status na stroomonderbreking"
+          },
+          "hint": {
+            "en": "State after power disruption.",
+            "nl": "Status na stroomonderbreking"
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Always off",
+                "nl": "Altijd uit"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Restore previous state",
+                "nl": "Herstel vorige status"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "energy_switch_plus",
+      "name": {
+        "en": "Energy Switch+",
+        "nl": "Energy Switch+"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": [
+          32,
+          6
+        ],
+        "productId": [
+          1,
+          512
+        ],
+        "learnmode": {
+          "image": "/drivers/energy_switch_plus/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start inclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het installatie proces te starten."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/energy_switch_plus/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start exclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het verwijder proces te starten."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ]
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power"
+      ],
+      "images": {
+        "large": "/drivers/energy_switch_plus/assets/images/large.png",
+        "small": "/drivers/energy_switch_plus/assets/images/small.png"
+      },
+      "settings": [
+        {
+          "id": "meter_report_percentage",
+          "zwave": {
+            "index": 6,
+            "size": 1
+          },
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (%)",
+            "nl": "Wattage verzending drempel (%)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in percentage) before the value is being send. Range: 10 - 100",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in percentage) voor de waarde wordt verzonden. Bereik: 10 - 100"
+          },
+          "attr": {
+            "min": 10,
+            "max": 100
+          },
+          "value": 20
+        },
+        {
+          "id": "meter_report_watt",
+          "zwave": {
+            "index": 7,
+            "size": 1,
+            "signed": false
+          },
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (W)",
+            "nl": "Wattage verzending drempel (W)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255"
+          },
+          "attr": {
+            "min": 10,
+            "max": 255
+          },
+          "value": 5
+        },
+        {
+          "id": "save_state",
+          "zwave": {
+            "index": 4,
+            "size": 1
+          },
+          "type": "dropdown",
+          "label": {
+            "en": "Save power-off state",
+            "nl": "Onthoud status na stroomonderbreking"
+          },
+          "hint": {
+            "en": "State after power disruption.",
+            "nl": "Status na stroomonderbreking"
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Always off",
+                "nl": "Altijd uit"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Restore previous state",
+                "nl": "Herstel vorige status"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "heating_control",
+      "name": {
+        "en": "Heating Control",
+        "nl": "Heating Control"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 33,
+        "productId": [
+          256,
+          258
+        ],
+        "learnmode": {
+          "image": "/drivers/heating_control/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start inclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het installatie proces te starten."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/heating_control/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start exclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het verwijder proces te starten."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ],
+        "defaultConfiguration": [
+          {
+            "id": 7,
+            "size": 1,
+            "value": 1
+          }
+        ]
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "measure_temperature",
+        "target_temperature",
+        "measure_pressure",
+        "measure_temperature.outside"
+      ],
+      "capabilitiesOptions": {
+        "target_temperature": {
+          "min": 7.5,
+          "max": 32.5
+        }
+      },
+      "images": {
+        "large": "/drivers/heating_control/assets/images/large.png",
+        "small": "/drivers/heating_control/assets/images/small.png"
+      },
+      "settings": []
+    },
+    {
+      "id": "molite_sensor",
+      "name": {
+        "en": "MoLiTe Sensor",
+        "nl": "MoLiTe Sensor"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 3,
+        "productId": 257,
+        "learnmode": {
+          "image": "/drivers/molite_sensor/assets/learnmode.svg",
+          "instruction": {
+            "en": "Remove the backplate of the device and hold the tamper button for 2 seconds.",
+            "nl": "Verwijder de achterkant van het apparaat en houd de knop ongeveer 2 seconden ingedrukt."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/molite_sensor/assets/learnmode.svg",
+          "instruction": {
+            "en": "Remove the backplate of the device and hold the tamper button for 2 seconds.",
+            "nl": "Verwijder de achterkant van het apparaat en houd de knop ongeveer 2 seconden ingedrukt."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ]
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_motion",
+        "alarm_tamper",
+        "measure_luminance",
+        "measure_temperature",
+        "measure_battery"
+      ],
+      "images": {
+        "large": "/drivers/molite_sensor/assets/images/large.png",
+        "small": "/drivers/molite_sensor/assets/images/small.png"
+      }
     },
     {
       "id": "p1_dongle",
@@ -268,6 +575,10 @@
       "settings": [
         {
           "id": "hw_pullup",
+          "zwave": {
+            "index": 3,
+            "size": 1
+          },
           "type": "checkbox",
           "label": {
             "en": "Enable HW pullup",
@@ -281,6 +592,10 @@
         },
         {
           "id": "baud_rate",
+          "zwave": {
+            "index": 4,
+            "size": 2
+          },
           "type": "dropdown",
           "label": {
             "en": "Default Baud rate",
@@ -360,212 +675,6 @@
       ]
     },
     {
-      "id": "tag_reader_500",
-      "name": {
-        "en": "Tag Reader 500",
-        "nl": "Tag Reader 500"
-      },
-      "zwave": {
-        "manufacturerId": 138,
-        "productTypeId": 7,
-        "productId": 512,
-        "learnmode": {
-          "image": "/drivers/tag_reader_500/assets/learnmode.svg",
-          "instruction": {
-            "en": "Press and hold the enter button for two seconds (indication LED blinks shortly) and release to start the add/remove routine.",
-            "nl": "Druk en houd de enter knop ingedrukt voor twee seconden (LED indicatie knippert kort) om de toevoegen/verwijder modus te starten."
-          }
-        },
-        "associationGroups": [
-          1
-        ],
-        "wakeUpInterval": 900,
-        "defaultConfiguration": [
-          {
-            "id": 7,
-            "size": 1,
-            "value": 0
-          }
-        ]
-      },
-      "class": "other",
-      "capabilities": [
-        "measure_battery",
-        "user_code_report",
-        "alarm_report",
-        "my_gateway_control"
-      ],
-      "images": {
-        "large": "/drivers/tag_reader_500/assets/images/large.png",
-        "small": "/drivers/tag_reader_500/assets/images/small.png"
-      },
-      "settings": [
-        {
-          "id": "set_to_default",
-          "type": "dropdown",
-          "label": {
-            "en": "Reset to factory settings",
-            "nl": "Fabrieksinstellingen terugzetten"
-          },
-          "hint": {
-            "en": "Set all configuration values to default values (factory settings).",
-            "nl": "Zet alle configuratie waarden terug naar de standaard instellingen."
-          },
-          "value": "170",
-          "values": [
-            {
-              "id": "170",
-              "label": {
-                "en": "Don't reset settings",
-                "nl": "Wis gegevens niet"
-              }
-            },
-            {
-              "id": "3",
-              "label": {
-                "en": "Reset to factory settings",
-                "nl": "Fabrieksinstellingen terugzetten"
-              }
-            }
-          ]
-        },
-        {
-          "id": "feedback_time",
-          "type": "number",
-          "label": {
-            "en": "Feedback time",
-            "nl": "Terugkoppel tijd"
-          },
-          "hint": {
-            "en": "To configure the time the beep is automatically turned off in seconds (0 = off, 1 - 244 = value in seconds, 255 = not turned off, default 15).",
-            "nl": "De tijd waarna de piep automatisch uitgezet wordt. (0 = uit, 1 - 244 = waarde in seconden, 255 = nooit, standaard: 15)."
-          },
-          "attr": {
-            "min": 0,
-            "max": 255
-          },
-          "value": 15
-        },
-        {
-          "id": "feedback_timeout",
-          "type": "number",
-          "label": {
-            "en": "Feedback timeout",
-            "nl": "Terugkoppel timeout"
-          },
-          "hint": {
-            "en": "To configure the timeout to wait for a WAKEUP_NO_MORE_INFORMATION before the error beep is automatically sound. The error beeps are fixed 8 beeps shortly after each other (0 = off, 1 - 255 = value in seconds. Default 0).",
-            "nl": "Tijd waarna, bij het niet ontvangen van een WAKEUP_NO_MORE_INFORMATION frame van Homey, het apparaat error geluiden laad horen. De error piep is altijd 8 piepjes kort na elkaar (0 = uit, 1 - 255 = waarde in seconden, standaard: 0)."
-          },
-          "attr": {
-            "min": 0,
-            "max": 255
-          },
-          "value": 0
-        },
-        {
-          "id": "feedback_beeps_per_second",
-          "type": "number",
-          "label": {
-            "en": "Feedback beeps per second",
-            "nl": "Terugekoppeling piepjes per seconde"
-          },
-          "hint": {
-            "en": "To configure the number of beeps per second. Every beep is fixed about 10ms (0 = off, 1 - 255 = number of beeps per second. Default: 2)",
-            "nl": "Het aantal piepjes per seconde. Elke piep duurt 10ms (0 = uit, 1 - 255 = aantal piepjes per seconde. Standaard: 2)."
-          },
-          "attr": {
-            "min": 0,
-            "max": 255
-          },
-          "value": 2
-        },
-        {
-          "id": "always_awake_mode",
-          "type": "dropdown",
-          "label": {
-            "en": "Always awake mode",
-            "nl": "Altijd wakker modus"
-          },
-          "value": "0",
-          "values": [
-            {
-              "id": "0",
-              "label": {
-                "en": "Mode 1, normal operating mode",
-                "nl": "Mode 1, normale modus"
-              }
-            },
-            {
-              "id": "3",
-              "label": {
-                "en": "Always awake mode, Z-Wave chip is always on to request e.g. version or manufacturer id",
-                "nl": "Altijd wakker modus, Z-Wave chip is altijd klaar om een verzoek te ontvangen"
-              }
-            }
-          ]
-        },
-        {
-          "id": "operation_mode",
-          "type": "dropdown",
-          "label": {
-            "en": "Operation mode",
-            "nl": "Operatie modus"
-          },
-          "hint": {
-            "en": "The mode that the Tag Reader 500 communicates with the associated gateway.",
-            "nl": "De modus waarin de Tagreader 500 communiceert met de gateway."
-          },
-          "value": "0",
-          "values": [
-            {
-              "id": "0",
-              "label": {
-                "en": "The RFID and numeric codes are reported in gateway mode",
-                "nl": "De RFID en numerieke codes worden geraporteerd in gateway modus"
-              }
-            },
-            {
-              "id": "1",
-              "label": {
-                "en": "The RFID and numeric codes are reported in local mode",
-                "nl": "De RFID en numerieke codes worden lokaal verwerkt"
-              }
-            }
-          ]
-        },
-        {
-          "id": "gateway_confirmation",
-          "type": "dropdown",
-          "label": {
-            "en": "Gateway confirmation",
-            "nl": "Gateway bevestigings"
-          },
-          "hint": {
-            "en": "In gateway mode it is possible to let the gateway decide if the Tag Reader 500 can arm to home or away. If gateway indication is disabled the Tag Reader 500 automatically assumes that it can arm and will wait for a user input of RFID TAG or numeric code.",
-            "nl": "In gateway modus is het mogelijk om op terugkoppeling van de gateway te wachten of je het huis in thuis of afwezig modus mag zetten"
-          },
-          "value": "0",
-          "values": [
-            {
-              "id": "0",
-              "label": {
-                "en": "Gateway confirmation disabled",
-                "nl": "Altijd mogelijk thuis/afwezig aan te geven"
-              }
-            },
-            {
-              "id": "1",
-              "label": {
-                "en": "Gateway confirmation enabled",
-                "nl": "Gateway bepaald thuis/afwezig modus beschikbaarheid"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "plug_in_dimmer",
       "name": {
         "en": "Plug-in Dimmer",
@@ -601,29 +710,6 @@
         "measure_power",
         "meter_power"
       ],
-      "mobile": {
-        "components": [
-          {
-            "capabilities": [
-              "onoff"
-            ],
-            "id": "icon"
-          },
-          {
-            "capabilities": [
-              "dim"
-            ],
-            "id": "slider"
-          },
-          {
-            "capabilities": [
-              "measure_power",
-              "meter_power"
-            ],
-            "id": "sensor"
-          }
-        ]
-      },
       "images": {
         "large": "/drivers/plug_in_dimmer/assets/images/large.png",
         "small": "/drivers/plug_in_dimmer/assets/images/small.png"
@@ -631,6 +717,10 @@
       "settings": [
         {
           "id": "meter_report_percentage",
+          "zwave": {
+            "index": 11,
+            "size": 1
+          },
           "type": "number",
           "label": {
             "en": "Wattage report threshold (%)",
@@ -648,14 +738,19 @@
         },
         {
           "id": "meter_report_watt",
+          "zwave": {
+            "index": 12,
+            "size": 1,
+            "signed": false
+          },
           "type": "number",
           "label": {
             "en": "Wattage report threshold (W)",
             "nl": "Wattage verzending drempel (W)"
           },
           "hint": {
-            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255",
-            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255"
+            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255.",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden."
           },
           "attr": {
             "min": 5,
@@ -665,6 +760,10 @@
         },
         {
           "id": "save_state",
+          "zwave": {
+            "index": 14,
+            "size": 1
+          },
           "type": "dropdown",
           "label": {
             "en": "Save power-off state",
@@ -695,305 +794,197 @@
       ]
     },
     {
-      "id": "built_in_dimmer",
+      "id": "tag_reader_500",
       "name": {
-        "en": "Built-in Dimmer",
-        "nl": "Built-in Dimmer"
+        "en": "Tag Reader 500",
+        "nl": "Tag Reader 500"
       },
       "zwave": {
         "manufacturerId": 138,
-        "productTypeId": 13,
-        "productId": 256,
+        "productTypeId": 7,
+        "productId": 512,
         "learnmode": {
-          "image": "/drivers/built_in_dimmer/assets/learnmode.svg",
+          "image": "/drivers/tag_reader_500/assets/learnmode.svg",
           "instruction": {
-            "en": "When the light is off switch the wall switch once, after two seconds switch back the wall switch to start the inclusion process.",
-            "nl": "Zet het licht uit met de schakelaar, schakel het licht vervolgens in met de schakelaar en na 2 seconden weer uit om het apparaat toe te voegen."
-          }
-        },
-        "unlearnmode": {
-          "image": "/drivers/built_in_dimmer/assets/learnmode.svg",
-          "instruction": {
-            "en": "When the light is off switch the wall switch once, after two seconds switch back the wall switch to start the exclusion process.",
-            "nl": "Zet het licht uit met de schakelaar, schakel het licht vervolgens in met de schakelaar en na 2 seconden weer uit om het apparaat te verwijderen."
+            "en": "Press and hold the tamper switch about a second until indication LED blinks once per second, then release to start the add/remove routine.",
+            "nl": "Press and hold the tamper switch about a second until indication LED blinks once per second, then release to start the add/remove routine."
           }
         },
         "associationGroups": [
-          1,
-          2
+          1
         ],
+        "associationGroupsOptions": {},
+        "wakeUpInterval": 900,
         "defaultConfiguration": [
           {
-            "id": 11,
+            "id": 7,
             "size": 1,
-            "value": 20
+            "value": 0
           }
         ]
       },
-      "class": "light",
+      "class": "homealarm",
       "capabilities": [
-        "onoff",
-        "dim",
-        "measure_power",
-        "meter_power"
-      ],
-      "mobile": {
-        "components": [
-          {
-            "capabilities": [
-              "onoff"
-            ],
-            "id": "icon"
-          },
-          {
-            "capabilities": [
-              "dim"
-            ],
-            "id": "slider"
-          },
-          {
-            "capabilities": [
-              "measure_power",
-              "meter_power"
-            ],
-            "id": "sensor"
-          }
-        ]
-      },
-      "images": {
-        "large": "/drivers/built_in_dimmer/assets/images/large.png",
-        "small": "/drivers/built_in_dimmer/assets/images/small.png"
-      },
-      "settings": [
-        {
-          "id": "meter_report_percentage",
-          "type": "number",
-          "label": {
-            "en": "Wattage report threshold (%)",
-            "nl": "Wattage verzending drempel (%)"
-          },
-          "hint": {
-            "en": "How much must the Wattage change (in percentage) before the value is being send. Range: 1 - 100",
-            "nl": "Hoeveel moet de Wattage zijn veranderd (in percentage) voor de waarde wordt verzonden. Bereik: 1 - 100"
-          },
-          "attr": {
-            "min": 1,
-            "max": 100
-          },
-          "value": 20
-        },
-        {
-          "id": "meter_report_watt",
-          "type": "number",
-          "label": {
-            "en": "Wattage report threshold (W)",
-            "nl": "Wattage verzending drempel (W)"
-          },
-          "hint": {
-            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255",
-            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255"
-          },
-          "attr": {
-            "min": 5,
-            "max": 255
-          },
-          "value": 5
-        },
-        {
-          "id": "save_state",
-          "type": "dropdown",
-          "label": {
-            "en": "Save power-off state",
-            "nl": "Onthoud status na stroomonderbreking"
-          },
-          "hint": {
-            "en": "State after power disruption.",
-            "nl": "Status na stroomonderbreking"
-          },
-          "value": "0",
-          "values": [
-            {
-              "id": "0",
-              "label": {
-                "en": "Always off",
-                "nl": "Altijd uit"
-              }
-            },
-            {
-              "id": "1",
-              "label": {
-                "en": "Restore previous state",
-                "nl": "Herstel vorige status"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "energy_switch_plus",
-      "name": {
-        "en": "Energy Switch+",
-        "nl": "Energy Switch+"
-      },
-      "zwave": {
-        "manufacturerId": 138,
-        "productTypeId": [32, 6],
-        "productId": [1, 512],
-        "learnmode": {
-          "image": "/drivers/energy_switch_plus/assets/learnmode.svg",
-          "instruction": {
-            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start inclusion.",
-            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het installatie proces te starten."
-          }
-        },
-        "unlearnmode": {
-          "image": "/drivers/energy_switch_plus/assets/learnmode.svg",
-          "instruction": {
-            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start exclusion.",
-            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het verwijder proces te starten."
-          }
-        },
-        "associationGroups": [
-          1,
-          2
-        ]
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power"
-      ],
-      "mobile": {
-        "components": [
-          {
-            "capabilities": [
-              "onoff"
-            ],
-            "id": "icon"
-          },
-          {
-            "capabilities": [
-              "measure_power",
-              "meter_power"
-            ],
-            "id": "sensor"
-          }
-        ]
-      },
-      "images": {
-        "large": "/drivers/energy_switch_plus/assets/images/large.png",
-        "small": "/drivers/energy_switch_plus/assets/images/small.png"
-      },
-      "settings": [
-        {
-          "id": "meter_report_percentage",
-          "type": "number",
-          "label": {
-            "en": "Wattage report threshold (%)",
-            "nl": "Wattage verzending drempel (%)"
-          },
-          "hint": {
-            "en": "How much must the Wattage change (in percentage) before the value is being send. Range: 10 - 100",
-            "nl": "Hoeveel moet de Wattage zijn veranderd (in percentage) voor de waarde wordt verzonden. Bereik: 10 - 100"
-          },
-          "attr": {
-            "min": 10,
-            "max": 100
-          },
-          "value": 20
-        },
-        {
-          "id": "meter_report_watt",
-          "type": "number",
-          "label": {
-            "en": "Wattage report threshold (W)",
-            "nl": "Wattage verzending drempel (W)"
-          },
-          "hint": {
-            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255",
-            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden. Bereik: 5 - 255"
-          },
-          "attr": {
-            "min": 10,
-            "max": 255
-          },
-          "value": 5
-        },
-        {
-          "id": "save_state",
-          "type": "dropdown",
-          "label": {
-            "en": "Save power-off state",
-            "nl": "Onthoud status na stroomonderbreking"
-          },
-          "hint": {
-            "en": "State after power disruption.",
-            "nl": "Status na stroomonderbreking"
-          },
-          "value": "0",
-          "values": [
-            {
-              "id": "0",
-              "label": {
-                "en": "Always off",
-                "nl": "Altijd uit"
-              }
-            },
-            {
-              "id": "1",
-              "label": {
-                "en": "Restore previous state",
-                "nl": "Herstel vorige status"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "molite_sensor",
-      "name": {
-        "en": "MoLiTe Sensor",
-        "nl": "MoLiTe Sensor"
-      },
-      "zwave": {
-        "manufacturerId": 138,
-        "productTypeId": 3,
-        "productId": 257,
-        "learnmode": {
-          "image": "/drivers/molite_sensor/assets/learnmode.svg",
-          "instruction": {
-            "en": "Remove the backplate of the device and hold the tamper button for 2 seconds.",
-            "nl": "Verwijder de achterkant van het apparaat en houd de knop ongeveer 2 seconden ingedrukt."
-          }
-        },
-        "unlearnmode": {
-          "image": "/drivers/molite_sensor/assets/learnmode.svg",
-          "instruction": {
-            "en": "Remove the backplate of the device and hold the tamper button for 2 seconds.",
-            "nl": "Verwijder de achterkant van het apparaat en houd de knop ongeveer 2 seconden ingedrukt."
-          }
-        },
-        "associationGroups": [
-          1,
-          2
-        ]
-      },
-      "class": "sensor",
-      "capabilities": [
-        "alarm_motion",
+        "measure_battery",
         "alarm_tamper",
-        "measure_luminance",
-        "measure_temperature",
-        "measure_battery"
+        "user_code_report",
+        "homealarm_state",
+        "my_gateway_control"
       ],
-      "images": {
-        "large": "/drivers/molite_sensor/assets/images/large.png",
-        "small": "/drivers/molite_sensor/assets/images/small.png"
+      "mobile": {
+        "components": [
+          {
+            "id": "icon"
+          },
+          {
+            "id": "battery",
+            "capabilities": [
+              "measure_battery"
+            ]
+          },
+          {
+            "id": "sensor",
+            "capabilities": [
+              "homealarm_state",
+              "alarm_tamper"
+            ]
+          }
+        ]
       },
-      "settings": []
+      "images": {
+        "large": "/drivers/tag_reader_500/assets/images/large.png",
+        "small": "/drivers/tag_reader_500/assets/images/small.png"
+      },
+      "settings": [
+        {
+          "id": "set_to_default",
+          "zwave": {
+            "index": 1,
+            "size": 1
+          },
+          "type": "dropdown",
+          "label": {
+            "en": "Reset to factory settings",
+            "nl": "Fabrieksinstellingen terugzetten"
+          },
+          "hint": {
+            "en": "Set all configuration values to default values (factory settings).",
+            "nl": "Zet alle configuratie waarden terug naar de standaard instellingen."
+          },
+          "value": "170",
+          "values": [
+            {
+              "id": "170",
+              "label": {
+                "en": "Don't reset settings",
+                "nl": "Wis gegevens niet"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "Reset to factory settings",
+                "nl": "Fabrieksinstellingen terugzetten"
+              }
+            }
+          ]
+        },
+        {
+          "id": "feedback_time",
+          "zwave": {
+            "index": 2,
+            "size": 1,
+            "signed": false
+          },
+          "type": "number",
+          "label": {
+            "en": "Feedback time",
+            "nl": "Terugkoppel tijd"
+          },
+          "hint": {
+            "en": "To configure the time the beep is automatically turned off in seconds (0 = off, 1 - 244 = value in seconds, 255 = not turned off, default 15).",
+            "nl": "De tijd waarna de piep automatisch uitgezet wordt. (0 = uit, 1 - 244 = waarde in seconden, 255 = nooit, standaard: 15)."
+          },
+          "attr": {
+            "min": 0,
+            "max": 255
+          },
+          "value": 15
+        },
+        {
+          "id": "feedback_timeout",
+          "zwave": {
+            "index": 3,
+            "size": 1,
+            "signed": false
+          },
+          "type": "number",
+          "label": {
+            "en": "Feedback timeout",
+            "nl": "Terugkoppel timeout"
+          },
+          "hint": {
+            "en": "To configure the timeout to wait for a WAKEUP_NO_MORE_INFORMATION before the error beep is automatically sound. The error beeps are fixed 8 beeps shortly after each other (0 = off, 1 - 255 = value in seconds. Default 0).",
+            "nl": "Tijd waarna, bij het niet ontvangen van een WAKEUP_NO_MORE_INFORMATION frame van Homey, het apparaat error geluiden laad horen. De error piep is altijd 8 piepjes kort na elkaar (0 = uit, 1 - 255 = waarde in seconden, standaard: 0)."
+          },
+          "attr": {
+            "min": 0,
+            "max": 255
+          },
+          "value": 0
+        },
+        {
+          "id": "feedback_beeps_per_second",
+          "zwave": {
+            "index": 4,
+            "size": 1,
+            "signed": false
+          },
+          "type": "number",
+          "label": {
+            "en": "Feedback beeps per second",
+            "nl": "Terugekoppeling piepjes per seconde"
+          },
+          "hint": {
+            "en": "To configure the number of beeps per second. Every beep is fixed about 10ms (0 = off, 1 - 255 = number of beeps per second. Default: 2)",
+            "nl": "Het aantal piepjes per seconde. Elke piep duurt 10ms (0 = uit, 1 - 255 = aantal piepjes per seconde. Standaard: 2)."
+          },
+          "attr": {
+            "min": 0,
+            "max": 255
+          },
+          "value": 2
+        },
+        {
+          "id": "always_awake_mode",
+          "zwave": {
+            "index": 5,
+            "size": 1
+          },
+          "type": "dropdown",
+          "label": {
+            "en": "Always awake mode",
+            "nl": "Altijd wakker modus"
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Mode 1, normal operating mode",
+                "nl": "Mode 1, normale modus"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "Always awake mode, Z-Wave chip is always on to request e.g. version or manufacturer id",
+                "nl": "Altijd wakker modus, Z-Wave chip is altijd klaar om een verzoek te ontvangen"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "window_door_sensor",
@@ -1034,225 +1025,98 @@
       "images": {
         "large": "/drivers/window_door_sensor/assets/images/large.png",
         "small": "/drivers/window_door_sensor/assets/images/small.png"
-      },
-      "settings": []
-    },
-    {
-      "id": "heating_control",
-      "name": {
-        "en": "Heating Control",
-        "nl": "Heating Control"
-      },
-      "zwave": {
-        "manufacturerId": 138,
-        "productTypeId": 33,
-        "productId": [
-					256,
-					258
-				],
-        "learnmode": {
-          "image": "/drivers/heating_control/assets/learnmode.svg",
-          "instruction": {
-            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start inclusion.",
-            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het installatie proces te starten."
-          }
-        },
-        "unlearnmode": {
-          "image": "/drivers/heating_control/assets/learnmode.svg",
-          "instruction": {
-            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start exclusion.",
-            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het verwijder proces te starten."
-          }
-        },
-        "associationGroups": [
-          1,
-          2
-        ],
-        "defaultConfiguration": [
-          {
-            "id": 7,
-            "size": 1,
-            "value": 1
-          }
-        ]
-      },
-      "class": "thermostat",
-      "capabilities": [
-        "measure_temperature",
-        "target_temperature",
-        "measure_pressure",
-        "measure_temperature.outside"
-      ],
-      "capabilitiesOptions": {
-        "target_temperature": {
-          "min": 7.5,
-          "max": 32.5
-        }
-      },
-      "mobile": {
-        "components": [
-          {
-            "capabilities": [],
-            "id": "icon"
-          },
-          {
-            "capabilities": [
-              "measure_temperature",
-              "measure_temperature.outside",
-              "measure_pressure"
-            ],
-            "id": "sensor"
-          },
-          {
-            "capabilities": [
-              "target_temperature"
-            ],
-            "id": "thermostat"
-          }
-        ]
-      },
-      "images": {
-        "large": "/drivers/heating_control/assets/images/large.png",
-        "small": "/drivers/heating_control/assets/images/small.png"
-      },
-      "settings": [
-        {
-          "id": "override_mode",
-          "type": "dropdown",
-          "label": {
-            "en": "Temperature schedule override",
-            "nl": "Temperatuur schema overschrijven"
-          },
-          "value": "1",
-          "values": [
-            {
-              "id": "1",
-              "label": {
-                "en": "Temporary",
-                "nl": "Tijdelijk"
-              }
-            },
-            {
-              "id": "2",
-              "label": {
-                "en": "Permanently",
-                "nl": "Permanent"
-              }
-            }
-          ]
-        }
-      ]
+      }
     }
   ],
   "flow": {
     "triggers": [
       {
-        "id": "user_home",
+        "id": "tagReader-start_scene",
         "title": {
-          "en": "System disarmed",
-          "nl": "Systeem gedeactiveerd"
+          "en": "Scene activated",
+          "nl": "Scene geactiveerd"
         },
         "hint": {
-          "en": "Triggered when a user presses the home button of this tag reader and enters a valid code / presents a valid tag.",
-          "nl": "Wordt uitgevoerd wanneer iemand op de thuis knop van deze tag reader drukt en een geldige code / tag ingevoerd wordt."
+          "en": "Triggered when a user presses numbers without pressing home/away first. Please note that trying to trigger multiple scenes after each other without an home/away event screws up the tag reader in sending some random scene numbers somehow.",
+          "nl": "Wordt uitgevoerd wanneer iemand een nummber indrukt zonder home/away te gebruiken. Houdt er rekening mee dat als je meerdere scenes achter alkaar wilt uitvoeren zonder dat er een home/away event tussen zit dat de tag reader dan random scene nummers verstuurd naar Homey en er geen touw meer aan vast te knopen is."
         },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=tag_reader_500"
-          }
-        ],
         "tokens": [
           {
-            "name": "userId",
+            "name": "sceneId",
             "type": "number",
             "title": {
-              "en": "User ID",
-              "nl": "Gebruikers ID"
-            },
-            "example": 2
-          },
-          {
-            "name": "userName",
-            "title": {
-              "en": "Username",
-              "nl": "Gebruikersnaam"
-            },
-            "example": {
-              "en": "Test",
-              "nl": "Test"
-            }
-          },
-          {
-            "name": "tagId",
-            "type": "number",
-            "title": {
-              "en": "Tag ID",
-              "nl": "Tag ID"
+              "en": "Scene ID",
+              "nl": "Scene Nr"
             },
             "example": 1
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=tag_reader_500"
           }
         ]
       },
       {
-        "id": "user_away",
+        "id": "tagReader-user_away",
         "title": {
-          "en": "System armed",
-          "nl": "Systeem geactiveerd"
+          "en": "User is away",
+          "nl": "Iemand is weggegaan"
         },
         "hint": {
           "en": "Triggered when a user presses the away button of this tag reader and presents a valid code / tag.",
           "nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop van deze tag reader drukt en een geldige code / tag invoert."
         },
-        "args": [
+        "tokens": [
           {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=tag_reader_500"
+            "name": "userId",
+            "type": "number",
+            "title": {
+              "en": "User ID",
+              "nl": "Gebruikers ID"
+            },
+            "example": 2
+          },
+          {
+            "name": "userName",
+            "title": {
+              "en": "Username",
+              "nl": "Gebruikersnaam"
+            },
+            "example": {
+              "en": "Test",
+              "nl": "Test"
+            }
+          },
+          {
+            "name": "tagId",
+            "type": "number",
+            "title": {
+              "en": "Tag ID",
+              "nl": "Tag ID"
+            },
+            "example": 1
           }
         ],
-        "tokens": [
+        "args": [
           {
-            "name": "userId",
-            "type": "number",
-            "title": {
-              "en": "User ID",
-              "nl": "Gebruikers ID"
-            },
-            "example": 2
-          },
-          {
-            "name": "userName",
-            "title": {
-              "en": "Username",
-              "nl": "Gebruikersnaam"
-            },
-            "example": {
-              "en": "Test",
-              "nl": "Test"
-            }
-          },
-          {
-            "name": "tagId",
-            "type": "number",
-            "title": {
-              "en": "Tag ID",
-              "nl": "Tag ID"
-            },
-            "example": 1
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=tag_reader_500"
           }
         ]
       },
       {
-        "id": "user_system_home",
+        "id": "tagReader-user_home",
         "title": {
-          "en": "System disarmed",
-          "nl": "Systeem gedeactiveerd"
+          "en": "User is home",
+          "nl": "Iemand is thuis gekomen"
         },
         "hint": {
-          "en": "Triggered when a user presses the home button on a tag reader and presents a valid code / tag.",
-          "nl": "Wordt uitgevoerd wanneer iemand op de thuis knop op de tag reader drukt en een geldige code / tag invoert."
+          "en": "Triggered when a user presses the home button of this tag reader and enters a valid code / presents a valid tag.",
+          "nl": "Wordt uitgevoerd wanneer iemand op de thuis knop van deze tag reader drukt en een geldige code / tag ingevoerd wordt."
         },
         "tokens": [
           {
@@ -1283,23 +1147,18 @@
               "nl": "Tag ID"
             },
             "example": 1
-          },
+          }
+        ],
+        "args": [
           {
-            "name": "deviceId",
-            "type": "number",
-            "title": {
-              "en": "Tagreader ID",
-              "nl": "Tagreader ID"
-            },
-            "example": {
-              "en": "123x",
-              "nl": "123x"
-            }
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=tag_reader_500"
           }
         ]
       },
       {
-        "id": "user_system_away",
+        "id": "tagReader-user_system_away",
         "title": {
           "en": "System armed",
           "nl": "Systeem geactiveerd"
@@ -1341,49 +1200,87 @@
           {
             "name": "deviceId",
             "title": {
-              "en": "Tagreader ID",
-              "nl": "Tagreader ID"
+              "en": "Keypad ID",
+              "nl": "Keypad ID"
             },
             "example": {
               "en": "123x",
               "nl": "123x"
             }
           }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=tag_reader_500"
+          }
         ]
       },
       {
-        "id": "start_scene",
+        "id": "tagReader-user_system_home",
         "title": {
-          "en": "Scene activated",
-          "nl": "Scene geactiveerd"
+          "en": "System disarmed",
+          "nl": "Systeem gedeactiveerd"
         },
         "hint": {
-          "en": "Triggered when a user presses numbers without pressing home/away first. Please note that trying to trigger multiple scenes after each other without an home/away event screws up the tag reader in sending some random scene numbers somehow.",
-          "nl": "Wordt uitgevoerd wanneer iemand een nummber indrukt zonder home/away te gebruiken. Houdt er rekening mee dat als je meerdere scenes achter alkaar wilt uitvoeren zonder dat er een home/away event tussen zit dat de tag reader dan random scene nummers verstuurd naar Homey en er geen touw meer aan vast te knopen is."
+          "en": "Triggered when a user presses the home button on a tag reader and presents a valid code / tag.",
+          "nl": "Wordt uitgevoerd wanneer iemand op de thuis knop op de tag reader drukt en een geldige code / tag invoert."
         },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=tag_reader_500"
-          }
-        ],
         "tokens": [
           {
-            "name": "sceneId",
+            "name": "userId",
             "type": "number",
             "title": {
-              "en": "Scene ID",
-              "nl": "Scene Nr"
+              "en": "User ID",
+              "nl": "Gebruikers ID"
+            },
+            "example": 2
+          },
+          {
+            "name": "userName",
+            "title": {
+              "en": "Username",
+              "nl": "Gebruikersnaam"
+            },
+            "example": {
+              "en": "Test",
+              "nl": "Test"
+            }
+          },
+          {
+            "name": "tagId",
+            "type": "number",
+            "title": {
+              "en": "Tag ID",
+              "nl": "Tag ID"
             },
             "example": 1
+          },
+          {
+            "name": "deviceId",
+            "title": {
+              "en": "RFID keypad ID",
+              "nl": "RFID keypad ID"
+            },
+            "example": {
+              "en": "123x",
+              "nl": "123x"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=tag_reader_500"
           }
         ]
       }
     ],
     "conditions": [
       {
-        "id": "is_at_home",
+        "id": "tagReader-is_at_home",
         "title": {
           "en": "Is !{{|not}} at home",
           "nl": "Is !{{|niet}} thuis"
@@ -1394,6 +1291,11 @@
         },
         "args": [
           {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=tag_reader_500"
+          },
+          {
             "name": "person",
             "type": "autocomplete",
             "placeholder": {
@@ -1402,60 +1304,28 @@
             }
           }
         ]
+      },
+      {
+        "id": "tagReader-system_is_armed",
+        "title": {
+          "en": "Is !{{|not}} armed"
+        },
+        "hint": {
+          "en": "If the system is armed.",
+          "nl": "If the system is armed."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=tag_reader_500"
+          }
+        ]
       }
     ],
     "actions": [
       {
-        "id": "sound_alarm",
-        "title": {
-          "en": "Sound alarm",
-          "nl": "Alarm inschakelen"
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=alarm_sound"
-          }
-        ]
-      },
-      {
-        "id": "silence_alarm",
-        "title": {
-          "en": "Silence alarm",
-          "nl": "Alarm uitschakelen"
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=alarm_sound"
-          }
-        ]
-      },
-      {
-        "id": "toggle_person_home",
-        "title": {
-          "en": "Mark as home",
-          "nl": "Is thuis"
-        },
-        "hint": {
-          "en": "Select a person to set the status of the person to home.",
-          "nl": "Selecteer een persoon om de status van deze persoon op thuis te zetten."
-        },
-        "args": [
-          {
-            "name": "person",
-            "type": "autocomplete",
-            "placeholder": {
-              "en": "Who came home?",
-              "nl": "Wie is er thuis?"
-            }
-          }
-        ]
-      },
-      {
-        "id": "toggle_person_away",
+        "id": "tagReader-toggle_person_away",
         "title": {
           "en": "Mark as away",
           "nl": "Is afwezig"
@@ -1466,6 +1336,11 @@
         },
         "args": [
           {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=tag_reader_500"
+          },
+          {
             "name": "person",
             "type": "autocomplete",
             "placeholder": {
@@ -1474,7 +1349,83 @@
             }
           }
         ]
+      },
+      {
+        "id": "tagReader-toggle_person_home",
+        "title": {
+          "en": "Mark as home",
+          "nl": "Is thuis"
+        },
+        "hint": {
+          "en": "Select a person to set the status of the person to home.",
+          "nl": "Selecteer een persoon om de status van deze persoon op thuis te zetten."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=tag_reader_500"
+          },
+          {
+            "name": "person",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Who came home?",
+              "nl": "Wie is er thuis?"
+            }
+          }
+        ]
       }
     ]
+  },
+  "capabilities": {
+    "alarm_report": {
+      "type": "number",
+      "title": {
+        "en": "Alarm Report User ID",
+        "nl": "Alarm Rapport Gebruiker ID"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "status",
+        "nl": "status"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    "my_gateway_control": {
+      "type": "number",
+      "title": {
+        "en": "Gateway Events",
+        "nl": "Gateway Events"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "event",
+        "nl": "event"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    "user_code_report": {
+      "type": "number",
+      "title": {
+        "en": "User Code Report",
+        "nl": "Gebruikerscode Rapport"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "status",
+        "nl": "status"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1
+    }
   }
 }

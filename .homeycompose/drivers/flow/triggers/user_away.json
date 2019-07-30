@@ -1,0 +1,41 @@
+{
+	"title": {
+	  "en": "User is away",
+	  "nl": "Iemand is weggegaan"
+	},
+	"hint": {
+	  "en": "Triggered when a user presses the away button of this tag reader and presents a valid code / tag.",
+	  "nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop van deze tag reader drukt en een geldige code / tag invoert."
+	},
+	"tokens": [
+	  {
+		"name": "userId",
+		"type": "number",
+		"title": {
+		  "en": "User ID",
+		  "nl": "Gebruikers ID"
+		},
+		"example": 2
+	  },
+	  {
+		"name": "userName",
+		"title": {
+		  "en": "Username",
+		  "nl": "Gebruikersnaam"
+		},
+		"example": {
+		  "en": "Test",
+		  "nl": "Test"
+		}
+	  },
+	  {
+		"name": "tagId",
+		"type": "number",
+		"title": {
+		  "en": "Tag ID",
+		  "nl": "Tag ID"
+		},
+		"example": 1
+	  }
+	]
+}

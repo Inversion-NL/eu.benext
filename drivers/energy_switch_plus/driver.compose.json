@@ -1,0 +1,40 @@
+{
+      "id": "energy_switch_plus",
+      "name": {
+        "en": "Energy Switch+",
+        "nl": "Energy Switch+"
+      },
+      "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": [32, 6],
+        "productId": [1, 512],
+        "learnmode": {
+          "image": "/drivers/energy_switch_plus/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start inclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het installatie proces te starten."
+          }
+        },
+        "unlearnmode": {
+          "image": "/drivers/energy_switch_plus/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the button on the front of the device until the LED starts to blink. Release the button to start exclusion.",
+            "nl": "Houd de druk-knop ingedrukt totdat het indicatielampje knippert. Laat de knop vervolgens los om het verwijder proces te starten."
+          }
+        },
+        "associationGroups": [
+          1,
+          2
+        ]
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power"
+      ],
+      "images": {
+        "large": "/drivers/energy_switch_plus/assets/images/large.png",
+        "small": "/drivers/energy_switch_plus/assets/images/small.png"
+      }
+    }

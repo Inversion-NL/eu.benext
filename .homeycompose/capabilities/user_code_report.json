@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+	  "en": "User Code Report",
+  "nl": "Gebruikerscode Rapport"
+  },
+  "getable": true,
+  "setable": false,
+  "units": {
+	"en": "status",
+	"nl": "status"
+  },
+  "min": 0,
+  "max": 100,
+  "step": 1
+}

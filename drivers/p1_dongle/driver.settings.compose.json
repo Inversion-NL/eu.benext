@@ -1,0 +1,101 @@
+[
+        {
+          "id": "hw_pullup",
+		  "zwave": {
+            "index": 3,
+            "size": 1
+          },
+          "type": "checkbox",
+          "label": {
+            "en": "Enable HW pullup",
+            "nl": "Bied HW pullup aan"
+          },
+          "hint": {
+            "en": "It is possible to provide a pullup to your smart meter.",
+            "nl": "Het is mogelijk om een pullup aan te bieden aan uw slimme meter."
+          },
+          "value": false
+        },
+        {
+          "id": "baud_rate",
+		  "zwave": {
+            "index": 4,
+            "size": 2
+          },
+          "type": "dropdown",
+          "label": {
+            "en": "Default Baud rate",
+            "nl": "Standaard Baud rate"
+          },
+          "hint": {
+            "en": "The speed of the communication between de P1 and your smart meter. Kamstrup and Iskra = Baud rate 9600, aifa, Landis, Gyr = Baud rate 115200.",
+            "nl": "De snelheid van de P1 communicatie tussen slimme meter en de P1 to Z-Wave. Kamstrup en Iskra = Baud rate 9600, Kaifa, Landis, Gyr = Baud rate 115200."
+          },
+          "value": "1152",
+          "values": [
+            {
+              "id": "1152",
+              "label": {
+                "en": "115200 (DSMR 4.0)"
+              }
+            },
+            {
+              "id": "96",
+              "label": {
+                "en": "9600 (DMSR 2.2)"
+              }
+            }
+          ]
+        },
+        {
+          "id": "poll_interval_channel_1",
+          "type": "number",
+          "attr": {
+            "min": 0,
+            "max": 86400
+          },
+          "value": 36000,
+          "label": {
+            "en": "Poll interval channel 1",
+            "nl": "Poll interval channel 1"
+          },
+          "hint": {
+            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling. \nRange: 0 - 86400.\nDefault: 3600 seconds.",
+            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen. \nBereik: 0 - 86400.\nStandaard waarde: 3600 seconden."
+          }
+        },
+        {
+          "id": "poll_interval_channel_2",
+          "type": "number",
+          "attr": {
+            "min": 0,
+            "max": 86400
+          },
+          "value": 36000,
+          "label": {
+            "en": "Poll interval channel 2",
+            "nl": "Poll interval channel 2"
+          },
+          "hint": {
+            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling. \nRange: 0 - 86400.\nDefault: 3600 seconds.",
+            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen. \nBereik: 0 - 86400.\nStandaard waarde: 3600 seconden."
+          }
+        },
+        {
+          "id": "poll_interval_channel_3",
+          "type": "number",
+          "attr": {
+            "min": 0,
+            "max": 86400
+          },
+          "value": 36000,
+          "label": {
+            "en": "Poll interval channel 3",
+            "nl": "Poll interval channel 3"
+          },
+          "hint": {
+            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling. \nRange: 0 - 86400.\nDefault: 3600 seconds.",
+            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen. \nBereik: 0 - 86400.\nStandaard waarde: 3600 seconden."
+          }
+        }
+		]

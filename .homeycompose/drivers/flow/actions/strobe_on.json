@@ -1,0 +1,48 @@
+{
+    "title": {
+        "en": "Strobe on",
+        "nl": "Stroboscoop aan"
+    },
+	"args": [
+		{
+			"name": "count",
+			"type": "number",
+	        "min": 1,
+	        "max": 127,
+		    "placeholder": {
+		        "en": "Count",
+		        "nl": "Aantal"
+		    }
+		},
+		{
+			"name": "speed",
+			"type": "number",
+	        "min": 1,
+	        "max": 25,
+		    "placeholder": {
+		        "en": "Interval",
+		        "nl": "Interval"
+		    }
+		},
+		{
+			"name": "random_color",
+			"type": "dropdown",
+			"values": [
+				{
+					"id": "0",
+					"label": {
+						"en": "Current color",
+						"nl": "Huidige kleur"
+					}
+				},
+				{
+					"id": "1",
+					"label": {
+						"en": "Random color",
+						"nl": "Willekeurige kleur"
+					}
+				}
+			]
+		}
+	]
+}

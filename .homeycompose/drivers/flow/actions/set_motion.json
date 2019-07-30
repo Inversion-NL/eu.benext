@@ -1,0 +1,28 @@
+{
+    "title": {
+        "en": "Force motion",
+        "nl": "Forceer beweging"
+    },
+	"args": [
+		{
+			"name": "motion",
+			"type": "dropdown",
+			"values": [
+				{
+					"id": "0",
+					"label": {
+						"en": "No motion",
+						"nl": "Geen beweging"
+					}
+				},
+				{
+					"id": "1",
+					"label": {
+						"en": "Motion detected",
+						"nl": "Beweging"
+					}
+				}
+			]
+		}
+	]
+}

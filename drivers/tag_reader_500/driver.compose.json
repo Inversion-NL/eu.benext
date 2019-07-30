@@ -1,0 +1,56 @@
+{
+    "id": "tag_reader_500",
+    "name": {
+        "en": "Tag Reader 500",
+        "nl": "Tag Reader 500"
+    },
+    "zwave": {
+        "manufacturerId": 138,
+        "productTypeId": 7,
+        "productId": 512,
+        "learnmode": {
+            "image": "/drivers/tag_reader_500/assets/learnmode.svg",
+            "instruction": {
+                "en": "Press and hold the tamper switch about a second until indication LED blinks once per second, then release to start the add/remove routine.",
+                "nl": "Press and hold the tamper switch about a second until indication LED blinks once per second, then release to start the add/remove routine."
+            }
+        },
+        "associationGroups": [
+            1
+        ],
+        "associationGroupsOptions": {},
+        "wakeUpInterval": 900,
+        "defaultConfiguration": [{
+            "id": 7,
+            "size": 1,
+            "value": 0
+        }]
+    },
+    "class": "homealarm",
+    "capabilities": [
+        "measure_battery",
+        "alarm_tamper",
+        "user_code_report",
+        "homealarm_state",
+        "my_gateway_control"
+    ],
+    "mobile": {
+        "components": [
+            {
+                "id": "icon"
+            },
+            {
+                "id": "battery",
+                "capabilities": [ "measure_battery" ]
+            },
+            {
+            "id": "sensor",
+            "capabilities": [ "homealarm_state", "alarm_tamper" ]
+            }
+        ]
+    },
+    "images": {
+        "large": "/drivers/tag_reader_500/assets/images/large.png",
+        "small": "/drivers/tag_reader_500/assets/images/small.png"
+    }
+}

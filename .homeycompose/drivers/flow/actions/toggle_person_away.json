@@ -1,0 +1,20 @@
+{
+	"title": {
+		"en": "Mark as away",
+		"nl": "Is afwezig"
+	},
+	"hint": {
+		"en": "Select a person to set the status of the person to away.",
+		"nl": "Selecteer een persoon om de status van deze persoon op afwezig te zetten."
+	},
+	"args": [
+		{
+			"name": "person",
+			"type": "autocomplete",
+			"placeholder": {
+				"en": "Who has gone away?",
+				"nl": "Wie is er afwezig?"
+			}
+		}
+	]
+}
