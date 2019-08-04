@@ -7,15 +7,16 @@
     "zwave": {
         "manufacturerId": 138,
         "productTypeId": 7,
-        "productId": [ 512,
+        "productId": [ 
+                      512,
                       256,
                       257
                       ],
         "learnmode": {
             "image": "/drivers/tag_reader_500/assets/learnmode.svg",
             "instruction": {
-                "en": "For Tag Reader: Release the enter button. Press and hold the tamper switch about a second until indication LED blinks once per second, then release. For Tag Reader 500 (Z-Wave Plus): Press and hold the enter button for two seconds (indication LED blinks shortly).",
-                "nl": "For Tag Reader: Release the enter button. Press and hold the tamper switch about a second until indication LED blinks once per second, then release. For Tag Reader 500 (Z-Wave Plus): Press and hold the enter button for two seconds (indication LED blinks shortly)."
+                "en": "For Tag Reader: Press and hold the tamper switch about a second until indication LED blinks once per second, then release. For Tag Reader 500 (Z-Wave Plus): Press and hold the enter button for two seconds (indication LED blinks shortly). Release the enter button.",
+                "nl": "For Tag Reader: Press and hold the tamper switch about a second until indication LED blinks once per second, then release. For Tag Reader 500 (Z-Wave Plus): Press and hold the enter button for two seconds (indication LED blinks shortly). Release the enter button."
             }
         },
         "associationGroups": [
