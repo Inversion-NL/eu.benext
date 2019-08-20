@@ -1,3 +1,27 @@
 [
-        
+        {
+          "id": "override_mode",
+          "type": "dropdown",
+          "label": {
+            "en": "Temperature schedule override",
+            "nl": "Temperatuur schema overschrijven"
+          },
+          "value": "1",
+          "values": [
+            {
+              "id": "1",
+              "label": {
+                "en": "Temporary",
+                "nl": "Tijdelijk"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Permanently",
+                "nl": "Permanent"
+              }
+            }
+          ]
+        }
       ]

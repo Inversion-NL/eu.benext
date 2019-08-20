@@ -5,7 +5,7 @@
   },
   "brandColor": "#a6ce3f",
   "sdk": 2,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "compatibility": ">=2.0.0",
   "description": {
     "en": "BeNext devices for Homey",
@@ -482,7 +482,33 @@
         "large": "/drivers/heating_control/assets/images/large.png",
         "small": "/drivers/heating_control/assets/images/small.png"
       },
-      "settings": []
+      "settings": [
+        {
+          "id": "override_mode",
+          "type": "dropdown",
+          "label": {
+            "en": "Temperature schedule override",
+            "nl": "Temperatuur schema overschrijven"
+          },
+          "value": "1",
+          "values": [
+            {
+              "id": "1",
+              "label": {
+                "en": "Temporary",
+                "nl": "Tijdelijk"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Permanently",
+                "nl": "Permanent"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "molite_sensor",
@@ -803,10 +829,10 @@
         "manufacturerId": 138,
         "productTypeId": 7,
         "productId": [
-                      512,
-                      256,
-                      257
-                      ],
+          512,
+          256,
+          257
+        ],
         "learnmode": {
           "image": "/drivers/tag_reader_500/assets/learnmode.svg",
           "instruction": {
@@ -1022,9 +1048,11 @@
       "class": "sensor",
       "capabilities": [
         "alarm_contact",
-        "alarm_water",
+        "alarm_generic",
+        "alarm_tamper",
         "measure_temperature",
-        "measure_battery"
+        "measure_battery",
+        "alarm_battery"
       ],
       "images": {
         "large": "/drivers/window_door_sensor/assets/images/large.png",

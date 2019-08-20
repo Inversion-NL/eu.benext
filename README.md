@@ -7,6 +7,9 @@ Not all features are implemented at the moment. Please report any problems and s
 If you update from v0.x you may have to recreate your flows containing BeNext devices.
 
 Changelog
+V1.0.5
+Added new capabilities to Window/door sensor (tamper, generic alarm = external contact) 
+
 V1.0.4
 Added product IDs for Tag Reader
 

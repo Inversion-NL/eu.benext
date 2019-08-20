@@ -30,9 +30,11 @@
       "class": "sensor",
       "capabilities": [
         "alarm_contact",
-        "alarm_water",
+        "alarm_generic",
+		"alarm_tamper",
         "measure_temperature",
-        "measure_battery"
+        "measure_battery",
+		"alarm_battery"
       ],
       "images": {
         "large": "/drivers/window_door_sensor/assets/images/large.png",
