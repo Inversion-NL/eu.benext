@@ -1,3 +1,5 @@
+Outdated App Version for Homey V1.x
+
 # BeNext
 
 This app adds support for BeNext devices in Homey.
