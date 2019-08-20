@@ -1,0 +1,41 @@
+{
+	"title": {
+	  "en": "User is home",
+	  "nl": "Iemand is thuis gekomen"
+	},
+	"hint": {
+	  "en": "Triggered when a user presses the home button of this tag reader and enters a valid code / presents a valid tag.",
+	  "nl": "Wordt uitgevoerd wanneer iemand op de thuis knop van deze tag reader drukt en een geldige code / tag ingevoerd wordt."
+	},
+	"tokens": [
+	  {
+		"name": "userId",
+		"type": "number",
+		"title": {
+		  "en": "User ID",
+		  "nl": "Gebruikers ID"
+		},
+		"example": 2
+	  },
+	  {
+		"name": "userName",
+		"title": {
+		  "en": "Username",
+		  "nl": "Gebruikersnaam"
+		},
+		"example": {
+		  "en": "Test",
+		  "nl": "Test"
+		}
+	  },
+	  {
+		"name": "tagId",
+		"type": "number",
+		"title": {
+		  "en": "Tag ID",
+		  "nl": "Tag ID"
+		},
+		"example": 1
+	  }
+	]
+}

@@ -1,0 +1,21 @@
+{
+	"title": {
+	  "en": "Scene activated",
+	  "nl": "Scene geactiveerd"
+	},
+	"hint": {
+	  "en": "Triggered when a user presses numbers without pressing home/away first. Please note that trying to trigger multiple scenes after each other without an home/away event screws up the tag reader in sending some random scene numbers somehow.",
+	  "nl": "Wordt uitgevoerd wanneer iemand een nummber indrukt zonder home/away te gebruiken. Houdt er rekening mee dat als je meerdere scenes achter alkaar wilt uitvoeren zonder dat er een home/away event tussen zit dat de tag reader dan random scene nummers verstuurd naar Homey en er geen touw meer aan vast te knopen is."
+	},
+	"tokens": [
+	  {
+		"name": "sceneId",
+		"type": "number",
+		"title": {
+		  "en": "Scene ID",
+		  "nl": "Scene Nr"
+		},
+		"example": 1
+	  }
+	]
+  }

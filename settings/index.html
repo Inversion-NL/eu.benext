@@ -1,10 +1,10 @@
 <html>
 <head>
-
+<script type="text/javascript" src="/homey.js" data-origin="settings"></script>
 <style>
-table.benext th, table.benext td { font-size: 14px; text-align: left; padding-right: 10px; }
-table.benext tr { font-size: 14px; }
-button.benext { margin-right: 10px; }
+table.zipato th, table.zipato td { font-size: 14px; text-align: left; padding-right: 10px; }
+table.zipato tr { font-size: 14px; }
+button.zipato { margin-right: 10px; }
 	
 .alert {
   padding: 15px;
@@ -91,7 +91,7 @@ button.benext { margin-right: 10px; }
 	
 	<fieldset>
 		<legend data-i18n="settings.users.title"></legend>
-        <table id="systemUser" class="benext">
+        <table id="systemUser" class="zipato">
 			<thead>
 				<tr>
 					<th data-i18n="settings.users.table.userId"></th>
@@ -106,13 +106,13 @@ button.benext { margin-right: 10px; }
 		</table>
 		
 		<br /><br />
-		<button class="left benext" style="display:block" onclick="addNewUserRow()" data-i18n="settings.buttons.addUser"></button>
-		<button class="left benext" style="display:block" onclick="saveUsers()" data-i18n="settings.buttons.saveSettings" ></button>
+		<button class="left zipato" style="display:block" onclick="addNewUserRow()" data-i18n="settings.buttons.addUser"></button>
+		<button class="left zipato" style="display:block" onclick="saveUsers()" data-i18n="settings.buttons.saveSettings" ></button>
     </fieldset>
 	<br /><br />
 	<fieldset>
 		<legend data-i18n="settings.advanced.title"></legend>
-		<table id="systemAdvancedSettings" class="benext">
+		<table id="systemAdvancedSettings" class="zipato">
 			<thead>
 				<tr>
 					<th></th>
@@ -123,18 +123,18 @@ button.benext { margin-right: 10px; }
 			<tbody id="systemAdvancedSettingsBody">
 				<tr>
 					<td data-i18n="settings.advanced.table.tagApproval"></td>
-					<td><button class="left benext" style="display:block" onclick="toggleTagStatus()" data-i18n="settings.advanced.buttons.toggleTag"></button></td>
+					<td><button class="left zipato" style="display:block" onclick="toggleTagStatus()" data-i18n="settings.advanced.buttons.toggleTag"></button></td>
 					<td id="currentTagStatus" data-i18n="settings.advanced.table.tagApprovalStatus"></td>
 				</tr>
 				<tr>
 					<td data-i18n="settings.advanced.table.eventLog"></td>
-					<td colspan='2'><button class="left benext" style="display:block" onclick="clearEventLog()" data-i18n="settings.advanced.buttons.clearEventLog"></button></td>
+					<td colspan='2'><button class="left zipato" style="display:block" onclick="clearEventLog()" data-i18n="settings.advanced.buttons.clearEventLog"></button></td>
 				</tr>
 			</tbody>
 		</table>
 		<br /><br />
 		<p data-i18n="settings.advanced.description"></p>
-		<table id="systemAdvancedSettings" class="benext">
+		<table id="systemAdvancedSettings" class="zipato">
 			<thead>
 				<tr>
 					<th></th>
@@ -145,7 +145,7 @@ button.benext { margin-right: 10px; }
 			<tbody>
 				<tr>
 					<td data-i18n="settings.advanced.table.tags"></td>
-					<td colspan='2'><button class="left benext" style="display:block" onclick="clearTags()" data-i18n="settings.advanced.buttons.clearTags" ></button></td>
+					<td colspan='2'><button class="left zipato" style="display:block" onclick="clearTags()" data-i18n="settings.advanced.buttons.clearTags" ></button></td>
 				</tr>
 			</tbody>
 		</table>
@@ -154,7 +154,7 @@ button.benext { margin-right: 10px; }
 	<div class="table-container">
 		<fieldset>
 			<legend data-i18n="settings.systemEventLog.title"></legend>
-			<table id="systemEventLog" class="benext flex">
+			<table id="systemEventLog" class="zipato flex">
 				<thead>
 					<tr>
 						<th data-i18n="settings.systemEventLog.table.datetime"></th>
@@ -173,7 +173,7 @@ button.benext { margin-right: 10px; }
 	<br /><br />
 	<fieldset>
 		<legend data-i18n="settings.devices.title"></legend>
-        <table id="systemDevices" class="benext">
+        <table id="systemDevices" class="zipato">
 			<thead>
 				<tr>
 					<th data-i18n="settings.devices.table.deviceId"></th>
@@ -193,8 +193,11 @@ button.benext { margin-right: 10px; }
 		tagSelect.setAttribute('data-id', -1);
 		tagSelect.setAttribute('id', 'tagSelect_-1');
 
-        function onHomeyReady()
+		var Homey;
+
+        function onHomeyReady(homey)
 		{
+			Homey = homey;
 			// Retrieve log file			
         	retrieveLogFile();
 			
@@ -202,11 +205,11 @@ button.benext { margin-right: 10px; }
 			{
 				if(err)
         		{
-        			console.log("Can't retrieve tags.");
+        			showMessage('error getting tagContainer', err, 'danger');
         			return console.error(err);
         		}
-        		
-				if(typeof tags === 'undefined' || tags === null || tags.length <= 0)
+
+				if(typeof tags === 'undefined' || tags === null)
 				{
 					//document.getElementById('systemEventLogBody').innerHTML = '<tr><td colspan="5">' + __('settings.systemEventLog.messages.noUsersFound') + '</td></tr>';
 					return;
@@ -235,7 +238,7 @@ button.benext { margin-right: 10px; }
 			{
 				if(err)
         		{
-        			console.log("Can't retrieve devices.");
+        			showMessage('error getting tagReaders', err, 'danger');
         			return console.error(err);
         		}
         		
@@ -256,7 +259,7 @@ button.benext { margin-right: 10px; }
 			{
 				if(err)
         		{
-        			console.log("Can't retrieve tags.");
+        			showMessage('error getting tagStatus', err, 'danger');
         			return console.error(err);
         		}
         		
@@ -272,12 +275,8 @@ button.benext { margin-right: 10px; }
 			
 			Homey.get('userContainer', function (err, users)
 			{
-				console.log("Retrieving users");
-				console.log(users);
-			
-				if(err)
-        		{
-        			console.log("Can't retrieve users.");
+				if(err) {
+					showMessage('error getting userContainer', err, 'danger');
         			return console.error(err);
         		}
         		
@@ -303,7 +302,6 @@ button.benext { margin-right: 10px; }
 			removeEmptyMessageFromTable('systemDevicesBody');
 		
 			var tableRow = document.createElement("tr");
-			console.log(deviceEntry);
 													
 			tableRow.innerHTML += '<td>' + deviceEntry.id + '</td>';
 			tableRow.innerHTML += '<td>' + deviceEntry.state + '</td>';
@@ -322,8 +320,6 @@ button.benext { margin-right: 10px; }
 			tableRow.setAttribute('id', 'userRow_' + userEntry.id);
 			tableRow.setAttribute('data-id', userEntry.id);
 			
-			console.log(userEntry);
-													
 			tableRow.innerHTML += '<td>' + userEntry.id + '</td>';
 			tableRow.innerHTML += '<td><input type="text" name="username_'+userEntry.id+'" id="username_'+userEntry.id+'" value="' + userEntry.name + '"></input></td>';
 			tableRow.innerHTML += '<td id="tagDataColumn_' + userEntry.id + '"></td>';
@@ -371,7 +367,10 @@ button.benext { margin-right: 10px; }
 						highestId = id;
 					}
 				}
-			} catch(e) { console.log(e); }
+			} catch(e) { 
+				showMessage('error looping users', err, 'danger');
+				console.error(e);
+			}
 			
 			// Add the row
 			var userEntry = { 'id': highestId+1, 'name': '', 'statusCode': -1, 'tagIds': null };
@@ -380,13 +379,16 @@ button.benext { margin-right: 10px; }
 		
 		function removeUserRow(userId)
 		{
-			if(confirm(__('settings.users.messages.confirmDeteleUser')))
-			{
-				// http://stackoverflow.com/questions/3387427/remove-element-by-id
-				var element = document.getElementById('userRow_' + userId);
-				element.parentNode.removeChild(element);	 
-			}
-			
+			Homey.confirm(__('settings.users.messages.confirmDeteleUser'), 'warning', function(err, result) {
+				if (err === true || result === true) {
+					// http://stackoverflow.com/questions/3387427/remove-element-by-id
+					var element = document.getElementById('userRow_' + userId);
+					element.parentNode.removeChild(element);
+
+					showMessage('', __('settings.advanced.messages.userDeleted'), 'success');
+				}
+			});
+
 			// Always return false to cancel the bubbling click events.
 			return false;
 		}
@@ -400,20 +402,18 @@ button.benext { margin-right: 10px; }
 				for(var i = 0; i<rows.length; i++)
 				{
 					var id = parseInt(rows[i].getAttribute('data-id'));
-					console.log("Adding ID: " + id);
 					userIds.push(id);
 				}
-			} catch(e) { console.log(e); }
+			} catch(e) {
+				showMessage('error looping users', err, 'danger');
+				console.error(e);
+			}
 			
-			console.log("User array: ");
-			console.log(userIds);
-		
 			// Get user settings from Homey and update users with the new values
 			Homey.get('userContainer', function (err, users)
-			{			
-				if(err)
-        		{
-        			console.log("Can't retrieve users.");
+			{
+				if(err) {
+				    showMessage('error getting userContainer', err, 'danger');
         			return console.error(err);
         		}
         		
@@ -438,7 +438,6 @@ button.benext { margin-right: 10px; }
 						// Remove element from rows list
 						var index = userIds.indexOf(users[i].id);
 						if (index > -1) {
-							console.log("removing user with id " + users[i].id + " from index " + index);
 							userIds.splice(index, 1);
 						
 							// Push users to all users to save. If user ID is not in the userIds list, it is assumed that the user is removed with the 'x'.
@@ -447,13 +446,9 @@ button.benext { margin-right: 10px; }
 					}
 				}
 		
-				console.log(userIds);
-			
 				// Now we only need to add the new users left in 'rows' variable.
 				for(var i = 0; i < userIds.length; i++)
 				{
-					console.log("Adding user with id: " + userIds[i]);
-				
 					// contains objects: { "name": "bla", "id": -1, "statusCode": 0 (0 = away, 1 = home), "tagIds": { 1, 3 } };
 					var newUser = { "name": null, "id": userIds[i], "statusCode": -1, "tagIds": {} };
 					var userName = document.getElementById('username_' + userIds[i]);
@@ -472,11 +467,15 @@ button.benext { margin-right: 10px; }
 					allUsersToSave.push(newUser);
 				}
 				
-				// TODO :: VALIDATE DUBBLE ASSIGNED TAGS
-				
 				// Save allUsersToSave ! :)
-				console.log(allUsersToSave);
-				Homey.set('userContainer', allUsersToSave);
+				Homey.set('userContainer', allUsersToSave, function(err, result) {
+					if (err) {
+						showMessage(__('settings.advanced.messages.usersSavedErrorTitle'), err, 'danger');
+					} else {
+						showMessage('', __('settings.advanced.messages.usersSavedConfirmation'), 'success');
+					}
+				});
+				showMessage('', __('settings.advanced.messages.usersSavedConfirmation'), 'success');
 				
 				// TODO :: GIVE FEEDBACK REGARDING ACTION
 			});	
@@ -511,19 +510,16 @@ button.benext { margin-right: 10px; }
 		{
 			var options = select && select.options;
 			
-			if(typeof values === 'undefined' || values === null || values.length <= 0)
+			if(typeof values === 'undefined' || values === null || !Array.isArray(values) || values.length <= 0)
 			{
 				return select;
 			}
-			
-			console.log(values);
 
 			for (var i=0, iLen=options.length; i<iLen; i++) {
 				var opt = options[i];
 				
 				var value = parseInt(opt.value) || opt.text;
 				var index = values.indexOf(value);
-				console.log(index);
 				if(index > -1)
 				{	
 					options[i].selected = true;
@@ -539,7 +535,7 @@ button.benext { margin-right: 10px; }
 			Homey.get('systemEventLog', function(err, eventLog) {
         		if(err)
         		{
-        			console.log("Can't retrieve event log.");
+				    showMessage('error getting systemEventLog', err, 'danger');
         			return console.error(err);
         		}
         		
@@ -557,8 +553,6 @@ button.benext { margin-right: 10px; }
 				{
 					var logEntry = eventLog[i];
 					var tableRow = document.createElement("tr");
-					
-					console.log(logEntry);
 					
 					// Parse data in nice format
 					var date = new Date(logEntry.time);
@@ -589,23 +583,33 @@ button.benext { margin-right: 10px; }
 		
 		function clearEventLog()
 		{
-			if(confirm(__('settings.advanced.messages.confirmClearEventLog')))
-			{
-				Homey.set('systemEventLog', new Array());
-				showMessage('', __('settings.advanced.messages.eventLogClearedConfirmation'), 'success');
-			}
-			
+			Homey.confirm(__('settings.advanced.messages.confirmClearEventLog'), 'warning', function(err, result) {
+				if (err === true || result === true) {
+					document.getElementById('systemEventLogBody').innerHTML = '<tr data-type="emptyMessage"><td colspan="5">Clearing eventlog...</td></tr>';
+
+					Homey.set('systemEventLog', new Array(), function(err) {
+						if (err) {
+							showMessage('Error clearing event log', err, 'danger');	
+						} else {
+							showMessage('', __('settings.advanced.messages.eventLogClearedConfirmation'), 'success');
+						}
+						retrieveLogFile();
+					});
+				}
+			});
+
 			// Always return false to cancel the bubbling click events.
 			return false;
 		}
 		
 		function clearTags()
 		{
-			if(confirm(__('settings.advanced.messages.confirmClearTags')))
-			{
-				Homey.set('tagContainer', new Array());
-				showMessage('', __('settings.advanced.messages.tagsClearedConfirmation'), 'success');	 
-			}
+			Homey.confirm(__('settings.advanced.messages.confirmClearTags'), 'warning', function(err, result) {
+				if (err === true || result === true) {
+					Homey.set('tagContainer', new Array());
+					showMessage('', __('settings.advanced.messages.tagsClearedConfirmation'), 'success');
+				}
+			});
 			
 			// Always return false to cancel the bubbling click events.
 			return false;
@@ -617,7 +621,7 @@ button.benext { margin-right: 10px; }
 			{
 				if(err)
         		{
-        			console.log("Can't retrieve tags.");
+				    showMessage('error getting toggleTagStatus', err, 'danger');
         			return console.error(err);
         		}
         		
@@ -642,7 +646,7 @@ button.benext { margin-right: 10px; }
 			{
 				if(err)
 				{
-					console.log("Can't retrieve users to add tags.");
+					showMessage('error getting userContainer', err, 'danger');
 					return console.error(err);
 				}
 				

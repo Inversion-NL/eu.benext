@@ -1,0 +1,52 @@
+{
+	"title": {
+	  "en": "System armed",
+	  "nl": "Systeem geactiveerd"
+	},
+	"hint": {
+	  "en": "Triggered when a user presses the away button on a tag reader and presents a valid code / tag.",
+	  "nl": "Wordt uitgevoerd wanneer iemand op de afwezig knop op de tag reader drukt en een geldige code / tag invoert."
+	},
+	"tokens": [
+	  {
+		"name": "userId",
+		"type": "number",
+		"title": {
+		  "en": "User ID",
+		  "nl": "Gebruikers ID"
+		},
+		"example": 2
+	  },
+	  {
+		"name": "userName",
+		"title": {
+		  "en": "Username",
+		  "nl": "Gebruikersnaam"
+		},
+		"example": {
+		  "en": "Test",
+		  "nl": "Test"
+		}
+	  },
+	  {
+		"name": "tagId",
+		"type": "number",
+		"title": {
+		  "en": "Tag ID",
+		  "nl": "Tag ID"
+		},
+		"example": 1
+	  },
+	  {
+		"name": "deviceId",
+		"title": {
+		  "en": "Keypad ID",
+		  "nl": "Keypad ID"
+		},
+		"example": {
+		  "en": "123x",
+		  "nl": "123x"
+		}
+	  }
+	]
+}

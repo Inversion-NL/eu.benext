@@ -1,0 +1,78 @@
+[
+        {
+          "id": "meter_report_percentage",
+		  "zwave": {
+            "index": 11,
+            "size": 1
+          },
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (%)",
+            "nl": "Wattage verzending drempel (%)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in percentage) before the value is being send. Range: 1 - 100",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in percentage) voor de waarde wordt verzonden. Bereik: 1 - 100"
+          },
+          "attr": {
+            "min": 1,
+            "max": 100
+          },
+          "value": 20
+        },
+        {
+          "id": "meter_report_watt",
+		  "zwave": {
+            "index": 12,
+            "size": 1,
+			"signed": false
+          },
+          "type": "number",
+          "label": {
+            "en": "Wattage report threshold (W)",
+            "nl": "Wattage verzending drempel (W)"
+          },
+          "hint": {
+            "en": "How much must the Wattage change (in Watt) before the value is being send. Range: 5 - 255.",
+            "nl": "Hoeveel moet de Wattage zijn veranderd (in Watt) voor de waarde wordt verzonden."
+          },
+          "attr": {
+            "min": 5,
+            "max": 255
+          },
+          "value": 5
+        },
+        {
+          "id": "save_state",
+		  "zwave": {
+            "index": 14,
+            "size": 1
+          },
+          "type": "dropdown",
+          "label": {
+            "en": "Save power-off state",
+            "nl": "Onthoud status na stroomonderbreking"
+          },
+          "hint": {
+            "en": "State after power disruption.",
+            "nl": "Status na stroomonderbreking"
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Always off",
+                "nl": "Altijd uit"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Restore previous state",
+                "nl": "Herstel vorige status"
+              }
+            }
+          ]
+        }
+		]

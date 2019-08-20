@@ -19,7 +19,8 @@
 				"s0": "Away",
 				"s1": "Home",
 				"s2": "Tag Paired",
-				"s3": "Scene Started"
+				"s3": "Scene Started",
+				"s4": "Unknown Tag"
 			},
 			"messages":
 			{
@@ -79,7 +80,10 @@
 				"tagsClearedConfirmation": "The tags are all removed from Homey. Please reset your Tag Readers manually.",
 				"allowTags": "Registration of new tags is allowed",
 				"denyTags": "Registration of new tags is not allowed",
-				"toggleTagStatusConfirmedTitle": "Tag registration status switched: "
+				"toggleTagStatusConfirmedTitle": "Tag registration status switched: ",
+				"usersSavedErrorTitle": "Error saving users: ",
+				"usersSavedConfirmation": "Users succesfully saved",
+				"userDeleted": "User deleted, click on save user settings to commit the delete"																	   
 			},
 			"buttons":
 			{
