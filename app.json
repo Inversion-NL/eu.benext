@@ -1,11 +1,11 @@
 {
-  "id": "com.benext",
+  "id": "eu.benext",
   "name": {
     "en": "BeNext"
   },
   "brandColor": "#a6ce3f",
   "sdk": 2,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "compatibility": ">=2.0.0",
   "description": {
     "en": "BeNext devices for Homey",
@@ -23,14 +23,18 @@
     "small": "/assets/images/small.png"
   },
   "author": {
-    "name": "Martin Pussamsies",
-    "email": "martin@pussamsies.de"
+    "name": "Robin van Kekem",
+    "email": "nl.inversion@gmail.com"
   },
   "contributors": {
     "developers": [
       {
-        "name": "Martin Pussamsies",
-        "email": "martin@pussamsies.de"
+        "name": "Robin van Kekem",
+        "email": "nl.inversion@gmail.com"
+      },
+      {
+        "name": "Martin P",
+        "email": "mapulu@t-online.de"
       }
     ]
   },
@@ -792,18 +796,22 @@
     {
       "id": "tag_reader_500",
       "name": {
-        "en": "Tag Reader 500",
-        "nl": "Tag Reader 500"
+        "en": "Tag Reader (500)",
+        "nl": "Tag Reader (500)"
       },
       "zwave": {
         "manufacturerId": 138,
         "productTypeId": 7,
-        "productId": 512,
+        "productId": [
+                      512,
+                      256,
+                      257
+                      ],
         "learnmode": {
           "image": "/drivers/tag_reader_500/assets/learnmode.svg",
           "instruction": {
-            "en": "Press and hold the tamper switch about a second until indication LED blinks once per second, then release to start the add/remove routine.",
-            "nl": "Press and hold the tamper switch about a second until indication LED blinks once per second, then release to start the add/remove routine."
+            "en": "For Tag Reader: Press and hold the tamper switch about a second until indication LED blinks once per second, then release. For Tag Reader 500 (Z-Wave Plus): Press and hold the enter button for two seconds (indication LED blinks shortly). Release the enter button.",
+            "nl": "For Tag Reader: Press and hold the tamper switch about a second until indication LED blinks once per second, then release. For Tag Reader 500 (Z-Wave Plus): Press and hold the enter button for two seconds (indication LED blinks shortly). Release the enter button."
           }
         },
         "associationGroups": [
