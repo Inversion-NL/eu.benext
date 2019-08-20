@@ -20,8 +20,8 @@ const clamp = function(num, min, max) {
 
 class tagReaderDevice extends ZwaveDevice {
 	async onMeshInit() {
-		//this.enableDebug();
-		//this.printNode();
+		this.enableDebug();
+		this.printNode();
 		this.log("Initializing mesh driver")
 		this.registerCapability('measure_battery', 'BATTERY');
 		this.registerCapability('homealarm_state', 'SWITCH_BINARY');
