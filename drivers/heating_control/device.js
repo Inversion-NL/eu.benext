@@ -113,8 +113,8 @@ onMeshInit() {
 
 
 		//Setpoint
-				if (node && node && node.CommandClass && node.CommandClass.COMMAND_CLASS_THERMOSTAT_SETPOINT) {
-			node.CommandClass.COMMAND_CLASS_THERMOSTAT_SETPOINT.THERMOSTAT_SETPOINT_GET({
+				if (this.node && this.node.CommandClass && this.node.CommandClass.COMMAND_CLASS_THERMOSTAT_SETPOINT) {
+			this.node.CommandClass.COMMAND_CLASS_THERMOSTAT_SETPOINT.THERMOSTAT_SETPOINT_GET({
 				'Level': {
 					'Setpoint Type': 'Heating 1'
 				}
@@ -123,7 +123,7 @@ onMeshInit() {
 				if (result && result.hasOwnProperty('Value')) {
 					let parsedValue = result['Value'].readUIntBE(0, 2);
 					if (typeof parsedValue === 'number' && parsedValue / 10 !== 20) {
-						node.CommandClass.COMMAND_CLASS_THERMOSTAT_SETPOINT.THERMOSTAT_SETPOINT_SET({
+						this.node.CommandClass.COMMAND_CLASS_THERMOSTAT_SETPOINT.THERMOSTAT_SETPOINT_SET({
 							'Level': {
 								'Setpoint Type': 'Heating 1'
 							},
