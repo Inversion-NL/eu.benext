@@ -140,14 +140,12 @@ onMeshInit() {
 								console.log('Success after THERMOSTAT_SETPOINT_SET', result);
 							}
 						});
-					} else {
-						return callback(null, true);
-					}
+					} 
 				}
 			});
 
 		} else {
-			return callback('missing_command_class_or_method');
+			console.log('missing_command_class_or_method');
 		}
 		
 		
