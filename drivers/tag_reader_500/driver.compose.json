@@ -27,7 +27,7 @@
         "defaultConfiguration": [{
             "id": 7,
             "size": 1,
-            "value": 0
+            "value": 1
         }]
     },
     "class": "homealarm",
