@@ -27,7 +27,7 @@
         "defaultConfiguration": [{
             "id": 7,
             "size": 1,
-            "value": 0
+            "value": 1
         }]
     },
     "class": "homealarm",
@@ -38,21 +38,9 @@
         "homealarm_state",
         "my_gateway_control"
     ],
-    "mobile": {
-        "components": [
-            {
-                "id": "icon"
-            },
-            {
-                "id": "battery",
-                "capabilities": [ "measure_battery" ]
-            },
-            {
-            "id": "sensor",
-            "capabilities": [ "homealarm_state", "alarm_tamper" ]
-            }
-        ]
-    },
+      "energy": {
+      "batteries": [ "AA", "AA" ]
+      },
     "images": {
         "large": "/drivers/tag_reader_500/assets/images/large.png",
         "small": "/drivers/tag_reader_500/assets/images/small.png"

@@ -26,6 +26,9 @@
         "meter_power.low",
         "meter_gas"
       ],
+      "energy": {
+      "cumulative": true
+      },
       "capabilitiesOptions": {
         "meter_power.normal": {
           "title": {

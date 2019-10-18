@@ -5,8 +5,8 @@
   },
   "brandColor": "#a6ce3f",
   "sdk": 2,
-  "version": "1.0.6",
-  "compatibility": ">=2.0.0",
+  "version": "1.1.0",
+  "compatibility": ">=3.0.0",
   "description": {
     "en": "BeNext devices for Homey",
     "nl": "BeNext apparaten voor Homey"
@@ -547,6 +547,12 @@
         "measure_temperature",
         "measure_battery"
       ],
+      "energy": {
+        "batteries": [
+          "AA",
+          "AA"
+        ]
+      },
       "images": {
         "large": "/drivers/molite_sensor/assets/images/large.png",
         "small": "/drivers/molite_sensor/assets/images/small.png"
@@ -580,6 +586,9 @@
         "meter_power.low",
         "meter_gas"
       ],
+      "energy": {
+        "cumulative": true
+      },
       "capabilitiesOptions": {
         "meter_power.normal": {
           "title": {
@@ -849,7 +858,7 @@
           {
             "id": 7,
             "size": 1,
-            "value": 0
+            "value": 1
           }
         ]
       },
@@ -861,24 +870,10 @@
         "homealarm_state",
         "my_gateway_control"
       ],
-      "mobile": {
-        "components": [
-          {
-            "id": "icon"
-          },
-          {
-            "id": "battery",
-            "capabilities": [
-              "measure_battery"
-            ]
-          },
-          {
-            "id": "sensor",
-            "capabilities": [
-              "homealarm_state",
-              "alarm_tamper"
-            ]
-          }
+      "energy": {
+        "batteries": [
+          "AA",
+          "AA"
         ]
       },
       "images": {
@@ -1054,6 +1049,12 @@
         "measure_battery",
         "alarm_battery"
       ],
+      "energy": {
+        "batteries": [
+          "AAA",
+          "AAA"
+        ]
+      },
       "images": {
         "large": "/drivers/window_door_sensor/assets/images/large.png",
         "small": "/drivers/window_door_sensor/assets/images/small.png"

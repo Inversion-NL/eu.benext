@@ -35,6 +35,9 @@
         "measure_temperature",
         "measure_battery"
       ],
+      "energy": {
+      "batteries": [ "AA", "AA" ]
+      },
       "images": {
         "large": "/drivers/molite_sensor/assets/images/large.png",
         "small": "/drivers/molite_sensor/assets/images/small.png"

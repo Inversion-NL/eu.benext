@@ -4,7 +4,7 @@
   "description": "This app adds support for BeNext devices in Homey.",
   "main": "app.js",
   "dependencies": {
-    "homey-meshdriver": "^1.2.34"
+    "homey-meshdriver": "^1.3.16"
   },
   "devDependencies": {},
   "repository": {

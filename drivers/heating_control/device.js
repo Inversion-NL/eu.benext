@@ -38,7 +38,7 @@ onMeshInit() {
 					return Math.max(7.5, Math.min(DEFAULT_SETPOINT + delta, 32.5));
 				}
 			},
-	set: 'THERMOSTAT_SETPOINT_REPORT',
+	set: 'SCHEDULE_OVERRIDE_SET',
 	setParser(value) {
 
 				console.log('Set target temperature', value);
@@ -140,14 +140,12 @@ onMeshInit() {
 								console.log('Success after THERMOSTAT_SETPOINT_SET', result);
 							}
 						});
-					} else {
-						return callback(null, true);
-					}
+					} 
 				}
 			});
 
 		} else {
-			return callback('missing_command_class_or_method');
+			console.log('missing_command_class_or_method');
 		}
 		
 		
