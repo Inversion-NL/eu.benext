@@ -59,14 +59,14 @@ onMeshInit() {
 
 				console.log('SCHEDULE_OVERRIDE_SET -> final object ->', {
 					Properties1: {
-						'Override Type': this.getSetting('override_mode') || 1,
+						'Override Type': Number(this.getSetting('override_mode')) || 1,
 					},
 					'Override State': new Buffer([delta])
 				});
 
 				return {
 					Properties1: {
-						'Override Type': this.getSetting('override_mode') || 1,
+						'Override Type': Number(this.getSetting('override_mode')) || 1,
 					},
 					'Override State': new Buffer([delta])
 				}
