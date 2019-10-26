@@ -7,7 +7,7 @@ Not all features are implemented at the moment. Please report any problems and s
 If you update from v0.x you may have to recreate your flows containing BeNext devices.
 
 Changelog
-V1.1.0
+V1.1.1
 Added Homey Energy
 Updated Meshdriver
 Bugfixes
