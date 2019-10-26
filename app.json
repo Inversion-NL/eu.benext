@@ -5,7 +5,7 @@
   },
   "brandColor": "#a6ce3f",
   "sdk": 2,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "compatibility": ">=3.0.0",
   "description": {
     "en": "BeNext devices for Homey",
